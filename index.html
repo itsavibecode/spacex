@@ -3,870 +3,210 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>SpaceX IPO — Tracker</title>
+<title>BookHockeys</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --bg: #0b0d12;
-    --panel: #141821;
-    --panel-2: #1a1f2b;
-    --line: #252b38;
-    --line-bright: #333a4a;
-    --ink: #f2f4f8;
-    --ink-dim: #a8b0c0;
-    --ink-faint: #6b7385;
-    --accent: #ff6b47;
-    --accent-2: #ffc857;
-    --good: #5fd99d;
-    --sans: 'Inter', system-ui, -apple-system, sans-serif;
-    --mono: 'JetBrains Mono', ui-monospace, monospace;
-  }
+  *{ box-sizing: border-box; margin: 0; padding: 0; }
 
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-
-  html, body {
-    background: var(--bg);
-    color: var(--ink);
-    font-family: var(--sans);
-    font-size: 15px;
-    line-height: 1.6;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    min-height: 100vh;
-  }
-
-  a { color: inherit; text-decoration: none; }
-
-  .wrap {
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 32px 28px 80px;
-  }
-
-  .topbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding-bottom: 20px;
-    border-bottom: 1px solid var(--line);
-    font-size: 13px;
-  }
-  .brand {
-    font-weight: 700;
-    font-size: 14px;
-    letter-spacing: -0.01em;
-  }
-  .brand .slash { color: var(--ink-faint); font-weight: 400; margin: 0 8px; }
-  .brand .sub { color: var(--ink-dim); font-weight: 500; }
-  .pulse {
-    display: inline-block;
-    width: 7px; height: 7px;
-    border-radius: 50%;
-    background: var(--accent);
-    margin-right: 10px;
-    vertical-align: middle;
-    box-shadow: 0 0 0 0 rgba(255,107,71,0.6);
-    animation: pulse 2s infinite;
-  }
-  @keyframes pulse {
-    0% { box-shadow: 0 0 0 0 rgba(255,107,71,0.6); }
-    70% { box-shadow: 0 0 0 8px rgba(255,107,71,0); }
-    100% { box-shadow: 0 0 0 0 rgba(255,107,71,0); }
-  }
-  .ts {
-    font-family: var(--mono);
-    font-size: 12px;
-    color: var(--ink-faint);
-  }
-
-  .hero {
-    padding: 72px 0 48px;
-    text-align: center;
-  }
-  .status-tag {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    padding: 6px 14px;
-    border: 1px solid var(--line-bright);
-    border-radius: 999px;
-    font-size: 12px;
-    font-weight: 500;
-    color: var(--accent-2);
-    margin-bottom: 28px;
-  }
-  .status-tag .dot {
-    width: 6px; height: 6px;
-    border-radius: 50%;
-    background: var(--accent-2);
-  }
-
-  .hero-date {
-    font-size: clamp(64px, 13vw, 168px);
-    font-weight: 800;
-    line-height: 0.95;
-    letter-spacing: -0.04em;
-    color: var(--ink);
-    margin: 0;
-  }
-  .hero-sub {
-    margin-top: 20px;
-    font-size: 14px;
-    color: var(--ink-dim);
-    font-weight: 500;
-  }
-
-  .price-block {
-    margin-top: 40px;
-    display: inline-block;
-    padding: 22px 44px;
-    background: var(--panel);
-    border: 1px solid var(--line);
-    border-radius: 12px;
-  }
-  .price-label {
-    font-size: 12px;
-    font-weight: 600;
-    color: var(--ink-dim);
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-    margin-bottom: 8px;
-  }
-  .price-value {
-    font-size: clamp(36px, 6vw, 56px);
-    font-weight: 700;
-    color: var(--accent-2);
-    letter-spacing: -0.02em;
-    line-height: 1;
-  }
-  .price-range {
-    margin-top: 10px;
-    font-size: 13px;
-    color: var(--ink-faint);
-  }
-
-  .countdown {
-    margin: 52px auto 0;
-    max-width: 720px;
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 10px;
-  }
-  .cd-cell {
-    padding: 22px 10px 16px;
-    background: var(--panel);
-    border: 1px solid var(--line);
-    border-radius: 10px;
-    text-align: center;
-  }
-  .cd-num {
-    font-family: var(--mono);
-    font-weight: 700;
-    font-size: clamp(32px, 5.5vw, 48px);
-    line-height: 1;
-    color: var(--ink);
-    font-variant-numeric: tabular-nums;
-  }
-  .cd-lbl {
-    font-size: 11px;
-    font-weight: 600;
-    color: var(--ink-dim);
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    margin-top: 10px;
-  }
-  .countdown-caption {
-    text-align: center;
-    margin-top: 18px;
-    font-size: 13px;
-    color: var(--ink-faint);
-  }
-
-  .sec {
-    margin-top: 72px;
-  }
-  .sec-head {
-    display: flex;
-    align-items: baseline;
-    gap: 16px;
-    margin-bottom: 24px;
-    padding-bottom: 16px;
-    border-bottom: 1px solid var(--line);
-    flex-wrap: wrap;
-  }
-  .sec-num {
-    font-family: var(--mono);
-    font-size: 12px;
-    font-weight: 700;
-    color: var(--accent);
-  }
-  .sec-title {
-    font-size: 24px;
-    font-weight: 700;
-    color: var(--ink);
-    letter-spacing: -0.02em;
-  }
-  .sec-sub {
-    font-size: 13px;
-    color: var(--ink-dim);
-    margin-left: auto;
-  }
-
-  .articles {
-    border: 1px solid var(--line);
-    border-radius: 12px;
+  html, body{
+    height: 100%;
+    background: #39ff14;
+    font-family: 'Luckiest Guy', system-ui, sans-serif;
+    letter-spacing: 1px;
     overflow: hidden;
-    background: var(--panel);
-  }
-  .article {
-    display: grid;
-    grid-template-columns: 44px 1fr auto;
-    gap: 20px;
-    align-items: center;
-    padding: 18px 22px;
-    border-bottom: 1px solid var(--line);
-    transition: background 0.15s;
-  }
-  .article:last-child { border-bottom: none; }
-  .article:hover { background: var(--panel-2); }
-  .article:hover .a-title { color: var(--accent-2); }
-
-  .a-idx {
-    font-family: var(--mono);
-    font-size: 13px;
-    font-weight: 700;
-    color: var(--accent);
-  }
-  .a-title {
-    font-size: 15px;
-    font-weight: 600;
-    color: var(--ink);
-    line-height: 1.4;
-    transition: color 0.15s;
-    margin-bottom: 4px;
-  }
-  .a-src {
-    font-size: 12px;
-    color: var(--ink-dim);
-    font-weight: 500;
-  }
-  .a-date {
-    font-family: var(--mono);
-    font-size: 12px;
-    color: var(--ink-faint);
-    white-space: nowrap;
   }
 
-  .articles-footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 14px 22px;
-    background: var(--panel-2);
-    border-top: 1px solid var(--line);
-    font-size: 12px;
-    color: var(--ink-faint);
-  }
-  .shuffle-btn {
-    background: transparent;
-    border: 1px solid var(--line-bright);
-    color: var(--ink);
-    padding: 7px 14px;
-    font-family: var(--sans);
-    font-size: 12px;
-    font-weight: 600;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: all 0.15s;
-  }
-  .shuffle-btn:hover {
-    border-color: var(--accent);
-    color: var(--accent);
-  }
-
-  .filings {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 12px;
-  }
-  .filing {
-    position: relative;
-    padding: 18px 20px;
-    background: var(--panel);
-    border: 1px solid var(--line);
-    border-radius: 10px;
-    transition: all 0.15s;
-  }
-  .filing:hover {
-    border-color: var(--accent);
-    transform: translateY(-2px);
-  }
-  .filing-type {
-    display: inline-block;
-    font-family: var(--mono);
-    font-size: 10px;
-    font-weight: 700;
-    color: var(--accent);
-    letter-spacing: 0.08em;
-    padding: 3px 8px;
-    background: rgba(255,107,71,0.08);
-    border-radius: 4px;
-    margin-bottom: 12px;
-  }
-  .filing-title {
-    font-size: 15px;
-    font-weight: 600;
-    color: var(--ink);
-    line-height: 1.35;
-    margin-bottom: 8px;
-    padding-right: 20px;
-  }
-  .filing-meta {
-    font-size: 13px;
-    color: var(--ink-dim);
-    line-height: 1.5;
-  }
-  .filing-arrow {
-    position: absolute;
-    top: 18px;
-    right: 18px;
-    color: var(--ink-faint);
-    font-size: 14px;
-    transition: color 0.15s;
-  }
-  .filing:hover .filing-arrow { color: var(--accent); }
-
-  .notify {
-    background: var(--panel);
-    border: 1px solid var(--line);
-    border-radius: 12px;
-    padding: 32px;
-  }
-  .notify-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 36px;
-  }
-  @media (max-width: 720px) {
-    .notify-grid { grid-template-columns: 1fr; gap: 28px; }
-    .notify { padding: 24px; }
-  }
-
-  .notify h3 {
-    font-size: 18px;
-    font-weight: 700;
-    color: var(--ink);
-    margin-bottom: 10px;
-    letter-spacing: -0.01em;
-  }
-  .notify p {
-    font-size: 14px;
-    color: var(--ink-dim);
-    margin-bottom: 18px;
-    line-height: 1.6;
-  }
-
-  .field { margin-bottom: 14px; }
-  .field label {
-    display: block;
-    font-size: 12px;
-    font-weight: 600;
-    color: var(--ink-dim);
-    margin-bottom: 6px;
-  }
-  .field input {
+  /* Background video */
+  .bg-video{
+    position: fixed;
+    inset: 0;
     width: 100%;
-    background: var(--bg);
-    border: 1px solid var(--line-bright);
-    color: var(--ink);
-    padding: 11px 14px;
-    font-family: var(--sans);
-    font-size: 14px;
-    border-radius: 6px;
-    outline: none;
-    transition: border-color 0.15s;
+    height: 100%;
+    object-fit: cover;
+    z-index: 0;
   }
-  .field input:focus { border-color: var(--accent); }
-  .field input::placeholder { color: var(--ink-faint); }
 
-  .checks {
+  /* Neon green tint overlay so the video "fits in" */
+  .tint{
+    position: fixed;
+    inset: 0;
+    background: #39ff14;
+    opacity: 0.55;
+    mix-blend-mode: multiply;
+    z-index: 1;
+    pointer-events: none;
+  }
+  /* second layer to brighten/unify the green */
+  .tint-2{
+    position: fixed;
+    inset: 0;
+    background: #39ff14;
+    opacity: 0.30;
+    z-index: 2;
+    pointer-events: none;
+  }
+
+  /* Content container */
+  .content{
+    position: relative;
+    z-index: 3;
+    height: 100%;
     display: flex;
     flex-direction: column;
-    gap: 10px;
-    margin: 18px 0;
-  }
-  .check {
-    display: flex;
     align-items: center;
-    gap: 10px;
-    font-size: 14px;
-    color: var(--ink);
-    cursor: pointer;
-    user-select: none;
-  }
-  .check input {
-    width: 16px; height: 16px;
-    accent-color: var(--accent);
-    cursor: pointer;
+    justify-content: center;
+    padding: 40px 20px;
+    gap: 40px;
   }
 
-  .btn {
+  .logo{
+    width: min(90vw, 560px);
+    height: auto;
+    display: block;
+    filter: drop-shadow(6px 8px 0 rgba(0,0,0,0.5));
+  }
+
+  .links{
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .btn{
     display: inline-flex;
     align-items: center;
-    gap: 8px;
-    background: var(--accent);
-    color: #0a0a0a;
-    border: none;
-    padding: 11px 18px;
-    font-family: var(--sans);
-    font-size: 13px;
-    font-weight: 600;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: all 0.15s;
+    gap: 12px;
     text-decoration: none;
+    color: #0a0a0a;
+    background: #ffffff;
+    padding: 16px 28px;
+    font-size: 26px;
+    border: 4px solid #0a0a0a;
+    box-shadow: 6px 6px 0 #0a0a0a;
+    transition: transform .12s ease, box-shadow .12s ease;
   }
-  .btn:hover { background: var(--accent-2); transform: translateY(-1px); }
-  .btn.secondary {
-    background: transparent;
-    color: var(--ink);
-    border: 1px solid var(--line-bright);
+
+  .btn:hover{
+    transform: translate(-3px, -3px);
+    box-shadow: 9px 9px 0 #0a0a0a;
   }
-  .btn.secondary:hover {
-    border-color: var(--accent-2);
-    color: var(--accent-2);
-  }
-  .btn-row {
-    display: flex;
+
+  .btn svg{ width: 28px; height: 28px; }
+
+  .btn.kick{ background: #53fc18; }
+  .btn.twitch{ background: #9146ff; color: #ffffff; }
+
+  /* Unmute prompt */
+  .unmute{
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    z-index: 10;
+    display: inline-flex;
+    align-items: center;
     gap: 10px;
-    flex-wrap: wrap;
+    padding: 14px 20px;
+    font-family: 'Luckiest Guy', sans-serif;
+    font-size: 20px;
+    letter-spacing: 1px;
+    color: #0a0a0a;
+    background: #ffe82e;
+    border: 4px solid #0a0a0a;
+    box-shadow: 5px 5px 0 #0a0a0a;
+    cursor: pointer;
+    animation: pulse 1.4s ease-in-out infinite;
+    transition: transform .12s ease, box-shadow .12s ease, opacity .3s ease;
+  }
+  .unmute:hover{
+    transform: translate(-2px, -2px);
+    box-shadow: 7px 7px 0 #0a0a0a;
+  }
+  .unmute.hidden{
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(20px);
+  }
+  .unmute svg{ width: 22px; height: 22px; }
+
+  @keyframes pulse{
+    0%,100%{ transform: scale(1); }
+    50%{ transform: scale(1.05); }
   }
 
-  .notice {
-    margin-top: 16px;
-    padding: 14px 16px;
-    background: rgba(255,200,87,0.06);
-    border: 1px solid rgba(255,200,87,0.25);
-    border-radius: 8px;
-    font-size: 13px;
-    color: var(--accent-2);
-    line-height: 1.6;
-  }
-  .notice strong { color: #fff; }
-  .notice a { color: var(--accent-2); text-decoration: underline; }
-
-  .saved-pref {
-    margin-top: 14px;
-    padding: 12px 14px;
-    background: rgba(95,217,157,0.08);
-    border: 1px solid rgba(95,217,157,0.3);
-    border-radius: 6px;
-    font-size: 13px;
-    color: var(--good);
-    line-height: 1.5;
-    display: none;
-  }
-  .saved-pref.show { display: block; }
-
-  .checklist {
-    list-style: none;
-    font-size: 13px;
-    color: var(--ink-dim);
-    line-height: 2;
-  }
-  .checklist li::before {
-    content: "→";
-    color: var(--accent);
-    margin-right: 10px;
-    font-weight: 700;
-  }
-
-  footer {
-    margin-top: 72px;
-    padding-top: 28px;
-    border-top: 1px solid var(--line);
-    text-align: center;
-  }
-  footer .disc {
-    font-size: 13px;
-    color: var(--ink-dim);
-    max-width: 720px;
-    margin: 0 auto 16px;
-    line-height: 1.7;
-  }
-  footer .disc strong { color: var(--accent-2); }
-  footer .meta {
-    font-size: 12px;
-    color: var(--ink-faint);
-  }
-
-  @media (max-width: 640px) {
-    .wrap { padding: 20px 16px 60px; }
-    .hero { padding: 48px 0 32px; }
-    .article { grid-template-columns: 30px 1fr; padding: 16px 18px; }
-    .a-date { grid-column: 1 / -1; padding-left: 40px; padding-top: 4px; }
-    .notify { padding: 20px; }
-    .sec { margin-top: 56px; }
+  @media (max-width: 480px){
+    .btn{ font-size: 20px; padding: 14px 22px; }
+    .btn svg{ width: 22px; height: 22px; }
+    .unmute{ font-size: 16px; padding: 10px 16px; bottom: 16px; right: 16px; }
   }
 </style>
 </head>
 <body>
 
-<div class="wrap">
+  <video id="bgvid" class="bg-video" autoplay muted loop playsinline preload="auto">
+    <source src="bookmentions.mp4" type="video/mp4">
+  </video>
 
-  <div class="topbar">
-    <div class="brand">
-      <span class="pulse"></span>SpaceX IPO
-      <span class="slash">/</span>
-      <span class="sub">Tracker</span>
+  <div class="tint"></div>
+  <div class="tint-2"></div>
+
+  <div class="content">
+    <img class="logo" src="logo.png" alt="BookHockeys" />
+
+    <div class="links">
+      <a class="btn kick" href="https://kick.com/bookhockeys" target="_blank" rel="noopener">
+        <svg viewBox="0 0 933 300" xmlns="http://www.w3.org/2000/svg" fill="currentColor">
+          <path d="M0 0h100v100h100V0h100v100H300v100H200v100H100V200H0zM400 0h100v300H400zM533 0h100v100h100V0h100v100H833V200H733v100H633V200H533zM866 0h67v100h-67zm0 200h67v100h-67z"/>
+        </svg>
+        KICK
+      </a>
+      <a class="btn twitch" href="https://twitch.tv/bookhockeys" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="currentColor">
+          <path d="M11.571 4.714h1.715v5.143H11.57zm4.715 0H18v5.143h-1.714zM6 0L1.714 4.286v15.428h5.143V24l4.286-4.286h3.428L22.286 12V0zm14.571 11.143l-3.428 3.428h-3.429l-3 3v-3H6.857V1.714h13.714Z"/>
+        </svg>
+        TWITCH
+      </a>
     </div>
-    <div class="ts" id="now-ts">—</div>
   </div>
 
-  <section class="hero">
-    <div class="status-tag">
-      <span class="dot"></span>
-      Unconfirmed · target window
-    </div>
+  <button id="unmute" class="unmute" aria-label="Unmute video">
+    <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+      <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
+    </svg>
+    TAP FOR SOUND
+  </button>
 
-    <h1 class="hero-date">June 2026</h1>
+  <script>
+    (function(){
+      const vid = document.getElementById('bgvid');
+      const btn = document.getElementById('unmute');
 
-    <div class="hero-sub">
-      Expected roadshow early June · pricing estimate June 16–20
-    </div>
+      function unmuteNow(){
+        vid.muted = false;
+        vid.volume = 1.0;
+        // make sure it's playing
+        vid.play().catch(() => {});
+        btn.classList.add('hidden');
+        // clean up listeners
+        document.removeEventListener('click', firstClick, true);
+        document.removeEventListener('touchstart', firstClick, true);
+        document.removeEventListener('keydown', firstClick, true);
+      }
 
-    <div class="price-block">
-      <div class="price-label">Est. price per share</div>
-      <div class="price-value">$662.52</div>
-      <div class="price-range">Scenario range $527–$877 · Hiive mark 04/18/26</div>
-    </div>
+      function firstClick(e){
+        // don't hijack clicks on the actual link buttons
+        if (e.target && e.target.closest && e.target.closest('a.btn')) return;
+        unmuteNow();
+      }
 
-    <div class="countdown" id="countdown">
-      <div class="cd-cell"><div class="cd-num" id="cd-d">--</div><div class="cd-lbl">Days</div></div>
-      <div class="cd-cell"><div class="cd-num" id="cd-h">--</div><div class="cd-lbl">Hours</div></div>
-      <div class="cd-cell"><div class="cd-num" id="cd-m">--</div><div class="cd-lbl">Min</div></div>
-      <div class="cd-cell"><div class="cd-num" id="cd-s">--</div><div class="cd-lbl">Sec</div></div>
-    </div>
-    <div class="countdown-caption" id="countdown-caption">
-      Counting to June 16, 2026 · Will update when SpaceX confirms a date
-    </div>
-  </section>
-
-  <section class="sec">
-    <div class="sec-head">
-      <div class="sec-num">01</div>
-      <div class="sec-title">Latest coverage</div>
-      <div class="sec-sub">5 articles · reshuffles on reload</div>
-    </div>
-
-    <div class="articles" id="articles"></div>
-
-    <div class="articles-footer">
-      <span id="articles-stamp">Loading…</span>
-      <button class="shuffle-btn" id="reshuffle">↻ Reshuffle</button>
-    </div>
-  </section>
-
-  <section class="sec">
-    <div class="sec-head">
-      <div class="sec-num">02</div>
-      <div class="sec-title">Filings &amp; primary sources</div>
-      <div class="sec-sub">SEC EDGAR · secondary markets</div>
-    </div>
-
-    <div class="filings" id="filings"></div>
-  </section>
-
-  <section class="sec">
-    <div class="sec-head">
-      <div class="sec-num">03</div>
-      <div class="sec-title">Don't miss it</div>
-      <div class="sec-sub">Reminders · calendar · alerts</div>
-    </div>
-
-    <div class="notify">
-      <div class="notify-grid">
-
-        <div>
-          <h3>Get reminded as it approaches</h3>
-          <p>Save your contact info, arm browser notifications, or download a calendar file with reminders baked in.</p>
-
-          <div class="field">
-            <label for="email-input">Email (stored locally)</label>
-            <input type="email" id="email-input" placeholder="user@example.com" autocomplete="email" />
-          </div>
-
-          <div class="field">
-            <label for="phone-input">Phone for SMS (optional, locally stored)</label>
-            <input type="tel" id="phone-input" placeholder="+1 312 555 0100" autocomplete="tel" />
-          </div>
-
-          <div class="field">
-            <label>Alert me when</label>
-            <div class="checks">
-              <label class="check"><input type="checkbox" id="alert-official" checked /> Official IPO date is confirmed</label>
-              <label class="check"><input type="checkbox" id="alert-price" checked /> Official offer price announced</label>
-              <label class="check"><input type="checkbox" id="alert-s1" checked /> Public S-1 prospectus filed</label>
-              <label class="check"><input type="checkbox" id="alert-t30" /> 30 days before IPO</label>
-              <label class="check"><input type="checkbox" id="alert-t7" checked /> 7 days before IPO</label>
-              <label class="check"><input type="checkbox" id="alert-t1" checked /> 1 day before IPO</label>
-            </div>
-          </div>
-
-          <div class="btn-row">
-            <button class="btn" id="save-prefs">Save preferences</button>
-            <button class="btn secondary" id="enable-browser">Enable browser alerts</button>
-          </div>
-
-          <div class="saved-pref" id="saved-pref">Preferences saved.</div>
-        </div>
-
-        <div>
-          <h3>Calendar &amp; system reminders</h3>
-          <p>Download a .ics file with the estimated IPO date loaded and native reminders at T-30d, T-7d, T-1d and morning-of. Works with Apple Calendar, Google Calendar, and Outlook.</p>
-
-          <div class="btn-row" style="margin-bottom: 18px;">
-            <button class="btn" id="download-ics">Download .ics</button>
-            <a class="btn secondary" id="gcal-link" href="#" target="_blank" rel="noopener">Add to Google Calendar</a>
-          </div>
-
-          <div class="notice">
-            <strong>Heads up on SMS/email:</strong> This is a static site on GitHub Pages — it has no backend, so it can't send SMS or email directly. Your contact info is stored in this browser only. For guaranteed delivery, pair this with the calendar file above, SEC EDGAR email alerts at <a href="https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany" target="_blank" rel="noopener">sec.gov</a>, and a Google Alert for <em>"SpaceX IPO"</em>.
-          </div>
-
-          <h3 style="margin-top: 28px;">Broker prep</h3>
-          <ul class="checklist">
-            <li>Fidelity: $100K+ assets or active trader</li>
-            <li>Schwab: $100K+ or 36 trades/year</li>
-            <li>Robinhood IPO Access: no minimum, lottery</li>
-            <li>SoFi &amp; Webull: no minimum, request-based</li>
-            <li>Retail allocation reportedly ~30% of offering</li>
-            <li>Demand expected 10–20× oversubscribed</li>
-          </ul>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-  <footer>
-    <div class="disc">
-      <strong>Not investment advice.</strong> Figures are publicly reported estimates from secondary markets (Hiive, Forge) and financial press (Bloomberg, CNBC, Reuters, WSJ). SpaceX filed a confidential draft S-1 on April 1, 2026 but has not publicly confirmed an IPO date, offer price, or ticker. June 16, 2026 is a midpoint estimate of reported roadshow timing.
-    </div>
-    <div class="meta">© <span id="year"></span> · built for you · updated <span id="built"></span></div>
-  </footer>
-
-</div>
-
-<script>
-  const IPO_DATE = new Date('2026-06-16T09:30:00-04:00');
-  const IPO_DATE_LABEL = 'June 16, 2026';
-
-  const ARTICLE_POOL = [
-    { title: "SpaceX IPO: History Says the Stock Will Do This When It Starts Trading", source: "Motley Fool", date: "2026-04-15", url: "https://www.fool.com/investing/2026/04/15/spacex-ipo-stock-will-do-this-when-starts-trading/" },
-    { title: "SpaceX Could Be the Biggest IPO in History. Here's What Happened to the Last 5 Mega-IPOs", source: "Motley Fool", date: "2026-04-14", url: "https://www.fool.com/investing/2026/04/14/spacex-ipo-stock-should-you-buy-valuation-risks/" },
-    { title: "June IPO Poised to Propel SpaceX Into a Trillion-Dollar-Plus Orbit", source: "Evalueserve", date: "2026-04-10", url: "https://www.evalueserve.com/blog/june-ipo-poised-to-propel-spacex-into-a-trillion-dollar-plus-orbit/" },
-    { title: "SpaceX IPO Confirmed: $1.75T Valuation, 2026 Timeline", source: "Basenor", date: "2026-04-04", url: "https://www.basenor.com/blogs/news/spacex-ipo-confirmed-1-75t-valuation-2026-timeline" },
-    { title: "SpaceX IPO 2026: $1.75T Valuation, Filing Date, Investors", source: "Techi", date: "2026-04-03", url: "https://www.techi.com/spacex-ipo/" },
-    { title: "SpaceX Could Be the Biggest IPO Ever — How Much to Get Rich?", source: "Yahoo Finance", date: "2026-04-05", url: "https://finance.yahoo.com/markets/stocks/articles/spacex-could-biggest-ipo-ever-105505316.html" },
-    { title: "SpaceX stock debut is the big market event of 2026", source: "CNBC", date: "2026-01-02", url: "https://www.cnbc.com/2026/01/02/spacex-ipo-musk-2026.html" },
-    { title: "SpaceX expected to go public, launch giant IPO in 2026", source: "Texas Standard", date: "2026-01-10", url: "https://www.texasstandard.org/stories/spacex-to-go-public-ipo-in-2026-musk/" },
-    { title: "SpaceX Stock Prediction: Hitting $1,200 at 2026 IPO?", source: "Hey Go Trade", date: "2025-12-31", url: "https://www.heygotrade.com/en/news/spacex-stock-prediction-hitting-1-200-at-2026-ipo/" },
-    { title: "SpaceX IPO: everything you need to know", source: "Capital.com", date: "2026-01-15", url: "https://capital.com/en-int/learn/ipo/spacex-ipo" },
-    { title: "When will SpaceX officially announce an IPO?", source: "Kalshi Markets", date: "2026-04-17", url: "https://kalshi.com/markets/kxipospacex/when-will-spacex-ipo/kxipospacex" },
-    { title: "SpaceX Stock · Hiive order book", source: "Hiive", date: "2026-04-18", url: "https://www.hiive.com/securities/spacex-stock" }
-  ];
-
-  const FILINGS = [
-    { type: "SEC EDGAR", title: "Full-text search · SpaceX", meta: "All filings mentioning Space Exploration Technologies", url: "https://efts.sec.gov/LATEST/search-index?q=%22Space+Exploration+Technologies%22&dateRange=custom&startdt=2025-01-01&enddt=2026-12-31" },
-    { type: "SEC EDGAR", title: "Company search", meta: "Browse SpaceX filer history on EDGAR", url: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&company=space+exploration+technologies&type=&dateb=&owner=include&count=40" },
-    { type: "FORM D", title: "SpaceX Fund One (Maybrook)", meta: "Exempt offering · CIK 1819923", url: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001819923&type=&dateb=&owner=include&count=40" },
-    { type: "FORM D", title: "SpaceX Series (Pre-IPO Marketplace)", meta: "Exempt offerings · CIK 1826165", url: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001826165&type=&dateb=&owner=include&count=40" },
-    { type: "FORM D", title: "SpaceX Jun 2023 (CGF2021)", meta: "Exempt offering · CIK 1992247", url: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001992247&type=&dateb=&owner=include&count=40" },
-    { type: "FORM D", title: "SpaceX Nov 2024 (CGF2021)", meta: "Exempt offering · CIK 2047425", url: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0002047425&type=&dateb=&owner=include&count=40" },
-    { type: "DRAFT S-1", title: "Confidential draft registration", meta: "Filed April 1, 2026 · not public until refile", url: "https://efts.sec.gov/LATEST/search-index?q=%22Space+Exploration+Technologies%22&forms=DRS" },
-    { type: "SECONDARY", title: "Hiive · SpaceX order book", meta: "Live bids/asks · indicative pricing", url: "https://www.hiive.com/securities/spacex-stock" },
-    { type: "SECONDARY", title: "Forge Global · SpaceX", meta: "Forge Price · pre-IPO secondary data", url: "https://forgeglobal.com/spacex_stock/" },
-    { type: "MARKET DATA", title: "Yahoo Finance · SPAX.PVT", meta: "Private valuation history", url: "https://finance.yahoo.com/quote/SPAX.PVT/" }
-  ];
-
-  const $ = (id) => document.getElementById(id);
-  const pad = (n) => String(n).padStart(2, '0');
-  const fmtDate = (iso) => new Date(iso + 'T00:00:00').toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
-  const shuffle = (arr) => {
-    const a = [...arr];
-    for (let i = a.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [a[i], a[j]] = [a[j], a[i]];
-    }
-    return a;
-  };
-
-  function updateCountdown() {
-    const diff = IPO_DATE - new Date();
-    if (diff <= 0) {
-      ['cd-d','cd-h','cd-m','cd-s'].forEach(id => $(id).textContent = '00');
-      $('countdown-caption').textContent = 'IPO window has arrived — verify live status';
-      return;
-    }
-    $('cd-d').textContent = pad(Math.floor(diff / 86400000));
-    $('cd-h').textContent = pad(Math.floor((diff / 3600000) % 24));
-    $('cd-m').textContent = pad(Math.floor((diff / 60000) % 60));
-    $('cd-s').textContent = pad(Math.floor((diff / 1000) % 60));
-  }
-
-  function updateTs() {
-    $('now-ts').textContent = new Date().toISOString().replace('T',' ').substring(0,19) + ' UTC';
-  }
-
-  function renderArticles() {
-    const picked = shuffle(ARTICLE_POOL).slice(0, 5);
-    const c = $('articles');
-    c.innerHTML = '';
-    picked.forEach((a, i) => {
-      const el = document.createElement('a');
-      el.className = 'article';
-      el.href = a.url;
-      el.target = '_blank';
-      el.rel = 'noopener';
-      el.innerHTML = `
-        <div class="a-idx">0${i+1}</div>
-        <div>
-          <div class="a-title">${a.title}</div>
-          <div class="a-src">${a.source}</div>
-        </div>
-        <div class="a-date">${fmtDate(a.date)}</div>
-      `;
-      c.appendChild(el);
-    });
-    $('articles-stamp').textContent = `Updated ${new Date().toLocaleTimeString()} · Pool of ${ARTICLE_POOL.length}`;
-  }
-
-  function renderFilings() {
-    const c = $('filings');
-    c.innerHTML = '';
-    FILINGS.forEach(f => {
-      const el = document.createElement('a');
-      el.className = 'filing';
-      el.href = f.url;
-      el.target = '_blank';
-      el.rel = 'noopener';
-      el.innerHTML = `
-        <span class="filing-type">${f.type}</span>
-        <div class="filing-title">${f.title}</div>
-        <div class="filing-meta">${f.meta}</div>
-        <div class="filing-arrow">↗</div>
-      `;
-      c.appendChild(el);
-    });
-  }
-
-  const PREF_KEY = 'spacex_ipo_prefs_v1';
-
-  function loadPrefs() {
-    try {
-      const p = JSON.parse(localStorage.getItem(PREF_KEY) || '{}');
-      if (p.email) $('email-input').value = p.email;
-      if (p.phone) $('phone-input').value = p.phone;
-      ['official','price','s1','t30','t7','t1'].forEach(k => {
-        const el = $('alert-' + k);
-        if (el && typeof p[k] === 'boolean') el.checked = p[k];
-      });
-    } catch (e) {}
-  }
-
-  function savePrefs() {
-    const p = {
-      email: $('email-input').value.trim(),
-      phone: $('phone-input').value.trim(),
-      official: $('alert-official').checked,
-      price: $('alert-price').checked,
-      s1: $('alert-s1').checked,
-      t30: $('alert-t30').checked,
-      t7: $('alert-t7').checked,
-      t1: $('alert-t1').checked,
-      savedAt: new Date().toISOString()
-    };
-    localStorage.setItem(PREF_KEY, JSON.stringify(p));
-    const msg = $('saved-pref');
-    msg.classList.add('show');
-    msg.textContent = `✓ Saved ${new Date().toLocaleTimeString()} · Email: ${p.email || '(none)'} · Phone: ${p.phone || '(none)'}`;
-    setTimeout(() => msg.classList.remove('show'), 8000);
-  }
-
-  function enableBrowserAlerts() {
-    if (!('Notification' in window)) { alert('This browser does not support notifications.'); return; }
-    Notification.requestPermission().then(perm => {
-      if (perm !== 'granted') { alert('Notifications denied. Enable them in browser settings.'); return; }
-      const now = Date.now();
-      const sched = (offset, title, body) => {
-        const delay = IPO_DATE.getTime() - offset - now;
-        if (delay > 0 && delay < 2147483647) setTimeout(() => new Notification(title, { body }), delay);
-      };
-      if ($('alert-t7').checked) sched(7*86400000, 'SpaceX IPO: 7 days out', 'Estimated listing ' + IPO_DATE_LABEL);
-      if ($('alert-t1').checked) sched(1*86400000, 'SpaceX IPO: Tomorrow', 'Estimated listing ' + IPO_DATE_LABEL);
-      sched(0, 'SpaceX IPO: Today', 'Estimated pricing / first trade window');
-      new Notification('Browser alerts armed', { body: 'Notifications will fire if this tab is open at T-7d, T-1d, and day-of.' });
-    });
-  }
-
-  function generateICS() {
-    const dt = IPO_DATE;
-    const dtEnd = new Date(dt.getTime() + 3600000);
-    const fmt = (d) => d.toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, '');
-    const stamp = fmt(new Date());
-    const alarms = [];
-    if ($('alert-t30').checked) alarms.push({ trig: '-P30D', desc: 'SpaceX IPO in 30 days' });
-    if ($('alert-t7').checked)  alarms.push({ trig: '-P7D', desc: 'SpaceX IPO in 7 days' });
-    if ($('alert-t1').checked)  alarms.push({ trig: '-P1D', desc: 'SpaceX IPO tomorrow' });
-    alarms.push({ trig: '-PT30M', desc: 'SpaceX IPO in 30 min — get ready to buy' });
-    const alarmBlocks = alarms.map(a => `BEGIN:VALARM\nTRIGGER:${a.trig}\nACTION:DISPLAY\nDESCRIPTION:${a.desc}\nEND:VALARM`).join('\n');
-    const ics = `BEGIN:VCALENDAR\nVERSION:2.0\nPRODID:-//SpaceX IPO Tracker//EN\nCALSCALE:GREGORIAN\nMETHOD:PUBLISH\nBEGIN:VEVENT\nUID:spacex-ipo-${stamp}@local\nDTSTAMP:${stamp}\nDTSTART:${fmt(dt)}\nDTEND:${fmt(dtEnd)}\nSUMMARY:SpaceX IPO — estimated first trade\nDESCRIPTION:Estimated SpaceX IPO date (UNCONFIRMED as of April 2026). Target valuation $1.75T. Est. price per share ~$600-700. Verify latest before trading.\nLOCATION:Nasdaq (estimated)\nSTATUS:TENTATIVE\n${alarmBlocks}\nEND:VEVENT\nEND:VCALENDAR`;
-    const blob = new Blob([ics], { type: 'text/calendar' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'spacex-ipo-reminder.ics';
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
-  }
-
-  function buildGCalLink() {
-    const dt = IPO_DATE;
-    const dtEnd = new Date(dt.getTime() + 3600000);
-    const fmt = (d) => d.toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, '');
-    const params = new URLSearchParams({
-      action: 'TEMPLATE',
-      text: 'SpaceX IPO — estimated first trade',
-      dates: `${fmt(dt)}/${fmt(dtEnd)}`,
-      details: 'Estimated SpaceX IPO date (UNCONFIRMED as of April 2026). Target valuation $1.75T. Est. price ~$600-700. Verify latest before trading.',
-      location: 'Nasdaq (estimated)'
-    });
-    return 'https://calendar.google.com/calendar/render?' + params.toString();
-  }
-
-  document.addEventListener('DOMContentLoaded', () => {
-    updateCountdown();
-    updateTs();
-    setInterval(updateCountdown, 1000);
-    setInterval(updateTs, 1000);
-    renderArticles();
-    renderFilings();
-    loadPrefs();
-
-    $('reshuffle').addEventListener('click', renderArticles);
-    $('save-prefs').addEventListener('click', savePrefs);
-    $('enable-browser').addEventListener('click', enableBrowserAlerts);
-    $('download-ics').addEventListener('click', generateICS);
-    $('gcal-link').href = buildGCalLink();
-    $('year').textContent = new Date().getFullYear();
-    $('built').textContent = new Date().toLocaleDateString();
-  });
-</script>
+      btn.addEventListener('click', unmuteNow);
+      document.addEventListener('click', firstClick, true);
+      document.addEventListener('touchstart', firstClick, true);
+      document.addEventListener('keydown', firstClick, true);
+    })();
+  </script>
 
 </body>
 </html>
