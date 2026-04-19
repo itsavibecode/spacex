@@ -774,7 +774,7 @@
 
           <div class="field">
             <label for="email-input">Email (stored locally)</label>
-            <input type="email" id="email-input" placeholder="frank@example.com" autocomplete="email" />
+            <input type="email" id="email-input" placeholder="user@example.com" autocomplete="email" />
           </div>
 
           <div class="field">
@@ -836,7 +836,7 @@
     </div>
     <div class="meta">
       <span class="version-badge">v1.1.0</span>
-      © <span id="year"></span> · built for Frank · updated <span id="built"></span>
+      © <span id="year"></span> · built for you · updated <span id="built"></span>
     </div>
   </footer>
 
@@ -1069,7 +1069,7 @@
     if ($('alert-t1').checked)  alarms.push({ trig: '-P1D', desc: 'SpaceX IPO tomorrow' });
     alarms.push({ trig: '-PT30M', desc: 'SpaceX IPO in 30 min — get ready to buy' });
     const alarmBlocks = alarms.map(a => `BEGIN:VALARM\nTRIGGER:${a.trig}\nACTION:DISPLAY\nDESCRIPTION:${a.desc}\nEND:VALARM`).join('\n');
-    const ics = `BEGIN:VCALENDAR\nVERSION:2.0\nPRODID:-//Frank//SpaceX IPO Tracker//EN\nCALSCALE:GREGORIAN\nMETHOD:PUBLISH\nBEGIN:VEVENT\nUID:spacex-ipo-${stamp}@local\nDTSTAMP:${stamp}\nDTSTART:${fmt(dt)}\nDTEND:${fmt(dtEnd)}\nSUMMARY:SpaceX IPO — estimated first trade\nDESCRIPTION:Estimated SpaceX IPO date (UNCONFIRMED as of April 2026). Target valuation $1.75T. Est. price per share ~$600-700. Verify latest before trading.\nLOCATION:Nasdaq (estimated)\nSTATUS:TENTATIVE\n${alarmBlocks}\nEND:VEVENT\nEND:VCALENDAR`;
+    const ics = `BEGIN:VCALENDAR\nVERSION:2.0\nPRODID:-//SpaceX IPO Tracker//EN\nCALSCALE:GREGORIAN\nMETHOD:PUBLISH\nBEGIN:VEVENT\nUID:spacex-ipo-${stamp}@local\nDTSTAMP:${stamp}\nDTSTART:${fmt(dt)}\nDTEND:${fmt(dtEnd)}\nSUMMARY:SpaceX IPO — estimated first trade\nDESCRIPTION:Estimated SpaceX IPO date (UNCONFIRMED as of April 2026). Target valuation $1.75T. Est. price per share ~$600-700. Verify latest before trading.\nLOCATION:Nasdaq (estimated)\nSTATUS:TENTATIVE\n${alarmBlocks}\nEND:VEVENT\nEND:VCALENDAR`;
     const blob = new Blob([ics], { type: 'text/calendar' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
