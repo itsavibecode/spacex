@@ -4,6 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>SpaceX IPO — Tracker</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='12' fill='%230b0d12'/><path d='M32 10 L40 28 L40 46 L32 52 L24 46 L24 28 Z' fill='%23ff6b47'/><circle cx='32' cy='32' r='3' fill='%230b0d12'/><path d='M24 46 L18 56 L24 50 Z M40 46 L46 56 L40 50 Z' fill='%23ffc857'/></svg>" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
@@ -483,6 +484,150 @@
     font-weight: 700;
   }
 
+  /* ============ Ticker ribbon ============ */
+  .ticker-ribbon {
+    margin: 32px auto 0;
+    max-width: 640px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 14px 20px;
+    background: linear-gradient(135deg, rgba(255,107,71,0.08), rgba(255,200,87,0.04));
+    border: 1px solid var(--line-bright);
+    border-radius: 10px;
+    text-align: left;
+  }
+  .ticker-left {
+    flex-shrink: 0;
+    padding-right: 20px;
+    border-right: 1px solid var(--line-bright);
+  }
+  .ticker-lbl {
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--ink-dim);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+  .ticker-sym {
+    font-family: var(--mono);
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--accent);
+    letter-spacing: -0.02em;
+    line-height: 1;
+  }
+  .ticker-right {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .ticker-exch {
+    display: inline-block;
+    width: fit-content;
+    font-family: var(--mono);
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--accent-2);
+    letter-spacing: 0.1em;
+    padding: 2px 8px;
+    background: rgba(255,200,87,0.1);
+    border-radius: 4px;
+  }
+  .ticker-note {
+    font-size: 12px;
+    color: var(--ink-dim);
+    line-height: 1.4;
+  }
+  @media (max-width: 520px) {
+    .ticker-ribbon { flex-direction: column; align-items: flex-start; gap: 12px; }
+    .ticker-left { padding-right: 0; padding-bottom: 12px; border-right: none; border-bottom: 1px solid var(--line-bright); width: 100%; }
+  }
+
+  /* ============ Timeline ============ */
+  .timeline {
+    position: relative;
+    padding-left: 32px;
+  }
+  .timeline::before {
+    content: "";
+    position: absolute;
+    left: 9px;
+    top: 8px;
+    bottom: 8px;
+    width: 2px;
+    background: var(--line-bright);
+  }
+  .tl-event {
+    position: relative;
+    padding: 0 0 24px 24px;
+  }
+  .tl-event:last-child { padding-bottom: 0; }
+  .tl-event::before {
+    content: "";
+    position: absolute;
+    left: -28px;
+    top: 6px;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--panel);
+    border: 2px solid var(--ink-faint);
+    z-index: 1;
+  }
+  .tl-event.done::before {
+    background: var(--good);
+    border-color: var(--good);
+    box-shadow: 0 0 0 3px rgba(95,217,157,0.15);
+  }
+  .tl-event.next::before {
+    background: var(--accent);
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(255,107,71,0.2);
+    animation: pulse 2s infinite;
+  }
+  .tl-event.future::before {
+    background: var(--panel);
+    border-color: var(--line-bright);
+  }
+  .tl-date {
+    font-family: var(--mono);
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--ink-dim);
+    letter-spacing: 0.04em;
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .tl-status {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 4px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .tl-status.done { background: rgba(95,217,157,0.12); color: var(--good); }
+  .tl-status.next { background: rgba(255,107,71,0.12); color: var(--accent); }
+  .tl-status.future { background: var(--panel); color: var(--ink-faint); border: 1px solid var(--line); }
+  .tl-title {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--ink);
+    line-height: 1.4;
+    margin-bottom: 4px;
+  }
+  .tl-desc {
+    font-size: 13px;
+    color: var(--ink-dim);
+    line-height: 1.5;
+  }
+  .tl-event.future .tl-title { color: var(--ink-dim); }
+
   footer {
     margin-top: 72px;
     padding-top: 28px;
@@ -500,6 +645,19 @@
   footer .meta {
     font-size: 12px;
     color: var(--ink-faint);
+  }
+  .version-badge {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--accent);
+    background: rgba(255,107,71,0.1);
+    padding: 3px 8px;
+    border-radius: 4px;
+    letter-spacing: 0.05em;
+    margin-right: 10px;
+    vertical-align: middle;
   }
 
   @media (max-width: 640px) {
@@ -537,6 +695,17 @@
       Expected roadshow early June · pricing estimate June 16–20
     </div>
 
+    <div class="ticker-ribbon">
+      <div class="ticker-left">
+        <div class="ticker-lbl">Likely Ticker</div>
+        <div class="ticker-sym">$SPCX</div>
+      </div>
+      <div class="ticker-right">
+        <span class="ticker-exch">NASDAQ</span>
+        <span class="ticker-note">SPCX freed up April 2026 when Tuttle Capital swapped their ETF to SPCK — same pattern as META in 2022. Not officially confirmed by SpaceX.</span>
+      </div>
+    </div>
+
     <div class="price-block">
       <div class="price-label">Est. price per share</div>
       <div class="price-value">$662.52</div>
@@ -572,6 +741,16 @@
   <section class="sec">
     <div class="sec-head">
       <div class="sec-num">02</div>
+      <div class="sec-title">Timeline</div>
+      <div class="sec-sub">Past events &amp; upcoming milestones</div>
+    </div>
+
+    <div class="timeline" id="timeline"></div>
+  </section>
+
+  <section class="sec">
+    <div class="sec-head">
+      <div class="sec-num">03</div>
       <div class="sec-title">Filings &amp; primary sources</div>
       <div class="sec-sub">SEC EDGAR · secondary markets</div>
     </div>
@@ -581,7 +760,7 @@
 
   <section class="sec">
     <div class="sec-head">
-      <div class="sec-num">03</div>
+      <div class="sec-num">04</div>
       <div class="sec-title">Don't miss it</div>
       <div class="sec-sub">Reminders · calendar · alerts</div>
     </div>
@@ -595,7 +774,7 @@
 
           <div class="field">
             <label for="email-input">Email (stored locally)</label>
-            <input type="email" id="email-input" placeholder="user@example.com" autocomplete="email" />
+            <input type="email" id="email-input" placeholder="frank@example.com" autocomplete="email" />
           </div>
 
           <div class="field">
@@ -655,7 +834,10 @@
     <div class="disc">
       <strong>Not investment advice.</strong> Figures are publicly reported estimates from secondary markets (Hiive, Forge) and financial press (Bloomberg, CNBC, Reuters, WSJ). SpaceX filed a confidential draft S-1 on April 1, 2026 but has not publicly confirmed an IPO date, offer price, or ticker. June 16, 2026 is a midpoint estimate of reported roadshow timing.
     </div>
-    <div class="meta">© <span id="year"></span> · built for you · updated <span id="built"></span></div>
+    <div class="meta">
+      <span class="version-badge">v1.1.0</span>
+      © <span id="year"></span> · built for Frank · updated <span id="built"></span>
+    </div>
   </footer>
 
 </div>
@@ -677,6 +859,33 @@
     { title: "SpaceX IPO: everything you need to know", source: "Capital.com", date: "2026-01-15", url: "https://capital.com/en-int/learn/ipo/spacex-ipo" },
     { title: "When will SpaceX officially announce an IPO?", source: "Kalshi Markets", date: "2026-04-17", url: "https://kalshi.com/markets/kxipospacex/when-will-spacex-ipo/kxipospacex" },
     { title: "SpaceX Stock · Hiive order book", source: "Hiive", date: "2026-04-18", url: "https://www.hiive.com/securities/spacex-stock" }
+  ];
+
+  const TIMELINE = [
+    { date: "2002-03-14", title: "SpaceX founded by Elon Musk",
+      desc: "Space Exploration Technologies Corp. incorporated in Hawthorne, California." },
+    { date: "2008-09-28", title: "Falcon 1 reaches orbit",
+      desc: "First privately-funded liquid-fueled rocket to reach orbit — saves the company from near-bankruptcy." },
+    { date: "2020-05-30", title: "First crewed Dragon mission",
+      desc: "Demo-2 launches astronauts Behnken and Hurley to ISS — first crewed US launch since 2011." },
+    { date: "2024-12-10", title: "Musk confirms IPO plans",
+      desc: "On X, Musk says Eric Berger's IPO reporting is 'accurate,' effectively confirming 2026 listing plans." },
+    { date: "2025-12-01", title: "Secondary tender at $421/share",
+      desc: "Major employee tender values SpaceX at ~$800B, making it the world's most valuable private company." },
+    { date: "2026-02-15", title: "SpaceX merges with xAI",
+      desc: "All-stock deal combines SpaceX ($1T) with xAI ($250B) at $1.25T combined valuation." },
+    { date: "2026-04-01", title: "Confidential S-1 filed with SEC",
+      desc: "SpaceX submits confidential draft registration statement. Confirmed by Bloomberg, CNBC, Reuters, WSJ." },
+    { date: "2026-04-07", title: "SPCX ticker freed up",
+      desc: "Tuttle Capital swaps their SPAC ETF ticker from SPCX to SPCK — mirrors META's 2022 playbook." },
+    { date: "2026-05-15", title: "Public S-1 expected", future: true,
+      desc: "Must drop at least 15 days before roadshow. Will reveal revenue, margins, defense contracts, governance." },
+    { date: "2026-06-08", title: "IPO roadshow begins", future: true,
+      desc: "Shotwell likely leads institutional pitch across major financial centers over ~2 weeks." },
+    { date: "2026-06-11", title: "Retail investor event", future: true,
+      desc: "Unusual mid-roadshow retail push — underwriters want demand locked in early." },
+    { date: "2026-06-16", title: "Estimated pricing & first trade", future: true,
+      desc: "Midpoint of reported June 16–20 pricing window. Target $1.75T valuation, ~$600–700/share." }
   ];
 
   const FILINGS = [
@@ -742,6 +951,43 @@
       c.appendChild(el);
     });
     $('articles-stamp').textContent = `Updated ${new Date().toLocaleTimeString()} · Pool of ${ARTICLE_POOL.length}`;
+  }
+
+  function renderTimeline() {
+    const today = new Date();
+    // Decide which event is "next" — the first future event
+    let nextIdx = -1;
+    TIMELINE.forEach((e, i) => {
+      const d = new Date(e.date + 'T00:00:00');
+      if (d >= today && nextIdx === -1) nextIdx = i;
+    });
+
+    const c = $('timeline');
+    c.innerHTML = '';
+    TIMELINE.forEach((e, i) => {
+      const d = new Date(e.date + 'T00:00:00');
+      const isDone = d < today;
+      const isNext = i === nextIdx;
+      const statusClass = isDone ? 'done' : isNext ? 'next' : 'future';
+      const statusLabel = isDone ? '✓ Complete' : isNext ? '→ Next up' : 'Upcoming';
+      const dateStr = d.toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric'
+      }).toUpperCase();
+
+      const el = document.createElement('div');
+      el.className = 'tl-event ' + statusClass;
+      el.innerHTML = `
+        <div class="tl-date">
+          ${dateStr}
+          <span class="tl-status ${statusClass}">${statusLabel}</span>
+        </div>
+        <div class="tl-title">${e.title}</div>
+        <div class="tl-desc">${e.desc}</div>
+      `;
+      c.appendChild(el);
+    });
   }
 
   function renderFilings() {
@@ -823,7 +1069,7 @@
     if ($('alert-t1').checked)  alarms.push({ trig: '-P1D', desc: 'SpaceX IPO tomorrow' });
     alarms.push({ trig: '-PT30M', desc: 'SpaceX IPO in 30 min — get ready to buy' });
     const alarmBlocks = alarms.map(a => `BEGIN:VALARM\nTRIGGER:${a.trig}\nACTION:DISPLAY\nDESCRIPTION:${a.desc}\nEND:VALARM`).join('\n');
-    const ics = `BEGIN:VCALENDAR\nVERSION:2.0\nPRODID:-//SpaceX IPO Tracker//EN\nCALSCALE:GREGORIAN\nMETHOD:PUBLISH\nBEGIN:VEVENT\nUID:spacex-ipo-${stamp}@local\nDTSTAMP:${stamp}\nDTSTART:${fmt(dt)}\nDTEND:${fmt(dtEnd)}\nSUMMARY:SpaceX IPO — estimated first trade\nDESCRIPTION:Estimated SpaceX IPO date (UNCONFIRMED as of April 2026). Target valuation $1.75T. Est. price per share ~$600-700. Verify latest before trading.\nLOCATION:Nasdaq (estimated)\nSTATUS:TENTATIVE\n${alarmBlocks}\nEND:VEVENT\nEND:VCALENDAR`;
+    const ics = `BEGIN:VCALENDAR\nVERSION:2.0\nPRODID:-//Frank//SpaceX IPO Tracker//EN\nCALSCALE:GREGORIAN\nMETHOD:PUBLISH\nBEGIN:VEVENT\nUID:spacex-ipo-${stamp}@local\nDTSTAMP:${stamp}\nDTSTART:${fmt(dt)}\nDTEND:${fmt(dtEnd)}\nSUMMARY:SpaceX IPO — estimated first trade\nDESCRIPTION:Estimated SpaceX IPO date (UNCONFIRMED as of April 2026). Target valuation $1.75T. Est. price per share ~$600-700. Verify latest before trading.\nLOCATION:Nasdaq (estimated)\nSTATUS:TENTATIVE\n${alarmBlocks}\nEND:VEVENT\nEND:VCALENDAR`;
     const blob = new Blob([ics], { type: 'text/calendar' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
@@ -855,6 +1101,7 @@
     setInterval(updateCountdown, 1000);
     setInterval(updateTs, 1000);
     renderArticles();
+    renderTimeline();
     renderFilings();
     loadPrefs();
 
