@@ -3,8 +3,35 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>SpaceX IPO — Tracker</title>
+<title>SpaceX IPO Tracker — date, price, ticker, countdown</title>
+<meta name="description" content="Live tracker for the SpaceX IPO: estimated date (June 18–30, 2026), ~$525–530 price benchmark, $SPCX ticker speculation, countdown, timeline of milestones, and SEC filings — built for retail investors who don't want to miss it." />
+<meta name="theme-color" content="#0b0d12" />
+<meta name="author" content="itsavibecode" />
+<link rel="canonical" href="https://spacex.bookhockeys.com/" />
+
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://spacex.bookhockeys.com/" />
+<meta property="og:title" content="SpaceX IPO Tracker — June 2026" />
+<meta property="og:description" content="Countdown, price benchmark, ticker speculation, timeline, and SEC filings for the upcoming SpaceX IPO. Live updates as official details drop." />
+<meta property="og:site_name" content="SpaceX IPO Tracker" />
+
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="SpaceX IPO Tracker — June 2026" />
+<meta name="twitter:description" content="Countdown, price benchmark, $SPCX/$SPCE ticker watch, timeline, and SEC filings for the upcoming SpaceX IPO." />
+
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='12' fill='%230b0d12'/><path d='M32 10 L40 28 L40 46 L32 52 L24 46 L24 28 Z' fill='%23ff6b47'/><circle cx='32' cy='32' r='3' fill='%230b0d12'/><path d='M24 46 L18 56 L24 50 Z M40 46 L46 56 L40 50 Z' fill='%23ffc857'/></svg>" />
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "SpaceX IPO Tracker",
+  "url": "https://spacex.bookhockeys.com/",
+  "description": "Tracker for the SpaceX IPO: estimated date, price benchmark, ticker, countdown, timeline, and SEC filings.",
+  "publisher": { "@type": "Person", "name": "itsavibecode" },
+  "about": { "@type": "Corporation", "name": "Space Exploration Technologies Corp.", "alternateName": "SpaceX" }
+}
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
@@ -692,7 +719,7 @@
     <h1 class="hero-date">June 2026</h1>
 
     <div class="hero-sub">
-      Expected roadshow early June · pricing estimate June 16–20
+      Roadshow week of June 8 · pricing window June 18–30
     </div>
 
     <div class="ticker-ribbon">
@@ -702,14 +729,14 @@
       </div>
       <div class="ticker-right">
         <span class="ticker-exch">NASDAQ</span>
-        <span class="ticker-note">SPCX freed up April 2026 when Tuttle Capital swapped their ETF to SPCK — same pattern as META in 2022. Not officially confirmed by SpaceX.</span>
+        <span class="ticker-note">SPCX was freed up in April when Tuttle Capital swapped their ETF to SPCK — same playbook META used in 2022. Some outlets are also floating <strong>$SPCE</strong> (Virgin Galactic's old ticker). Neither is officially confirmed by SpaceX — the ticker drops with the public S-1.</span>
       </div>
     </div>
 
     <div class="price-block">
-      <div class="price-label">Est. price per share</div>
-      <div class="price-value">$662.52</div>
-      <div class="price-range">Scenario range $527–$877 · Hiive mark 04/18/26</div>
+      <div class="price-label">IPO Price Benchmark</div>
+      <div class="price-value">~$525–$530</div>
+      <div class="price-range">Per-share target at $1.75T–$2T valuation · Secondary mark $661 (Hiive 04/27) · Bullish range up to $877</div>
     </div>
 
     <div class="countdown" id="countdown">
@@ -719,7 +746,7 @@
       <div class="cd-cell"><div class="cd-num" id="cd-s">--</div><div class="cd-lbl">Sec</div></div>
     </div>
     <div class="countdown-caption" id="countdown-caption">
-      Counting to June 16, 2026 · Will update when SpaceX confirms a date
+      Counting to June 22, 2026 (midpoint of the June 18–30 window) · Updates when SpaceX confirms a hard date
     </div>
   </section>
 
@@ -769,51 +796,43 @@
       <div class="notify-grid">
 
         <div>
-          <h3>Get reminded as it approaches</h3>
-          <p>Save your contact info, arm browser notifications, or download a calendar file with reminders baked in.</p>
+          <h3>Reminders this site can actually deliver</h3>
+          <p>Pick which alarms to bake into the calendar file and browser notifications. Both fire on your device — no server, no email, no SMS.</p>
 
           <div class="field">
-            <label for="email-input">Email (stored locally)</label>
-            <input type="email" id="email-input" placeholder="user@example.com" autocomplete="email" />
-          </div>
-
-          <div class="field">
-            <label for="phone-input">Phone for SMS (optional, locally stored)</label>
-            <input type="tel" id="phone-input" placeholder="+1 312 555 0100" autocomplete="tel" />
-          </div>
-
-          <div class="field">
-            <label>Alert me when</label>
+            <label>Alarms to include</label>
             <div class="checks">
-              <label class="check"><input type="checkbox" id="alert-official" checked /> Official IPO date is confirmed</label>
-              <label class="check"><input type="checkbox" id="alert-price" checked /> Official offer price announced</label>
-              <label class="check"><input type="checkbox" id="alert-s1" checked /> Public S-1 prospectus filed</label>
               <label class="check"><input type="checkbox" id="alert-t30" /> 30 days before IPO</label>
               <label class="check"><input type="checkbox" id="alert-t7" checked /> 7 days before IPO</label>
               <label class="check"><input type="checkbox" id="alert-t1" checked /> 1 day before IPO</label>
+              <label class="check"><input type="checkbox" id="alert-t30m" checked /> 30 minutes before pricing</label>
             </div>
           </div>
 
-          <div class="btn-row">
-            <button class="btn" id="save-prefs">Save preferences</button>
-            <button class="btn secondary" id="enable-browser">Enable browser alerts</button>
+          <div class="btn-row" style="margin-bottom: 14px;">
+            <button class="btn" id="download-ics">Download .ics</button>
+            <a class="btn secondary" id="gcal-link" href="#" target="_blank" rel="noopener">Add to Google Calendar</a>
+            <button class="btn secondary" id="enable-browser">Arm browser alerts</button>
           </div>
 
           <div class="saved-pref" id="saved-pref">Preferences saved.</div>
+
+          <div class="notice">
+            <strong>Why no email or SMS form here:</strong> this is a static site on GitHub Pages with no backend, so any field that took your email or phone would be a dead end. The .ics file pushes <em>native</em> phone / desktop reminders the moment you import it, and browser alerts fire while a tab or installed PWA is open. Both are guaranteed delivery — they don't depend on this site being alive.
+          </div>
         </div>
 
         <div>
-          <h3>Calendar &amp; system reminders</h3>
-          <p>Download a .ics file with the estimated IPO date loaded and native reminders at T-30d, T-7d, T-1d and morning-of. Works with Apple Calendar, Google Calendar, and Outlook.</p>
+          <h3>How you'll actually hear about official news</h3>
+          <p>The IPO date, offer price, and ticker drop with the public S-1 and final prospectus. Subscribe to the sources that publish them so you hear it the same hour.</p>
 
-          <div class="btn-row" style="margin-bottom: 18px;">
-            <button class="btn" id="download-ics">Download .ics</button>
-            <a class="btn secondary" id="gcal-link" href="#" target="_blank" rel="noopener">Add to Google Calendar</a>
-          </div>
-
-          <div class="notice">
-            <strong>Heads up on SMS/email:</strong> This is a static site on GitHub Pages — it has no backend, so it can't send SMS or email directly. Your contact info is stored in this browser only. For guaranteed delivery, pair this with the calendar file above, SEC EDGAR email alerts at <a href="https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany" target="_blank" rel="noopener">sec.gov</a>, and a Google Alert for <em>"SpaceX IPO"</em>.
-          </div>
+          <ul class="checklist">
+            <li><a href="https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&amp;company=space+exploration+technologies&amp;type=&amp;dateb=&amp;owner=include&amp;count=40&amp;action=getcompany" target="_blank" rel="noopener">SEC EDGAR full-text search</a> — bookmark + check after May 15</li>
+            <li><a href="https://efts.sec.gov/LATEST/search-index?q=%22Space+Exploration+Technologies%22&amp;forms=S-1" target="_blank" rel="noopener">SEC S-1 filings filter</a> — direct link, narrowest scope</li>
+            <li><a href="https://www.google.com/alerts" target="_blank" rel="noopener">Google Alerts</a> for <em>"SpaceX IPO"</em> and <em>"SPCX OR SPCE"</em></li>
+            <li><a href="https://x.com/SpaceX" target="_blank" rel="noopener">@SpaceX on X</a> + push notifications on</li>
+            <li><a href="https://kalshi.com/markets/kxipospacex/when-will-spacex-ipo/kxipospacex" target="_blank" rel="noopener">Kalshi prediction market</a> — odds move in real time</li>
+          </ul>
 
           <h3 style="margin-top: 28px;">Broker prep</h3>
           <ul class="checklist">
@@ -821,7 +840,7 @@
             <li>Schwab: $100K+ or 36 trades/year</li>
             <li>Robinhood IPO Access: no minimum, lottery</li>
             <li>SoFi &amp; Webull: no minimum, request-based</li>
-            <li>Retail allocation reportedly ~30% of offering</li>
+            <li>Retail allocation reportedly up to 30%</li>
             <li>Demand expected 10–20× oversubscribed</li>
           </ul>
         </div>
@@ -832,10 +851,10 @@
 
   <footer>
     <div class="disc">
-      <strong>Not investment advice.</strong> Figures are publicly reported estimates from secondary markets (Hiive, Forge) and financial press (Bloomberg, CNBC, Reuters, WSJ). SpaceX filed a confidential draft S-1 on April 1, 2026 but has not publicly confirmed an IPO date, offer price, or ticker. June 16, 2026 is a midpoint estimate of reported roadshow timing.
+      <strong>Not investment advice.</strong> Figures are publicly reported estimates from secondary markets (Hiive, Forge) and financial press (Bloomberg, CNBC, Reuters, WSJ, Motley Fool). SpaceX filed a confidential draft S-1 on April 1, 2026 and held closed-door analyst meetings April 21–23, but as of late April has not publicly confirmed an IPO date, offer price, or ticker. June 22, 2026 is the midpoint of the reported June 18–30 pricing window.
     </div>
     <div class="meta">
-      <span class="version-badge">v1.1.0</span>
+      <span class="version-badge">v1.2.0</span>
       © <span id="year"></span> · built for you · updated <span id="built"></span>
     </div>
   </footer>
@@ -843,22 +862,25 @@
 </div>
 
 <script>
-  const IPO_DATE = new Date('2026-06-16T09:30:00-04:00');
-  const IPO_DATE_LABEL = 'June 16, 2026';
+  const IPO_DATE = new Date('2026-06-22T09:30:00-04:00');
+  const IPO_DATE_LABEL = 'June 22, 2026';
 
   const ARTICLE_POOL = [
+    { title: "The SpaceX IPO Timeline: Every Important Date and Time Frame You Need to Know", source: "Motley Fool", date: "2026-04-27", url: "https://www.fool.com/investing/2026/04/27/spacex-ipo-timeline-every-important-date-need-know/" },
+    { title: "Mark Your Calendar — the SpaceX IPO Should Occur by This Date", source: "Motley Fool", date: "2026-04-26", url: "https://www.fool.com/investing/2026/04/26/mark-your-calendar-the-spacex-ipo-should-occur-by/" },
+    { title: "SpaceX S-1 Filing Sets Stage for Largest IPO in History", source: "New Space Economy", date: "2026-04-23", url: "https://newspaceeconomy.ca/2026/04/23/spacex-s-1-filing-sets-stage-for-largest-ipo-in-history/" },
+    { title: "SpaceX's public IPO filing confirms Musk and insiders retain dominant voting control", source: "The Next Web", date: "2026-04-24", url: "https://thenextweb.com/news/spacex-ipo-s1-musk-voting-control" },
+    { title: "SpaceX's IPO filing says its orbital data centres may never work", source: "The Next Web", date: "2026-04-25", url: "https://thenextweb.com/news/spacex-orbital-data-centres-ipo-risk-disclosure" },
+    { title: "SpaceX IPO 2026: $1.75T Valuation, ~$525/Share Price, June Nasdaq Listing", source: "TechStackIPO", date: "2026-04-24", url: "https://www.techstackipo.com/ipo/spacex" },
+    { title: "ARK's Guide To The SpaceX IPO", source: "ARK Invest", date: "2026-04-22", url: "https://www.ark-funds.com/articles/venture-fund/arks-guide-to-the-spacex-ipo" },
+    { title: "SpaceX: $1.75T IPO And 220x EV/EBITDA Could Trigger Surge In Aerospace And Defense", source: "Seeking Alpha", date: "2026-04-21", url: "https://seekingalpha.com/article/4892343-spacex-stock-1-75t-ipo-and-220x-evebitda-could-trigger-surge-in-aerospace-and-defense" },
+    { title: "SpaceX S-1 Filed at $2T: Why Every ISO, RSU & AMT Model Needs to Be Re-Run Now", source: "Augustus Wealth", date: "2026-04-23", url: "https://augustuswealth.com/blog/spacex-s1-filed-ipo-planning/" },
     { title: "SpaceX IPO: History Says the Stock Will Do This When It Starts Trading", source: "Motley Fool", date: "2026-04-15", url: "https://www.fool.com/investing/2026/04/15/spacex-ipo-stock-will-do-this-when-starts-trading/" },
-    { title: "SpaceX Could Be the Biggest IPO in History. Here's What Happened to the Last 5 Mega-IPOs", source: "Motley Fool", date: "2026-04-14", url: "https://www.fool.com/investing/2026/04/14/spacex-ipo-stock-should-you-buy-valuation-risks/" },
     { title: "June IPO Poised to Propel SpaceX Into a Trillion-Dollar-Plus Orbit", source: "Evalueserve", date: "2026-04-10", url: "https://www.evalueserve.com/blog/june-ipo-poised-to-propel-spacex-into-a-trillion-dollar-plus-orbit/" },
-    { title: "SpaceX IPO Confirmed: $1.75T Valuation, 2026 Timeline", source: "Basenor", date: "2026-04-04", url: "https://www.basenor.com/blogs/news/spacex-ipo-confirmed-1-75t-valuation-2026-timeline" },
-    { title: "SpaceX IPO 2026: $1.75T Valuation, Filing Date, Investors", source: "Techi", date: "2026-04-03", url: "https://www.techi.com/spacex-ipo/" },
-    { title: "SpaceX Could Be the Biggest IPO Ever — How Much to Get Rich?", source: "Yahoo Finance", date: "2026-04-05", url: "https://finance.yahoo.com/markets/stocks/articles/spacex-could-biggest-ipo-ever-105505316.html" },
-    { title: "SpaceX stock debut is the big market event of 2026", source: "CNBC", date: "2026-01-02", url: "https://www.cnbc.com/2026/01/02/spacex-ipo-musk-2026.html" },
-    { title: "SpaceX expected to go public, launch giant IPO in 2026", source: "Texas Standard", date: "2026-01-10", url: "https://www.texasstandard.org/stories/spacex-to-go-public-ipo-in-2026-musk/" },
-    { title: "SpaceX Stock Prediction: Hitting $1,200 at 2026 IPO?", source: "Hey Go Trade", date: "2025-12-31", url: "https://www.heygotrade.com/en/news/spacex-stock-prediction-hitting-1-200-at-2026-ipo/" },
-    { title: "SpaceX IPO: everything you need to know", source: "Capital.com", date: "2026-01-15", url: "https://capital.com/en-int/learn/ipo/spacex-ipo" },
-    { title: "When will SpaceX officially announce an IPO?", source: "Kalshi Markets", date: "2026-04-17", url: "https://kalshi.com/markets/kxipospacex/when-will-spacex-ipo/kxipospacex" },
-    { title: "SpaceX Stock · Hiive order book", source: "Hiive", date: "2026-04-18", url: "https://www.hiive.com/securities/spacex-stock" }
+    { title: "SpaceX confidentially files for IPO, setting stage for record offering", source: "CNBC", date: "2026-04-01", url: "https://www.cnbc.com/2026/04/01/spacex-confidentially-files-for-ipo-setting-stage-for-record-offering.html" },
+    { title: "SpaceX IPO Ticker Speculation Grows as SPCX Symbol Becomes Available", source: "Bloomberg", date: "2026-04-10", url: "https://www.bloomberg.com/news/articles/2026-04-10/spacex-ticker-speculation-is-heating-up-as-tuttle-drops-spcx" },
+    { title: "When will SpaceX officially announce an IPO?", source: "Kalshi Markets", date: "2026-04-26", url: "https://kalshi.com/markets/kxipospacex/when-will-spacex-ipo/kxipospacex" },
+    { title: "SpaceX Stock · Hiive order book", source: "Hiive", date: "2026-04-27", url: "https://www.hiive.com/securities/spacex-stock" }
   ];
 
   const TIMELINE = [
@@ -878,14 +900,18 @@
       desc: "SpaceX submits confidential draft registration statement. Confirmed by Bloomberg, CNBC, Reuters, WSJ." },
     { date: "2026-04-07", title: "SPCX ticker freed up",
       desc: "Tuttle Capital swaps their SPAC ETF ticker from SPCX to SPCK — mirrors META's 2022 playbook." },
+    { date: "2026-04-21", title: "Closed-door analyst meetings",
+      desc: "April 21–23 institutional pre-marketing — long-term growth strategy and financials shared with Wall Street analysts under embargo." },
     { date: "2026-05-15", title: "Public S-1 expected", future: true,
-      desc: "Must drop at least 15 days before roadshow. Will reveal revenue, margins, defense contracts, governance." },
+      desc: "Window May 15–22. Must drop at least 15 days before roadshow. Will reveal revenue, margins, defense contracts, governance, and the official ticker symbol." },
     { date: "2026-06-08", title: "IPO roadshow begins", future: true,
       desc: "Shotwell likely leads institutional pitch across major financial centers over ~2 weeks." },
-    { date: "2026-06-11", title: "Retail investor event", future: true,
-      desc: "Unusual mid-roadshow retail push — underwriters want demand locked in early." },
-    { date: "2026-06-16", title: "Estimated pricing & first trade", future: true,
-      desc: "Midpoint of reported June 16–20 pricing window. Target $1.75T valuation, ~$600–700/share." }
+    { date: "2026-06-11", title: "Retail investor day", future: true,
+      desc: "Unusual mid-roadshow retail push — ~1,500 retail investors invited; underwriters want demand locked in early. Up to 30% retail allocation reportedly planned." },
+    { date: "2026-06-22", title: "Estimated pricing & first trade", future: true,
+      desc: "Midpoint of the June 18–30 pricing window. Target $1.75T–$2T valuation, ~$525–530/share benchmark, $75B raise." },
+    { date: "2026-12-22", title: "Insider lockup expires", future: true,
+      desc: "Standard 180-day lockup. Employees and pre-IPO holders can sell — historically a downside catalyst as supply hits the market." }
   ];
 
   const FILINGS = [
@@ -955,7 +981,7 @@
 
   function renderTimeline() {
     const today = new Date();
-    // Decide which event is "next" — the first future event
+    // "Next up" = first future event in chronological order
     let nextIdx = -1;
     TIMELINE.forEach((e, i) => {
       const d = new Date(e.date + 'T00:00:00');
@@ -964,7 +990,8 @@
 
     const c = $('timeline');
     c.innerHTML = '';
-    TIMELINE.forEach((e, i) => {
+    // Render newest-first (reverse chronological)
+    [...TIMELINE].map((e, i) => ({ e, i })).reverse().forEach(({ e, i }) => {
       const d = new Date(e.date + 'T00:00:00');
       const isDone = d < today;
       const isNext = i === nextIdx;
@@ -1009,14 +1036,13 @@
     });
   }
 
-  const PREF_KEY = 'spacex_ipo_prefs_v1';
+  const PREF_KEY = 'spacex_ipo_prefs_v2';
+  const ALARM_KEYS = ['t30', 't7', 't1', 't30m'];
 
   function loadPrefs() {
     try {
       const p = JSON.parse(localStorage.getItem(PREF_KEY) || '{}');
-      if (p.email) $('email-input').value = p.email;
-      if (p.phone) $('phone-input').value = p.phone;
-      ['official','price','s1','t30','t7','t1'].forEach(k => {
+      ALARM_KEYS.forEach(k => {
         const el = $('alert-' + k);
         if (el && typeof p[k] === 'boolean') el.checked = p[k];
       });
@@ -1024,22 +1050,16 @@
   }
 
   function savePrefs() {
-    const p = {
-      email: $('email-input').value.trim(),
-      phone: $('phone-input').value.trim(),
-      official: $('alert-official').checked,
-      price: $('alert-price').checked,
-      s1: $('alert-s1').checked,
-      t30: $('alert-t30').checked,
-      t7: $('alert-t7').checked,
-      t1: $('alert-t1').checked,
-      savedAt: new Date().toISOString()
-    };
+    const p = { savedAt: new Date().toISOString() };
+    ALARM_KEYS.forEach(k => { p[k] = $('alert-' + k).checked; });
     localStorage.setItem(PREF_KEY, JSON.stringify(p));
-    const msg = $('saved-pref');
-    msg.classList.add('show');
-    msg.textContent = `✓ Saved ${new Date().toLocaleTimeString()} · Email: ${p.email || '(none)'} · Phone: ${p.phone || '(none)'}`;
-    setTimeout(() => msg.classList.remove('show'), 8000);
+  }
+
+  function flashSaved(msg) {
+    const el = $('saved-pref');
+    el.textContent = msg;
+    el.classList.add('show');
+    setTimeout(() => el.classList.remove('show'), 4000);
   }
 
   function enableBrowserAlerts() {
@@ -1051,10 +1071,13 @@
         const delay = IPO_DATE.getTime() - offset - now;
         if (delay > 0 && delay < 2147483647) setTimeout(() => new Notification(title, { body }), delay);
       };
-      if ($('alert-t7').checked) sched(7*86400000, 'SpaceX IPO: 7 days out', 'Estimated listing ' + IPO_DATE_LABEL);
-      if ($('alert-t1').checked) sched(1*86400000, 'SpaceX IPO: Tomorrow', 'Estimated listing ' + IPO_DATE_LABEL);
+      if ($('alert-t30').checked) sched(30*86400000, 'SpaceX IPO: 30 days out', 'Estimated listing ' + IPO_DATE_LABEL);
+      if ($('alert-t7').checked)  sched(7*86400000,  'SpaceX IPO: 7 days out',  'Estimated listing ' + IPO_DATE_LABEL);
+      if ($('alert-t1').checked)  sched(1*86400000,  'SpaceX IPO: Tomorrow',    'Estimated listing ' + IPO_DATE_LABEL);
+      if ($('alert-t30m').checked) sched(30*60000,   'SpaceX IPO: 30 minutes',  'Pricing window opens — get ready to buy');
       sched(0, 'SpaceX IPO: Today', 'Estimated pricing / first trade window');
-      new Notification('Browser alerts armed', { body: 'Notifications will fire if this tab is open at T-7d, T-1d, and day-of.' });
+      savePrefs();
+      flashSaved('✓ Browser alerts armed for ' + ALARM_KEYS.filter(k => $('alert-' + k).checked).length + ' checkpoints. They fire while this tab or PWA is open.');
     });
   }
 
@@ -1064,12 +1087,12 @@
     const fmt = (d) => d.toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, '');
     const stamp = fmt(new Date());
     const alarms = [];
-    if ($('alert-t30').checked) alarms.push({ trig: '-P30D', desc: 'SpaceX IPO in 30 days' });
-    if ($('alert-t7').checked)  alarms.push({ trig: '-P7D', desc: 'SpaceX IPO in 7 days' });
-    if ($('alert-t1').checked)  alarms.push({ trig: '-P1D', desc: 'SpaceX IPO tomorrow' });
-    alarms.push({ trig: '-PT30M', desc: 'SpaceX IPO in 30 min — get ready to buy' });
+    if ($('alert-t30').checked)  alarms.push({ trig: '-P30D',  desc: 'SpaceX IPO in 30 days' });
+    if ($('alert-t7').checked)   alarms.push({ trig: '-P7D',   desc: 'SpaceX IPO in 7 days' });
+    if ($('alert-t1').checked)   alarms.push({ trig: '-P1D',   desc: 'SpaceX IPO tomorrow' });
+    if ($('alert-t30m').checked) alarms.push({ trig: '-PT30M', desc: 'SpaceX IPO in 30 min — get ready to buy' });
     const alarmBlocks = alarms.map(a => `BEGIN:VALARM\nTRIGGER:${a.trig}\nACTION:DISPLAY\nDESCRIPTION:${a.desc}\nEND:VALARM`).join('\n');
-    const ics = `BEGIN:VCALENDAR\nVERSION:2.0\nPRODID:-//SpaceX IPO Tracker//EN\nCALSCALE:GREGORIAN\nMETHOD:PUBLISH\nBEGIN:VEVENT\nUID:spacex-ipo-${stamp}@local\nDTSTAMP:${stamp}\nDTSTART:${fmt(dt)}\nDTEND:${fmt(dtEnd)}\nSUMMARY:SpaceX IPO — estimated first trade\nDESCRIPTION:Estimated SpaceX IPO date (UNCONFIRMED as of April 2026). Target valuation $1.75T. Est. price per share ~$600-700. Verify latest before trading.\nLOCATION:Nasdaq (estimated)\nSTATUS:TENTATIVE\n${alarmBlocks}\nEND:VEVENT\nEND:VCALENDAR`;
+    const ics = `BEGIN:VCALENDAR\nVERSION:2.0\nPRODID:-//SpaceX IPO Tracker//EN\nCALSCALE:GREGORIAN\nMETHOD:PUBLISH\nBEGIN:VEVENT\nUID:spacex-ipo-${stamp}@local\nDTSTAMP:${stamp}\nDTSTART:${fmt(dt)}\nDTEND:${fmt(dtEnd)}\nSUMMARY:SpaceX IPO — estimated first trade\nDESCRIPTION:Estimated midpoint of the June 18-30 SpaceX IPO pricing window. UNCONFIRMED. Target $1.75T-$2T valuation\\, ~$525-530/share benchmark\\, $75B raise. Likely ticker $SPCX (or $SPCE). Verify latest at spacex.bookhockeys.com before trading.\nLOCATION:Nasdaq (estimated)\nSTATUS:TENTATIVE\n${alarmBlocks}\nEND:VEVENT\nEND:VCALENDAR`;
     const blob = new Blob([ics], { type: 'text/calendar' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
@@ -1079,6 +1102,8 @@
     a.click();
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
+    savePrefs();
+    flashSaved('✓ Calendar file downloaded. Open it to import the event with native reminders.');
   }
 
   function buildGCalLink() {
@@ -1089,7 +1114,7 @@
       action: 'TEMPLATE',
       text: 'SpaceX IPO — estimated first trade',
       dates: `${fmt(dt)}/${fmt(dtEnd)}`,
-      details: 'Estimated SpaceX IPO date (UNCONFIRMED as of April 2026). Target valuation $1.75T. Est. price ~$600-700. Verify latest before trading.',
+      details: 'Estimated midpoint of the June 18-30 SpaceX IPO pricing window. UNCONFIRMED. Target $1.75T-$2T valuation, ~$525-530/share benchmark, $75B raise. Likely ticker $SPCX (or $SPCE). Verify latest at spacex.bookhockeys.com before trading.',
       location: 'Nasdaq (estimated)'
     });
     return 'https://calendar.google.com/calendar/render?' + params.toString();
@@ -1106,9 +1131,9 @@
     loadPrefs();
 
     $('reshuffle').addEventListener('click', renderArticles);
-    $('save-prefs').addEventListener('click', savePrefs);
     $('enable-browser').addEventListener('click', enableBrowserAlerts);
     $('download-ics').addEventListener('click', generateICS);
+    ALARM_KEYS.forEach(k => $('alert-' + k).addEventListener('change', savePrefs));
     $('gcal-link').href = buildGCalLink();
     $('year').textContent = new Date().getFullYear();
     $('built').textContent = new Date().toLocaleDateString();

@@ -1,0 +1,20 @@
+# SpaceX IPO Tracker
+
+> A single-page tracker for the upcoming SpaceX initial public offering. It surfaces the estimated IPO date, per-share price benchmark, speculated ticker symbol, a live countdown, a timeline of past and upcoming milestones, links to SEC filings and secondary-market data, and on-device reminder mechanisms (.ics calendar download with VALARM blocks, browser notifications). Built and maintained by an individual retail investor — not affiliated with SpaceX.
+
+## What's tracked
+
+- **Estimated IPO date:** June 18–30, 2026 (midpoint June 22). Unconfirmed by SpaceX.
+- **Price benchmark:** ~$525–$530 per share at the targeted $1.75T–$2T valuation. Secondary-market mark separately tracked from Hiive.
+- **Ticker speculation:** $SPCX (freed up by Tuttle Capital in April 2026) and $SPCE (Virgin Galactic's old ticker). Officially undisclosed until the public S-1.
+- **Filing status:** Confidential draft S-1 filed April 1, 2026. Closed-door analyst meetings April 21–23. Public S-1 expected May 15–22.
+
+## Constraints
+
+- Static GitHub Pages site, no backend. No SMS or email is ever sent. Reminder delivery is via the downloaded .ics file (native phone/desktop alarms) and browser notifications (while a tab or installed PWA is open).
+- Not investment advice. All figures sourced from public reporting (SEC, Bloomberg, CNBC, Reuters, WSJ, Motley Fool, Hiive, Forge).
+
+## Source
+
+- Repository: https://github.com/itsavibecode/spacex
+- Live: https://spacex.bookhockeys.com/
