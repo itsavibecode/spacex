@@ -36,6 +36,11 @@ When SpaceX confirms a hard pricing date, ticker, or offer price, edit the const
 
 ## Changelog
 
+### v1.2.2 — 2026-04-28
+- **Real share previews.** Generated a 1200×630 `og-image.png` (the size every link unfurler expects) and a 180×180 `apple-touch-icon.png`. Added the missing pieces of the Open Graph / Twitter Card spec: `og:image` (+ width / height / type / alt / secure_url), `og:locale`, `twitter:image`, `twitter:image:alt`, and flipped `twitter:card` from `summary` to `summary_large_image` so the Twitter/X preview uses the hero card instead of a tiny thumbnail. Added the `apple-touch-icon` link so iOS home-screen and iMessage rich previews show the rocket icon.
+- **OG image build script** lives at `.scripts/build-og-image.py` — uses Pillow + Windows-bundled fonts (Arial Black, Inter, Consolas Bold). Re-run it whenever the hero numbers change.
+- **Verify share previews** with [opengraph.xyz](https://www.opengraph.xyz/url/https%3A%2F%2Fspacex.bookhockeys.com%2F), [Facebook Sharing Debugger](https://developers.facebook.com/tools/debug/?q=https%3A%2F%2Fspacex.bookhockeys.com%2F), [LinkedIn Post Inspector](https://www.linkedin.com/post-inspector/inspect/https%3A%2F%2Fspacex.bookhockeys.com%2F), and (signed in) the [X Cards Validator](https://cards-dev.twitter.com/validator). LinkedIn and X cache aggressively — re-fetch from those tools after each image change.
+
 ### v1.2.1 — 2026-04-28
 - **Latest coverage now sorted by publish date** instead of randomly shuffled — the 5 newest articles always rise to the top. Removed the Reshuffle button (it was randomizing what should have been a recency feed) and the on-load shuffle helper.
 - **Every filing now shows a date.** Form D entries display the actual SEC filing date pulled from EDGAR (CIK 2047425 → 2024-12-05, 1992247 → 2023-09-07, 1819923 → 2020-10-07, 1826165 → 2020-09-28); the confidential draft S-1 shows 2026-04-01; live search/secondary-market links show the most recent "Updated" timestamp. Filings reordered newest-first.
