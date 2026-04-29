@@ -331,6 +331,13 @@
     border-color: var(--accent);
     transform: translateY(-2px);
   }
+  .filing-head {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+    padding-right: 28px;
+  }
   .filing-type {
     display: inline-block;
     font-family: var(--mono);
@@ -341,7 +348,14 @@
     padding: 3px 8px;
     background: rgba(255,107,71,0.08);
     border-radius: 4px;
-    margin-bottom: 12px;
+  }
+  .filing-date {
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--ink-faint);
+    letter-spacing: 0.02em;
+    white-space: nowrap;
   }
   .filing-title {
     font-size: 15px;
@@ -736,7 +750,7 @@
     <div class="price-block">
       <div class="price-label">IPO Price Benchmark</div>
       <div class="price-value">~$525–$530</div>
-      <div class="price-range">Per-share target at $1.75T–$2T valuation · Secondary mark $661 (Hiive 04/27) · Bullish range up to $877</div>
+      <div class="price-range">Per-share target at $1.75T–$2T valuation · Secondary mark $661 (Hiive 04/28) · Bullish range up to $877</div>
     </div>
 
     <div class="countdown" id="countdown">
@@ -746,7 +760,7 @@
       <div class="cd-cell"><div class="cd-num" id="cd-s">--</div><div class="cd-lbl">Sec</div></div>
     </div>
     <div class="countdown-caption" id="countdown-caption">
-      Counting to June 22, 2026 (midpoint of the June 18–30 window) · Updates when SpaceX confirms a hard date
+      Counting to June 18, 2026 — the earliest of the June 18–30 window. Better to be ready early than caught late. Updates when SpaceX confirms a hard date.
     </div>
   </section>
 
@@ -754,14 +768,13 @@
     <div class="sec-head">
       <div class="sec-num">01</div>
       <div class="sec-title">Latest coverage</div>
-      <div class="sec-sub">5 articles · reshuffles on reload</div>
+      <div class="sec-sub">5 most recent · sorted by publish date</div>
     </div>
 
     <div class="articles" id="articles"></div>
 
     <div class="articles-footer">
       <span id="articles-stamp">Loading…</span>
-      <button class="shuffle-btn" id="reshuffle">↻ Reshuffle</button>
     </div>
   </section>
 
@@ -851,10 +864,10 @@
 
   <footer>
     <div class="disc">
-      <strong>Not investment advice.</strong> Figures are publicly reported estimates from secondary markets (Hiive, Forge) and financial press (Bloomberg, CNBC, Reuters, WSJ, Motley Fool). SpaceX filed a confidential draft S-1 on April 1, 2026 and held closed-door analyst meetings April 21–23, but as of late April has not publicly confirmed an IPO date, offer price, or ticker. June 22, 2026 is the midpoint of the reported June 18–30 pricing window.
+      <strong>Not investment advice.</strong> Figures are publicly reported estimates from secondary markets (Hiive, Forge) and financial press (Bloomberg, CNBC, Reuters, WSJ, Motley Fool). SpaceX filed a confidential draft S-1 on April 1, 2026 and held closed-door analyst meetings April 21–23, but as of late April has not publicly confirmed an IPO date, offer price, or ticker. The countdown targets June 18, 2026 — the earliest of the reported June 18–30 pricing window — on the principle that being ready early beats being caught late.
     </div>
     <div class="meta">
-      <span class="version-badge">v1.2.0</span>
+      <span class="version-badge">v1.2.1</span>
       © <span id="year"></span> · built for you · updated <span id="built"></span>
     </div>
   </footer>
@@ -862,8 +875,8 @@
 </div>
 
 <script>
-  const IPO_DATE = new Date('2026-06-22T09:30:00-04:00');
-  const IPO_DATE_LABEL = 'June 22, 2026';
+  const IPO_DATE = new Date('2026-06-18T09:30:00-04:00');
+  const IPO_DATE_LABEL = 'June 18, 2026';
 
   const ARTICLE_POOL = [
     { title: "The SpaceX IPO Timeline: Every Important Date and Time Frame You Need to Know", source: "Motley Fool", date: "2026-04-27", url: "https://www.fool.com/investing/2026/04/27/spacex-ipo-timeline-every-important-date-need-know/" },
@@ -908,36 +921,28 @@
       desc: "Shotwell likely leads institutional pitch across major financial centers over ~2 weeks." },
     { date: "2026-06-11", title: "Retail investor day", future: true,
       desc: "Unusual mid-roadshow retail push — ~1,500 retail investors invited; underwriters want demand locked in early. Up to 30% retail allocation reportedly planned." },
-    { date: "2026-06-22", title: "Estimated pricing & first trade", future: true,
-      desc: "Midpoint of the June 18–30 pricing window. Target $1.75T–$2T valuation, ~$525–530/share benchmark, $75B raise." },
-    { date: "2026-12-22", title: "Insider lockup expires", future: true,
-      desc: "Standard 180-day lockup. Employees and pre-IPO holders can sell — historically a downside catalyst as supply hits the market." }
+    { date: "2026-06-18", title: "Earliest pricing & first trade", future: true,
+      desc: "Front edge of the June 18–30 pricing window — the date this site counts down to. Target $1.75T–$2T valuation, ~$525–530/share benchmark, $75B raise." },
+    { date: "2026-12-15", title: "Insider lockup expires", future: true,
+      desc: "Standard 180-day lockup measured from a June 18 first trade. Employees and pre-IPO holders can sell — historically a downside catalyst as supply hits the market." }
   ];
 
   const FILINGS = [
-    { type: "SEC EDGAR", title: "Full-text search · SpaceX", meta: "All filings mentioning Space Exploration Technologies", url: "https://efts.sec.gov/LATEST/search-index?q=%22Space+Exploration+Technologies%22&dateRange=custom&startdt=2025-01-01&enddt=2026-12-31" },
-    { type: "SEC EDGAR", title: "Company search", meta: "Browse SpaceX filer history on EDGAR", url: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&company=space+exploration+technologies&type=&dateb=&owner=include&count=40" },
-    { type: "FORM D", title: "SpaceX Fund One (Maybrook)", meta: "Exempt offering · CIK 1819923", url: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001819923&type=&dateb=&owner=include&count=40" },
-    { type: "FORM D", title: "SpaceX Series (Pre-IPO Marketplace)", meta: "Exempt offerings · CIK 1826165", url: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001826165&type=&dateb=&owner=include&count=40" },
-    { type: "FORM D", title: "SpaceX Jun 2023 (CGF2021)", meta: "Exempt offering · CIK 1992247", url: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001992247&type=&dateb=&owner=include&count=40" },
-    { type: "FORM D", title: "SpaceX Nov 2024 (CGF2021)", meta: "Exempt offering · CIK 2047425", url: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0002047425&type=&dateb=&owner=include&count=40" },
-    { type: "DRAFT S-1", title: "Confidential draft registration", meta: "Filed April 1, 2026 · not public until refile", url: "https://efts.sec.gov/LATEST/search-index?q=%22Space+Exploration+Technologies%22&forms=DRS" },
-    { type: "SECONDARY", title: "Hiive · SpaceX order book", meta: "Live bids/asks · indicative pricing", url: "https://www.hiive.com/securities/spacex-stock" },
-    { type: "SECONDARY", title: "Forge Global · SpaceX", meta: "Forge Price · pre-IPO secondary data", url: "https://forgeglobal.com/spacex_stock/" },
-    { type: "MARKET DATA", title: "Yahoo Finance · SPAX.PVT", meta: "Private valuation history", url: "https://finance.yahoo.com/quote/SPAX.PVT/" }
+    { type: "DRAFT S-1", title: "Confidential draft registration",   meta: "First public S-1 expected May 15-22",        url: "https://efts.sec.gov/LATEST/search-index?q=%22Space+Exploration+Technologies%22&forms=DRS",                                                              date: "2026-04-01", dateKind: "Filed" },
+    { type: "FORM D",    title: "SpaceX 4 Nov 2024 (CGF2021)",       meta: "Exempt offering · CIK 2047425",              url: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0002047425&type=&dateb=&owner=include&count=40", date: "2024-12-05", dateKind: "Filed" },
+    { type: "FORM D",    title: "SpaceX Jun 2023 (CGF2021)",         meta: "Exempt offering · CIK 1992247",              url: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001992247&type=&dateb=&owner=include&count=40", date: "2023-09-07", dateKind: "Filed" },
+    { type: "FORM D",    title: "SpaceX Fund One (Maybrook)",        meta: "Exempt offering · CIK 1819923",              url: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001819923&type=&dateb=&owner=include&count=40", date: "2020-10-07", dateKind: "Filed" },
+    { type: "FORM D",    title: "SpaceX Series (Pre-IPO Marketplace)", meta: "Exempt offerings · CIK 1826165",           url: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001826165&type=&dateb=&owner=include&count=40", date: "2020-09-28", dateKind: "Filed" },
+    { type: "SEC EDGAR", title: "Full-text search · SpaceX",         meta: "All filings mentioning Space Exploration Technologies", url: "https://efts.sec.gov/LATEST/search-index?q=%22Space+Exploration+Technologies%22&dateRange=custom&startdt=2025-01-01&enddt=2026-12-31", date: "2026-04-28", dateKind: "Updated" },
+    { type: "SEC EDGAR", title: "Company search",                    meta: "Browse SpaceX filer history on EDGAR",       url: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&company=space+exploration+technologies&type=&dateb=&owner=include&count=40",        date: "2026-04-28", dateKind: "Updated" },
+    { type: "SECONDARY", title: "Hiive · SpaceX order book",         meta: "Live bids/asks · indicative pricing",        url: "https://www.hiive.com/securities/spacex-stock",                                                                                                  date: "2026-04-28", dateKind: "Updated" },
+    { type: "SECONDARY", title: "Forge Global · SpaceX",             meta: "Forge Price · pre-IPO secondary data",       url: "https://forgeglobal.com/spacex_stock/",                                                                                                          date: "2026-04-28", dateKind: "Updated" },
+    { type: "MARKET DATA", title: "Yahoo Finance · SPAX.PVT",        meta: "Private valuation history",                  url: "https://finance.yahoo.com/quote/SPAX.PVT/",                                                                                                      date: "2026-04-28", dateKind: "Updated" }
   ];
 
   const $ = (id) => document.getElementById(id);
   const pad = (n) => String(n).padStart(2, '0');
   const fmtDate = (iso) => new Date(iso + 'T00:00:00').toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
-  const shuffle = (arr) => {
-    const a = [...arr];
-    for (let i = a.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [a[i], a[j]] = [a[j], a[i]];
-    }
-    return a;
-  };
 
   function updateCountdown() {
     const diff = IPO_DATE - new Date();
@@ -957,7 +962,8 @@
   }
 
   function renderArticles() {
-    const picked = shuffle(ARTICLE_POOL).slice(0, 5);
+    const sorted = [...ARTICLE_POOL].sort((a, b) => b.date.localeCompare(a.date));
+    const picked = sorted.slice(0, 5);
     const c = $('articles');
     c.innerHTML = '';
     picked.forEach((a, i) => {
@@ -976,7 +982,7 @@
       `;
       c.appendChild(el);
     });
-    $('articles-stamp').textContent = `Updated ${new Date().toLocaleTimeString()} · Pool of ${ARTICLE_POOL.length}`;
+    $('articles-stamp').textContent = `5 newest of ${ARTICLE_POOL.length} tracked sources`;
   }
 
   function renderTimeline() {
@@ -1027,7 +1033,10 @@
       el.target = '_blank';
       el.rel = 'noopener';
       el.innerHTML = `
-        <span class="filing-type">${f.type}</span>
+        <div class="filing-head">
+          <span class="filing-type">${f.type}</span>
+          <span class="filing-date">${f.dateKind} ${fmtDate(f.date)}</span>
+        </div>
         <div class="filing-title">${f.title}</div>
         <div class="filing-meta">${f.meta}</div>
         <div class="filing-arrow">↗</div>
@@ -1092,7 +1101,7 @@
     if ($('alert-t1').checked)   alarms.push({ trig: '-P1D',   desc: 'SpaceX IPO tomorrow' });
     if ($('alert-t30m').checked) alarms.push({ trig: '-PT30M', desc: 'SpaceX IPO in 30 min — get ready to buy' });
     const alarmBlocks = alarms.map(a => `BEGIN:VALARM\nTRIGGER:${a.trig}\nACTION:DISPLAY\nDESCRIPTION:${a.desc}\nEND:VALARM`).join('\n');
-    const ics = `BEGIN:VCALENDAR\nVERSION:2.0\nPRODID:-//SpaceX IPO Tracker//EN\nCALSCALE:GREGORIAN\nMETHOD:PUBLISH\nBEGIN:VEVENT\nUID:spacex-ipo-${stamp}@local\nDTSTAMP:${stamp}\nDTSTART:${fmt(dt)}\nDTEND:${fmt(dtEnd)}\nSUMMARY:SpaceX IPO — estimated first trade\nDESCRIPTION:Estimated midpoint of the June 18-30 SpaceX IPO pricing window. UNCONFIRMED. Target $1.75T-$2T valuation\\, ~$525-530/share benchmark\\, $75B raise. Likely ticker $SPCX (or $SPCE). Verify latest at spacex.bookhockeys.com before trading.\nLOCATION:Nasdaq (estimated)\nSTATUS:TENTATIVE\n${alarmBlocks}\nEND:VEVENT\nEND:VCALENDAR`;
+    const ics = `BEGIN:VCALENDAR\nVERSION:2.0\nPRODID:-//SpaceX IPO Tracker//EN\nCALSCALE:GREGORIAN\nMETHOD:PUBLISH\nBEGIN:VEVENT\nUID:spacex-ipo-${stamp}@local\nDTSTAMP:${stamp}\nDTSTART:${fmt(dt)}\nDTEND:${fmt(dtEnd)}\nSUMMARY:SpaceX IPO — earliest possible first trade\nDESCRIPTION:Front edge of the June 18-30 SpaceX IPO pricing window. UNCONFIRMED. Target $1.75T-$2T valuation\\, ~$525-530/share benchmark\\, $75B raise. Likely ticker $SPCX (or $SPCE). Verify latest at spacex.bookhockeys.com before trading.\nLOCATION:Nasdaq (estimated)\nSTATUS:TENTATIVE\n${alarmBlocks}\nEND:VEVENT\nEND:VCALENDAR`;
     const blob = new Blob([ics], { type: 'text/calendar' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
@@ -1112,9 +1121,9 @@
     const fmt = (d) => d.toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, '');
     const params = new URLSearchParams({
       action: 'TEMPLATE',
-      text: 'SpaceX IPO — estimated first trade',
+      text: 'SpaceX IPO — earliest possible first trade',
       dates: `${fmt(dt)}/${fmt(dtEnd)}`,
-      details: 'Estimated midpoint of the June 18-30 SpaceX IPO pricing window. UNCONFIRMED. Target $1.75T-$2T valuation, ~$525-530/share benchmark, $75B raise. Likely ticker $SPCX (or $SPCE). Verify latest at spacex.bookhockeys.com before trading.',
+      details: 'Front edge of the June 18-30 SpaceX IPO pricing window. UNCONFIRMED. Target $1.75T-$2T valuation, ~$525-530/share benchmark, $75B raise. Likely ticker $SPCX (or $SPCE). Verify latest at spacex.bookhockeys.com before trading.',
       location: 'Nasdaq (estimated)'
     });
     return 'https://calendar.google.com/calendar/render?' + params.toString();
@@ -1130,7 +1139,6 @@
     renderFilings();
     loadPrefs();
 
-    $('reshuffle').addEventListener('click', renderArticles);
     $('enable-browser').addEventListener('click', enableBrowserAlerts);
     $('download-ics').addEventListener('click', generateICS);
     ALARM_KEYS.forEach(k => $('alert-' + k).addEventListener('change', savePrefs));

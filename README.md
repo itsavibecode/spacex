@@ -6,11 +6,11 @@ Live single-page tracker for the upcoming SpaceX IPO. Built so I (and anyone els
 
 ## What it shows
 
-- **Big date hero** — current best estimate for the listing window (June 18–30, 2026, midpoint June 22)
+- **Big date hero** — current best estimate for the listing window (June 18–30, 2026); countdown targets **June 18** (the earliest of the window) so you're prepared on the front edge instead of caught off-guard
 - **IPO price benchmark** — ~$525–$530/share at the targeted $1.75T–$2T valuation, alongside the current secondary-market mark from Hiive
 - **Likely ticker** — $SPCX (freed up by Tuttle Capital in April 2026), with $SPCE as a secondary speculation
 - **Live countdown** to the estimated pricing date, recomputed every second
-- **Latest coverage** — pool of 15 recent articles, 5 picked at random on each load (with a Reshuffle button)
+- **Latest coverage** — 5 most recent of 15 tracked sources, sorted by publish date
 - **Timeline** — past milestones and upcoming events, rendered newest-first; "→ Next up" badge auto-flips to whichever future event is most imminent
 - **Filings & primary sources** — direct links to SEC EDGAR searches, Form D CIKs, draft S-1 filter, and secondary-market data (Hiive, Forge, Yahoo)
 - **Reminders that actually work** — pickable alarm offsets baked into a downloadable .ics file (native phone/desktop alarms), browser notifications while a tab/PWA is open, and a Google Calendar template link
@@ -30,11 +30,17 @@ Open [`index.html`](index.html) and look near the top of the `<script>` block. E
 - `IPO_DATE` and `IPO_DATE_LABEL` — the countdown target
 - `ARTICLE_POOL` — `{ title, source, date, url }` entries
 - `TIMELINE` — `{ date, title, desc }` entries (chronological order; rendered newest-first)
-- `FILINGS` — `{ type, title, meta, url }` entries
+- `FILINGS` — `{ type, title, meta, url, date, dateKind }` entries (`dateKind` is `"Filed"` for SEC filings, `"Updated"` for live links; rendered as e.g. "Filed Apr 1, 2026")
 
 When SpaceX confirms a hard pricing date, ticker, or offer price, edit the constants and the hero copy in the HTML, bump the version badge, and add a changelog entry below.
 
 ## Changelog
+
+### v1.2.1 — 2026-04-28
+- **Latest coverage now sorted by publish date** instead of randomly shuffled — the 5 newest articles always rise to the top. Removed the Reshuffle button (it was randomizing what should have been a recency feed) and the on-load shuffle helper.
+- **Every filing now shows a date.** Form D entries display the actual SEC filing date pulled from EDGAR (CIK 2047425 → 2024-12-05, 1992247 → 2023-09-07, 1819923 → 2020-10-07, 1826165 → 2020-09-28); the confidential draft S-1 shows 2026-04-01; live search/secondary-market links show the most recent "Updated" timestamp. Filings reordered newest-first.
+- **Countdown pivoted from the June 22 midpoint to the June 18 earliest.** Better to be ready early than caught late if SpaceX prices on the front edge of the window. Timeline event renamed to "Earliest pricing & first trade"; insider lockup expiry pushed from Dec 22 → Dec 15 (still 180 days out from the new first-trade date); .ics summary, Google Calendar event title, and footer disclaimer all reworded to match.
+- **Filing card layout** gets a small `filing-head` flex row so the type badge and date sit side-by-side without breaking the existing grid.
 
 ### v1.2.0 — 2026-04-27
 - **Refreshed all data** for the post-confidential-S-1 news cycle: IPO window narrowed to June 18–30, pricing benchmark updated to ~$525–$530 (the actual IPO target), Hiive secondary mark separated out, ticker note expanded to mention $SPCE alongside $SPCX, and 9 newer articles added to the rotation pool (Motley Fool, TechStackIPO, ARK, Augustus Wealth, The Next Web, etc.)
