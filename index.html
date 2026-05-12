@@ -6,6 +6,7 @@
 <title>SpaceX IPO Tracker — date, price, ticker, countdown</title>
 <meta name="description" content="Live tracker for the SpaceX IPO: estimated date (June 18–30, 2026), ~$525–530 price benchmark, $SPCX ticker speculation, countdown, timeline of milestones, and SEC filings — built for retail investors who don't want to miss it." />
 <meta name="theme-color" content="#0b0d12" />
+<meta name="color-scheme" content="dark" />
 <meta name="author" content="itsavibecode" />
 <link rel="canonical" href="https://spacex.bookhockeys.com/" />
 
@@ -44,7 +45,10 @@
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link rel="preload" as="style"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap"
+      onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap"></noscript>
 <style>
   :root {
     --bg: #0b0d12;
@@ -54,7 +58,7 @@
     --line-bright: #333a4a;
     --ink: #f2f4f8;
     --ink-dim: #a8b0c0;
-    --ink-faint: #6b7385;
+    --ink-faint: #8b93a7;
     --accent: #ff6b47;
     --accent-2: #ffc857;
     --good: #5fd99d;
@@ -777,7 +781,7 @@
   <section class="sec">
     <div class="sec-head">
       <div class="sec-num">01</div>
-      <div class="sec-title">Latest coverage</div>
+      <h2 class="sec-title">Latest coverage</h2>
       <div class="sec-sub">5 most recent · sorted by publish date</div>
     </div>
 
@@ -791,7 +795,7 @@
   <section class="sec">
     <div class="sec-head">
       <div class="sec-num">02</div>
-      <div class="sec-title">Timeline</div>
+      <h2 class="sec-title">Timeline</h2>
       <div class="sec-sub">Past events &amp; upcoming milestones</div>
     </div>
 
@@ -801,7 +805,7 @@
   <section class="sec">
     <div class="sec-head">
       <div class="sec-num">03</div>
-      <div class="sec-title">Filings &amp; primary sources</div>
+      <h2 class="sec-title">Filings &amp; primary sources</h2>
       <div class="sec-sub">SEC EDGAR · secondary markets</div>
     </div>
 
@@ -811,7 +815,7 @@
   <section class="sec">
     <div class="sec-head">
       <div class="sec-num">04</div>
-      <div class="sec-title">Don't miss it</div>
+      <h2 class="sec-title">Don't miss it</h2>
       <div class="sec-sub">Reminders · calendar · alerts</div>
     </div>
 
@@ -877,7 +881,7 @@
       <strong>Not investment advice.</strong> Figures are publicly reported estimates from secondary markets (Hiive, Forge) and financial press (Bloomberg, CNBC, Reuters, WSJ, Motley Fool). SpaceX filed a confidential draft S-1 on April 1, 2026 and held closed-door analyst meetings April 21–23, but as of late April has not publicly confirmed an IPO date, offer price, or ticker. The countdown targets June 18, 2026 — the earliest of the reported June 18–30 pricing window — on the principle that being ready early beats being caught late.
     </div>
     <div class="meta">
-      <span class="version-badge">v1.2.2</span>
+      <span class="version-badge">v1.2.3</span>
       © <span id="year"></span> · built for you · updated <span id="built"></span>
     </div>
   </footer>

@@ -36,6 +36,14 @@ When SpaceX confirms a hard pricing date, ticker, or offer price, edit the const
 
 ## Changelog
 
+### v1.2.3 — 2026-05-08
+- **Lighthouse mobile: 90/90/100/100 → 100/100/100/100.** All four categories now max out. FCP and LCP both dropped from 2.9s → 1.1s; Speed Index 3.1s → 1.1s; TTI 2.9s → 1.2s; CLS stayed comfortably under 0.05.
+- **Killed the only render-blocking resource** by switching the Google Fonts `<link>` from a synchronous stylesheet to the `rel="preload" as="style" onload="this.rel='stylesheet'"` async pattern with a `<noscript>` fallback. The fonts now load in parallel with the document instead of blocking ~1.9s of first paint.
+- **Fixed all WCAG AA color-contrast failures** (`#now-ts`, `.price-range`, `#countdown-caption`, every article date). Bumped `--ink-faint` from `#6b7385` (4.08:1 on `--bg`, 3.73:1 on `--panel`) to `#8b93a7` which clears 5.8:1 on both surfaces.
+- **Fixed heading order** by promoting the four section titles from `<div class="sec-title">` to `<h2 class="sec-title">`. The h1 → h2 → h3 hierarchy is now sequential; screen readers and SEO crawlers no longer trip over an out-of-order h3 in the reminders section.
+- **Added `<meta name="color-scheme" content="dark">`** so the browser paints a dark background before CSS parses, eliminating the flash of light on cold loads.
+- **Added `.scripts/compare-lh.py`** helper for printing before/after Lighthouse diffs and `.gitignore` for the regenerable `.lh-*.json` reports.
+
 ### v1.2.2 — 2026-04-28
 - **Real share previews.** Generated a 1200×630 `og-image.png` (the size every link unfurler expects) and a 180×180 `apple-touch-icon.png`. Added the missing pieces of the Open Graph / Twitter Card spec: `og:image` (+ width / height / type / alt / secure_url), `og:locale`, `twitter:image`, `twitter:image:alt`, and flipped `twitter:card` from `summary` to `summary_large_image` so the Twitter/X preview uses the hero card instead of a tiny thumbnail. Added the `apple-touch-icon` link so iOS home-screen and iMessage rich previews show the rocket icon.
 - **OG image build script** lives at `.scripts/build-og-image.py` — uses Pillow + Windows-bundled fonts (Arial Black, Inter, Consolas Bold). Re-run it whenever the hero numbers change.
