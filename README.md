@@ -10,10 +10,11 @@ Live single-page tracker for the upcoming SpaceX IPO. Built so I (and anyone els
 - **IPO price benchmark** — ~$525–$530/share at the targeted $1.75T–$2T valuation, alongside the current secondary-market mark from Hiive
 - **Likely ticker** — $SPCX (freed up by Tuttle Capital in April 2026), with $SPCE as a secondary speculation
 - **Live countdown** to the estimated pricing date, recomputed every second
-- **Latest coverage** — 5 most recent of 15 tracked sources, sorted by publish date
+- **Latest coverage** — 5 most recent of the 25 newest articles from Google News, refreshed daily by a GitHub Action; sorted by publish date
 - **Timeline** — past milestones and upcoming events, rendered newest-first; "→ Next up" badge auto-flips to whichever future event is most imminent
 - **Filings & primary sources** — direct links to SEC EDGAR searches, Form D CIKs, draft S-1 filter, and secondary-market data (Hiive, Forge, Yahoo)
 - **Reminders that actually work** — pickable alarm offsets baked into a downloadable .ics file (native phone/desktop alarms), browser notifications while a tab/PWA is open, and a Google Calendar template link
+- **PNG snapshots** — hover any article or timeline event, click the camera in the corner, and a PNG of just that card downloads
 
 ## What it deliberately doesn't do
 
@@ -27,14 +28,37 @@ This site is static GitHub Pages — no backend, no database, no scheduler. It w
 
 Open [`index.html`](index.html) and look near the top of the `<script>` block. Everything that changes when news lands is in plain JS arrays/constants:
 
-- `IPO_DATE` and `IPO_DATE_LABEL` — the countdown target
-- `ARTICLE_POOL` — `{ title, source, date, url }` entries
-- `TIMELINE` — `{ date, title, desc }` entries (chronological order; rendered newest-first)
-- `FILINGS` — `{ type, title, meta, url, date, dateKind }` entries (`dateKind` is `"Filed"` for SEC filings, `"Updated"` for live links; rendered as e.g. "Filed Apr 1, 2026")
+- `IPO_DATE` and `IPO_DATE_LABEL` — the countdown target (manual)
+- `ARTICLE_POOL` — `{ title, source, date, url }` entries. **Auto-refreshed daily by [.github/workflows/refresh-news.yml](.github/workflows/refresh-news.yml)** between the `// AUTO:ARTICLES:START` / `:END` markers — hand edits inside will be overwritten on the next cron run.
+- `TIMELINE` — `{ date, title, desc }` entries (chronological in source, rendered newest-first). Hand-curated; the workflow only *appends* events when a new public S-1 or 424B is detected on EDGAR.
+- `FILINGS` — `{ type, title, meta, url, date, dateKind }` entries. The workflow bumps `Updated` dates daily and appends EDGAR-detected SpaceX filings (deduped by accession number). Hand-curated entries are preserved.
 
 When SpaceX confirms a hard pricing date, ticker, or offer price, edit the constants and the hero copy in the HTML, bump the version badge, and add a changelog entry below.
 
+## Auto-refresh workflow
+
+A GitHub Action ([`.github/workflows/refresh-news.yml`](.github/workflows/refresh-news.yml)) runs daily at 14:00 UTC and on demand from the **Actions** tab. It calls [`.scripts/refresh-news.py`](.scripts/refresh-news.py), which:
+
+1. Pulls SpaceX IPO articles from the Google News RSS feed (no API key)
+2. Bumps every "Updated" date in `FILINGS` and the Hiive subtitle date to today
+3. Queries SEC EDGAR for SpaceX-from filings and appends new ones
+4. Updates `<lastmod>` in `sitemap.xml`
+
+The workflow only commits when content actually changed. Bot commits are authored as `github-actions[bot]` so they're visually distinct from human commits in the log.
+
+To run it manually: GitHub → **Actions** tab → **Refresh news + filings** → **Run workflow**.
+
 ## Changelog
+
+### v1.3.0 — 2026-05-13
+- **Daily auto-refresh via GitHub Actions.** A new `.github/workflows/refresh-news.yml` runs at 14:00 UTC every day (and on demand from the Actions tab) and pushes a commit only when content actually changed. The accompanying `.scripts/refresh-news.py`:
+  - Fully replaces `ARTICLE_POOL` from the [Google News RSS feed](https://news.google.com/rss/search?q=%22SpaceX%22+IPO) (no API key needed; aggregates Bloomberg, CNBC, Reuters, WSJ, Motley Fool, Yahoo, etc.) — keeps the 25 newest, dedupes by title+source, drops anything older than 60 days.
+  - Bumps every `dateKind: "Updated"` entry in `FILINGS` to today's date, and the "Hiive MM/DD" date in the price subtitle.
+  - Polls the SEC EDGAR full-text search API for SpaceX-from filings (`S-1`, `S-1/A`, `F-1`, `DRS`, `424B1-4`, `8-A12B`) and appends new entries to `FILINGS` (deduped by accession number — bulletproof) plus a `TIMELINE` event the first time an `S-1` or `424B` is detected.
+  - Updates `<lastmod>` in `sitemap.xml`.
+  - Idempotent: workflow only commits when `git diff` is non-empty.
+- **Camera button on every article and timeline event.** Hover (or focus) a card and a small camera icon fades in at top-right — click it to download a PNG snapshot of just that card. Powered by [html2canvas](https://html2canvas.hertzen.com/) lazy-loaded on first use (zero cold-load cost). Filenames are descriptive like `spacex-ipo-article-motley-fool-2026-05-13.png` and `spacex-ipo-timeline-2026-06-18-earliest-pricing-first-trade.png`. Camera button hides itself during capture so it doesn't appear in the screenshot. Click stops propagation so the article link doesn't open.
+- **Array markers.** `ARTICLE_POOL`, `TIMELINE`, and `FILINGS` are now wrapped in `// AUTO:*:START/END` comments so the refresh script has clean replacement boundaries and human edits stay readable.
 
 ### v1.2.3 — 2026-05-08
 - **Lighthouse mobile: 90/90/100/100 → 100/100/100/100.** All four categories now max out. FCP and LCP both dropped from 2.9s → 1.1s; Speed Index 3.1s → 1.1s; TTI 2.9s → 1.2s; CLS stayed comfortably under 0.05.

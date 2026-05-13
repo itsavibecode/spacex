@@ -263,8 +263,9 @@
     background: var(--panel);
   }
   .article {
+    position: relative;
     display: grid;
-    grid-template-columns: 44px 1fr auto;
+    grid-template-columns: 44px 1fr 28px auto;
     gap: 20px;
     align-items: center;
     padding: 18px 22px;
@@ -600,6 +601,59 @@
     .ticker-left { padding-right: 0; padding-bottom: 12px; border-right: none; border-bottom: 1px solid var(--line-bright); width: 100%; }
   }
 
+  /* ============ Camera / screenshot button ============ */
+  /* Shows only on hover of the parent .article or .tl-event so we don't
+     clutter the page with 19 camera glyphs sitting at rest. Clicking
+     it triggers an html2canvas snapshot of just the parent card. */
+  .cam-btn {
+    position: absolute;
+    background: rgba(20, 24, 33, 0.85);
+    color: var(--ink-dim);
+    border: 1px solid var(--line-bright);
+    border-radius: 6px;
+    width: 28px;
+    height: 28px;
+    padding: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.15s ease, color 0.15s ease, border-color 0.15s ease, transform 0.15s ease;
+    pointer-events: none;
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+  }
+  .cam-btn:hover {
+    color: var(--accent);
+    border-color: var(--accent);
+    transform: translateY(-1px);
+  }
+  .cam-btn:active { transform: translateY(0); }
+  .cam-btn svg { width: 14px; height: 14px; display: block; }
+  .cam-btn:disabled { opacity: 0.5 !important; cursor: progress; }
+  /* Reveal on hover/focus of the parent card */
+  .article:hover .cam-btn,
+  .article:focus-within .cam-btn,
+  .tl-event:hover .cam-btn,
+  .tl-event:focus-within .cam-btn,
+  .cam-btn:focus-visible {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  /* Touch devices have no hover — always show but dimmer */
+  @media (hover: none) {
+    .cam-btn { opacity: 0.55; pointer-events: auto; }
+    .cam-btn:active { opacity: 1; }
+  }
+  /* Camera lives inside the article grid as its own 28px column, so
+     layout doesn't shift on hover. Timeline events use absolute
+     positioning since the existing layout has room at top-right. */
+  .article .cam-btn { position: static; align-self: center; }
+  .tl-event .cam-btn { top: 4px; right: 0; }
+  /* During capture we hide the camera so it doesn't appear in the screenshot */
+  .capturing .cam-btn { visibility: hidden; }
+
   /* ============ Timeline ============ */
   .timeline {
     position: relative;
@@ -718,7 +772,7 @@
   @media (max-width: 640px) {
     .wrap { padding: 20px 16px 60px; }
     .hero { padding: 48px 0 32px; }
-    .article { grid-template-columns: 30px 1fr; padding: 16px 18px; }
+    .article { grid-template-columns: 30px 1fr 28px; padding: 16px 18px; }
     .a-date { grid-column: 1 / -1; padding-left: 40px; padding-top: 4px; }
     .notify { padding: 20px; }
     .sec { margin-top: 56px; }
@@ -764,7 +818,7 @@
     <div class="price-block">
       <div class="price-label">IPO Price Benchmark</div>
       <div class="price-value">~$525–$530</div>
-      <div class="price-range">Per-share target at $1.75T–$2T valuation · Secondary mark $661 (Hiive 04/28) · Bullish range up to $877</div>
+      <div class="price-range">Per-share target at $1.75T–$2T valuation · Secondary mark $661 (Hiive 05/13) · Bullish range up to $877</div>
     </div>
 
     <div class="countdown" id="countdown">
@@ -881,7 +935,7 @@
       <strong>Not investment advice.</strong> Figures are publicly reported estimates from secondary markets (Hiive, Forge) and financial press (Bloomberg, CNBC, Reuters, WSJ, Motley Fool). SpaceX filed a confidential draft S-1 on April 1, 2026 and held closed-door analyst meetings April 21–23, but as of late April has not publicly confirmed an IPO date, offer price, or ticker. The countdown targets June 18, 2026 — the earliest of the reported June 18–30 pricing window — on the principle that being ready early beats being caught late.
     </div>
     <div class="meta">
-      <span class="version-badge">v1.2.3</span>
+      <span class="version-badge">v1.3.0</span>
       © <span id="year"></span> · built for you · updated <span id="built"></span>
     </div>
   </footer>
@@ -892,24 +946,38 @@
   const IPO_DATE = new Date('2026-06-18T09:30:00-04:00');
   const IPO_DATE_LABEL = 'June 18, 2026';
 
-  const ARTICLE_POOL = [
-    { title: "The SpaceX IPO Timeline: Every Important Date and Time Frame You Need to Know", source: "Motley Fool", date: "2026-04-27", url: "https://www.fool.com/investing/2026/04/27/spacex-ipo-timeline-every-important-date-need-know/" },
-    { title: "Mark Your Calendar — the SpaceX IPO Should Occur by This Date", source: "Motley Fool", date: "2026-04-26", url: "https://www.fool.com/investing/2026/04/26/mark-your-calendar-the-spacex-ipo-should-occur-by/" },
-    { title: "SpaceX S-1 Filing Sets Stage for Largest IPO in History", source: "New Space Economy", date: "2026-04-23", url: "https://newspaceeconomy.ca/2026/04/23/spacex-s-1-filing-sets-stage-for-largest-ipo-in-history/" },
-    { title: "SpaceX's public IPO filing confirms Musk and insiders retain dominant voting control", source: "The Next Web", date: "2026-04-24", url: "https://thenextweb.com/news/spacex-ipo-s1-musk-voting-control" },
-    { title: "SpaceX's IPO filing says its orbital data centres may never work", source: "The Next Web", date: "2026-04-25", url: "https://thenextweb.com/news/spacex-orbital-data-centres-ipo-risk-disclosure" },
-    { title: "SpaceX IPO 2026: $1.75T Valuation, ~$525/Share Price, June Nasdaq Listing", source: "TechStackIPO", date: "2026-04-24", url: "https://www.techstackipo.com/ipo/spacex" },
-    { title: "ARK's Guide To The SpaceX IPO", source: "ARK Invest", date: "2026-04-22", url: "https://www.ark-funds.com/articles/venture-fund/arks-guide-to-the-spacex-ipo" },
-    { title: "SpaceX: $1.75T IPO And 220x EV/EBITDA Could Trigger Surge In Aerospace And Defense", source: "Seeking Alpha", date: "2026-04-21", url: "https://seekingalpha.com/article/4892343-spacex-stock-1-75t-ipo-and-220x-evebitda-could-trigger-surge-in-aerospace-and-defense" },
-    { title: "SpaceX S-1 Filed at $2T: Why Every ISO, RSU & AMT Model Needs to Be Re-Run Now", source: "Augustus Wealth", date: "2026-04-23", url: "https://augustuswealth.com/blog/spacex-s1-filed-ipo-planning/" },
-    { title: "SpaceX IPO: History Says the Stock Will Do This When It Starts Trading", source: "Motley Fool", date: "2026-04-15", url: "https://www.fool.com/investing/2026/04/15/spacex-ipo-stock-will-do-this-when-starts-trading/" },
-    { title: "June IPO Poised to Propel SpaceX Into a Trillion-Dollar-Plus Orbit", source: "Evalueserve", date: "2026-04-10", url: "https://www.evalueserve.com/blog/june-ipo-poised-to-propel-spacex-into-a-trillion-dollar-plus-orbit/" },
-    { title: "SpaceX confidentially files for IPO, setting stage for record offering", source: "CNBC", date: "2026-04-01", url: "https://www.cnbc.com/2026/04/01/spacex-confidentially-files-for-ipo-setting-stage-for-record-offering.html" },
-    { title: "SpaceX IPO Ticker Speculation Grows as SPCX Symbol Becomes Available", source: "Bloomberg", date: "2026-04-10", url: "https://www.bloomberg.com/news/articles/2026-04-10/spacex-ticker-speculation-is-heating-up-as-tuttle-drops-spcx" },
-    { title: "When will SpaceX officially announce an IPO?", source: "Kalshi Markets", date: "2026-04-26", url: "https://kalshi.com/markets/kxipospacex/when-will-spacex-ipo/kxipospacex" },
-    { title: "SpaceX Stock · Hiive order book", source: "Hiive", date: "2026-04-27", url: "https://www.hiive.com/securities/spacex-stock" }
-  ];
+  // AUTO:ARTICLES:START — managed by .github/workflows/refresh-news.yml; edits here will be overwritten on the next cron run
 
+  const ARTICLE_POOL = [
+    { title: "Market Brief: Will The SpaceX IPO Pop The U.S. Stock Bubble?", source: "Seeking Alpha", date: "2026-05-13", url: "https://news.google.com/rss/articles/CBMikwFBVV95cUxNOUdpeE9GSzlBRlJSSFpPUHZwOG5PY0dHTGFIcHJ5Tk52VXAwNFR2aktQTk9CTkhaU0tjcm9QWFhweHItRlR6UzhyeHFySU9UdnNWb1ZwYXp1YVVVWFdMOVhBOE5kTFN5NmpVOHc1aXhGSXB3TVNfcjJaaXRNQ0FjMzNDN1pzYmNfT1JscnZUUTJ5eVU?oc=5" },
+    { title: "Should You Invest In SpaceX’s IPO – Or Leave It On The Launchpad?", source: "Finimize", date: "2026-05-13", url: "https://news.google.com/rss/articles/CBMilAFBVV95cUxQcVJiZUdlckFLbmJ3VEJteHBxX05EdjBVS0t1RFEwd2hJTVh5emVGTkNSRENSc0Z4bmVjQTVYY3NkaURSNjJ0XzdvQlB4aE04UXpMQ3A4blNYaWpvLS01R2VOY0dtaHZSVFRfRFU2SFh2VDlnMWJITTB1TWtWS2hpaGdZQS1OZTBKRjlmdjJINmFuU1NX?oc=5" },
+    { title: "Here's What Happened After the 5 Biggest IPOs in Stock Market History", source: "Motley Fool", date: "2026-05-13", url: "https://news.google.com/rss/articles/CBMikwFBVV95cUxOTHVHRXBCY2xrVnd2bjRfcWRQU1hZZmtEN2cxUUE3RENQZWgwb1ZiZUk2bW1Da2dnc3lGb01xYkhEX1MxMVUzWDhnOGpTZ0J4aUUyZVQ2cDdPODJVOUdqWnZFYzZ4UzJyMUJEMFBHRXRaUmpzWEtEcTdzR0tmQUg4RkwySldZT1dGZXQwd3psZXJKVG8?oc=5" },
+    { title: "DXYZ, NASA Rally Premarket: Google’s Space AI Push Sends SpaceX IPO Bets Into Overdrive", source: "Stocktwits", date: "2026-05-13", url: "https://news.google.com/rss/articles/CBMirwFBVV95cUxPYlVsMFpBMmVuSmdzSEtkcFNuLWxIN1hWeHM2Zk5vRTBIb21fRjh4T1ZBV3JJZ04yZFlEQnhmTTdWSmlVVTlCUzh2N1RRSE5pRm9SNEMtdkgtZjdibVZrN0NUdk5ROXFyQUFXdGN0cGVtQ21VTjZHcGRLb0h2aW5WNHhGYXNVcC01T2VLNlVtQktScmVoekJjTW0tUy1Bc3U0ZHE0QzlKUEl0M2VuVEpJ?oc=5" },
+    { title: "The SpaceX IPO and the lost battle for shareholder rights", source: "Reuters", date: "2026-05-13", url: "https://news.google.com/rss/articles/CBMizwFBVV95cUxNYnEwWDE2R0lLb282dHVVMUdQcGtlNTl4Q0N1ODVKN1g2Q0ZmUEJQZWg2TUJzVW9BQ3dkQURKdk5YQU9mU01pSkRFYU5qanhDRy1UVldmTG0wRU9VWGRhRkV2aHFYOGVXMEh5TmxVNmVmY2dpbEZfRld6Q2h1UUtFOXllbFptRUdvbkdDa3UzR2RQSHMtUVlUWVNhTkE1ODBHU0pqdzJpS0NLQ0oyN3ZlTW55bDE5LXBJS211WHRVMUlBQzdTUDk1akUtalh6Yjg?oc=5" },
+    { title: "SpaceX IPO: Investors can get an early slice of what could be the world's largest listing", source: "The National", date: "2026-05-13", url: "https://news.google.com/rss/articles/CBMi3wFBVV95cUxNUzlMTXFkejk5WmV1dnRhYlF1V2ZXRVIxVjZFQllsTXpXWnlkRXJDYndnUTR2dW5Fbko3d2xMQklWZS1xcVNadVRIUG1sTmx6WUFXZkpPN3loRUxKSDAyOTZPTVJlWk9jNjFqaFdNYW9pS1FfLVVZdUlJZjJJX2otdVA1WGdocVNyeUVueTRObUh5NWlhYUtVTzhvOEtERU5scmRBbkZ2d3I0LTMycWJMTUxKNXlfVVdNSGdlWkxyLXpHOEJKQ3BXOXhRbGdPNVhseExoYXBIU3g4dGhsMGpF?oc=5" },
+    { title: "One Prediction Market Pegs SpaceX's Chance of Closing Above $2 Trillion on Its IPO Day at 62% -- but Investors Will Likely Regret Chasing History", source: "The Globe and Mail", date: "2026-05-13", url: "https://news.google.com/rss/articles/CBMiwAJBVV95cUxOeGx4amhVc0Y4dWktU1c0RnJuNjJibkxzSVR1a1gxN01MWEhzeGctSlV5azBycmVLbHdCbE1DZUszNkNMb3d0TjRrRnhkVVkySVRnREZTdVZGS3NJTXlycno2M3l1d29IVWFhT2xuRWtFUnNreGpqb1gxYmExRXp1N0FZeGdRd3hhNF9NM3NTX1lXeGJrekVyRXZTNUd1YjVjRjVGS0RqWlJCWFNrNHUtMDJIczFfZHhHZFdIMzB0TjdPWTBuU3ptU2FHdjlfYzBfYnJ1N2xZVlJkUWFwV29qazJIZGE1ZFBYTG1WejJTNVhkaUNwUFFUYklFQ2dEZVJNX0FuVE1sQW0zS3p0bktZY0FSTFF2cmVWY082RWZWeHU3RF9VcENaeFloUVN6bXhHTUtNSE5EdWV1TzVVWG9CRw?oc=5" },
+    { title: "The SpaceX IPO and the lost battle for shareholder rights: Ross Kerber", source: "TradingView", date: "2026-05-13", url: "https://news.google.com/rss/articles/CBMi1gFBVV95cUxPZ091WU9WUnhqdXhHMzlwaXN1RFpZdjZzWkZVR2tuaUVjYjlONDFmdkZ5VExGbzZnVmFEb2ktU1l2NFpQSWRReXE1cTRQNWdwdnI0RXVYUGJqaWRSQll1MlBiRWE0N3BuTHZxQ3U2WU5KSGJEWkxRU0pGQkkya3pBX1JhTXlvYnhyYmx2dnM0SzdLU0p3aDhLQXNEajQxUm9EZktubDZFVVFXXzg2UDM0T3N3R09fSTY1Z1pRcDJvbzhJR0tFOWV0VVlwY3p6T1dDQ2VqSVRn?oc=5" },
+    { title: "Google is in talks with SpaceX to launch AI data centers into orbit", source: "qz.com", date: "2026-05-13", url: "https://news.google.com/rss/articles/CBMib0FVX3lxTFAzMGJjTnRhRE1jVkowVTlfSGR0a1o2NUJWemhaNG05WVVaOVJteHVZbTdsakhLTUN1V3A5RDYweHFhRXBkRFZvMEZ5a0E0VEhhV0JodVM5ek1uWmVmT1F2UlhzS3dyYWpFMXFLQ2V5cw?oc=5" },
+    { title: "One Prediction Market Pegs SpaceX's Chance of Closing Above $2 Trillion on Its IPO Day at 62% -- but Investors Will Likely Regret Chasing History", source: "Motley Fool", date: "2026-05-13", url: "https://news.google.com/rss/articles/CBMimAFBVV95cUxPUmdMV3lkODBfWjd4aHpXdWVzQlpJTUFhekR2UldMMUlYQUdfX094M2xTR2tWSG1XZkdMcHY4Zk9PQzBjN3JwbVd2YjNHRXRZMUtYOXI4VWdUTjYzR0pvYldNeEphZ1VuLTdVcFpXNmNJTW5WejZaUktIblExYmJxLXF1MkRESm5CbG9hMWd3NlhlLWFpVHdVYg?oc=5" },
+    { title: "Google reportedly in talks with SpaceX to launch its orbital data centers — partnership could mark a historic turning point and boost upcoming IPO", source: "Tom's Hardware", date: "2026-05-13", url: "https://news.google.com/rss/articles/CBMitgJBVV95cUxOMzAzNng3cjFoV0htT3NxZWhGZkNfUE1PbVI1ZUl5aGhsSUhrV04wVmRScVdTNUtLN2QwRUZRdldzck1jSnI3MVpXeUE1NV83bWhPSUwxblFSZWtsVU0yYlQ5eE5SQ1dCQVZNb0J1TGpVMGlSY3Rkal9TdXRxWUd3S1pSNklBUlJ3TDlLb2ltSGlpQ3B0UUo5VlhyMlJiSHBxV0E5T29SZEhrb1FRZ1RDVUtobHgteUU0WDkxVDdxR3Fwd01SV3FsRkhJRnd0LXE4M3VqRlNUWEh6aUJ2b2VpWTRaQkpFNkhGV25IRHhNNHZKN0M4TEVBS0hDaWZ0bmlIaDdFbGdDcHEteUNJeG5xM2JycW1jU2hmcWRzZDNja3QzVG1XNFgtSDg2TlpTQURkcTdFN2pn?oc=5" },
+    { title: "What 10 of the biggest ever IPOs tell us ahead of SpaceX listing", source: "AJ Bell", date: "2026-05-13", url: "https://news.google.com/rss/articles/CBMijAFBVV95cUxNaHdCNG1wQko4MG5NZlVwSFZfalRrZEdpa213UlVpUUtWUjNGdnM5RXJ1dDhycTZPN1NGX3JDUVNmR1VDdV9OMGtqMUVSZWRDQ1FTOVpLV2RXUkx5el93MDJXQ0M2Z0UzNXJPbFZvUjVScmZ3SDlmeU9pdkFGWWhYOE94a1ZrRE1BUHhiag?oc=5" },
+    { title: "LUNR stock hits 52-week high ahead of Q1 earnings this week — retail says SpaceX IPO will fuel a rally in Intuitive Machines shares", source: "MSN", date: "2026-05-13", url: "https://news.google.com/rss/articles/CBMiswJBVV95cUxObVVKcDNlQzVpcUlGY29ta3VaeHBkN1ZLSHkyMFp5SUZFRTQxYWJwaXlHbDB5NDM4OUEyaFdHaTlZazhsRHNmZmdPWU9HM0NxbFppUkhXU25faExuRG8xbF8zeEZpZy1oMURsb3VGMXJsbnRQM0kxQU1ZR0tfYjJuTFJMdzhEdEUzZTlFWnB1eVo5Zjd0RGk3NE1XZG84LUNtSEMyS0R4eWdyNnlRY0Fwc3VzVHFzREJkWDdCUk1zQks0LVJiQTk0V2V5UjA0eS1sd3hvS05mU3h5VFotbjBfU180U1pfM3l1cWdtMFZ5SHRHOW95dl9fTmk5ZmM4WnlxaUpIamMxVFp3MldPSk43ODZRMUh2NGNqSkt2Vmk4SVFKRHFDUElrcF9JaTBMM0Z6SFg0?oc=5" },
+    { title: "Forget SpaceX. This Might Be the Hottest IPO of the Year.", source: "Barchart.com", date: "2026-05-13", url: "https://news.google.com/rss/articles/CBMioAFBVV95cUxPMDZCamlMbW5IcmVPak56Z01fLTc1SXBRRUlBWVBmOFlxSDI5YXJ2VlU5M2tPXzdWbHo1cjEwU1l3RlR2ZHAzbG1ZRG13V3FHeElsanhYMnlZYXJWaWpjVFp0VWRLMjhSQ1FEdGZIYnh1M0tYQnlNN1gxaGYtb1NDbkZWYlFoMW84ZktxeGpmQW5BQk15ZEpkd1NWRU1va2kt?oc=5" },
+    { title: "SpaceX Partners With Google in Talks on Orbital Data Center Cooperation Pre-IPO: Can 2 Trillion Valuation Goal Be Met?", source: "TradingKey", date: "2026-05-13", url: "https://news.google.com/rss/articles/CBMiwAFBVV95cUxPZXpXaDdYLWFfbEdpazdXZ1BCa25GX09VQ0FmNTNpVHVyMll3b1FfTGkweGJCVWpEV3VSNG92MjYzZFpaUVZxTmk2XzRsX3hOenVQamNBUmdHcHo1TUhORGgyMDM3bVkwQ2hnUzJUTkNrMzF3b3puTlQ2c2JITW1VeXg1LV82S3ljSS10YUlDTTRKbS1ycTFsY0NNQVYxclVWQWN3Z29EMW04SzFwZkJHNkVydjNiSmdoTHA4bkkxVVU?oc=5" },
+    { title: "As SpaceX preps for IPO liftoff, how will voting controls work?", source: "RTE.ie", date: "2026-05-13", url: "https://news.google.com/rss/articles/CBMipwFBVV95cUxQRHlvSWJJdGRTNFB5Z2ZPQWFEdFFQOVF6Ql9kRFQ2amVIb1UzUElrUGlMYXhfVHFaaVM3aThsMHhsY1N1NGV0bktsRFpOMy1sQ0ZiS3g4eExDNU9sRUtHRTdEM2x3ZHJSNWFqU3BOUmJsZHVKMjVPeDVGb0FqWE05U0VReU95OWpzZXR5ZjNWUjVTRU9EMFpNc2hSNndOZWYwdURxMFJHSQ?oc=5" },
+    { title: "EchoStar Stock Rises as FCC Approval Reprices the SpaceX Bet — and the Escrow Risk", source: "TechStock²", date: "2026-05-13", url: "https://news.google.com/rss/articles/CBMiowFBVV95cUxQd19VMFNDdFhtUDAxak01UFhDb3BnQWVLblhYUjhOc0ZXNms5cUV4MHRpQ3g3NERnZ0IxRWRjT3VZVmlBSzF5WEFUXzNIYUhaMUo1OFhoN3ZqRHBkODRCbkptOTM1SWdUOVJtM2RMLS1tQlVDZmtUQ2xvLXozdTdRaHIwWklaSUh2YVZWYWM0SjM4MUdSR19RMVdtVlBOdWlndXhV?oc=5" },
+    { title: "Scottish Mortgage defends $1.25tn SpaceX valuation ahead of IPO", source: "Financial Times", date: "2026-05-12", url: "https://news.google.com/rss/articles/CBMihAFBVV95cUxNTzc3WE1faUozVkV3b1FJelE0cDRGaWhXdnltUzdXS0VzSU1iSUw2aVRfTW5rOGk0bHV1d0xBSUZka2NSQkJyYXpPeE5fS25ndnRIS3dVSFRneWFLN1RZR0lURHcyaU5oY3JhQ1Q2QjZNVnF0dkh2V25fOEVaRXpZTDh3dzc?oc=5" },
+    { title: "SpaceX eyes global spaceports as Starship launch ambitions grow ahead of IPO", source: "Reuters", date: "2026-05-12", url: "https://news.google.com/rss/articles/CBMitgFBVV95cUxNR1dLblJhMEZhZmVVeUVydFZNeVlxc0VuSThwVHdwOXkzbHBtNTJMR2s3bF8zc0F0ekE1NG96cllFVVBUX1hCT04xUnNSTkZyRFBoUEVDTXJnRFY5TGV0d1J0bWZMUGRXZ1MzRWNDWERKd0JHaTZ5Mm9PNVdGWTA0QWh2RDhobmZDR0dQU3U2eHU4RGlnVnNyTnFvdy0tLVc3Rk4xajloam5VT2NIdFl5R2hvNXhYQQ?oc=5" },
+    { title: "SpaceX IPO: Here's What to Watch for Next (And It Could Be Crucial for Investors)", source: "Motley Fool", date: "2026-05-12", url: "https://news.google.com/rss/articles/CBMiigFBVV95cUxObDlhVlhMcmxsbTFoOGI0dWI3WW1aVk9jcllsdWhmdkN6bFhFeU9kdkN4SEJFOVFWZnVuNy1fZUMyY2JvbE5hMVFtbURSRUxQSWtkMHFYYzNLVXZKRHJ1dEhQVnRKMy03TzdxaUNSZ1JZNGVKNUpXNVNaMk05UDBNWlVzQTl6cGx0a3c?oc=5" },
+    { title: "What to know about investing in SpaceX — or any company — before it goes public", source: "MarketWatch", date: "2026-05-12", url: "https://news.google.com/rss/articles/CBMiugFBVV95cUxQbkZvRTMyY0cySlI0b0Jld2JiYWZpWGdpQURfNDF1enZFVzJVazJRUDZnN0poLWpaRXlfRTV2RVY5RVMxX1V0bUFjUjlSbkZjUzBhMkxOMXZaQUk0YkhmOXZjb1k4UzYtbWRKVnhnUDZaaXFYNnhvYUpfc1VFWGRBTTlVVzNKdkwyS3ZMbzYzX1dacW9naU5QcUh3VlU0YlltTmZkNWI1N19QVjdpLXVaZ3E0anFlTEtKd0E?oc=5" },
+    { title: "SpaceX IPO Tests Limits Of Market Liquidity Depth", source: "StoneX", date: "2026-05-12", url: "https://news.google.com/rss/articles/CBMijgFBVV95cUxOdFJaNFlSQUZJb3E2RDZ2R3N3X2pwamJTUExYa3FWS2p3R0cxZlJBaGtsTE5WUktuUGtOQWxsVjVMMHBpUC1MSjZfeWRxcnlyV21FM2tvSlBwRklXZ05SakdwelAxd2JTelB3am9Lb1dWUmt5dnlpNXgybGlwWTgtTUtPd0d3eVViX2hpdGF3?oc=5" },
+    { title: "Can't Buy SpaceX Yet? Here Are 5 Ways to Get Exposure Before the IPO.", source: "Motley Fool", date: "2026-05-12", url: "https://news.google.com/rss/articles/CBMiiAFBVV95cUxQQ0R0RjhhenF4LWljNnU0NlBCTWtVeDZSWTNjWTlYRXpYRUVLLWh4TVhIdzZwcEFaTFRDS1dsN1ZidzVCX3BMWGZHR09jQTVKQ05OdzFQb0kyQjNZYWgwbGRTZkZYZzhPVWk2YURhWHFsN2h5cUtGUmFCTmhwZjcxeGFfWW5HbnFS?oc=5" },
+    { title: "Can't Buy SpaceX Yet? Here Are 5 Ways to Get Exposure Before the IPO.", source: "Yahoo Finance", date: "2026-05-12", url: "https://news.google.com/rss/articles/CBMijwFBVV95cUxPX1RaU2NFREwwLWh2MlVOcXp1NVRYSzZRaWtkTk95bVlrZE5GZDFhTHZ3WGlKZENTdlA0cXZjbWhYVmdWN1lTNURBczcwMGtpVjZGNDB4WFFQWFB0RWhFdF9UYkZRSEZHRnUybjloeDdmRTB2cEM5aHhzNS1YdTN3QVVCMVlxeHdQV0lNZ0tSUQ?oc=5" },
+    { title: "Wall Street Waits for the SpaceX IPO, These 2 Under-the-Radar IPOs Could Already Be Making You Money", source: "Yahoo Finance", date: "2026-05-12", url: "https://news.google.com/rss/articles/CBMif0FVX3lxTE1LWS1CcEJsR21MdWs0RXNkSGg0aFJnejMzZFZqbFVJV2xFVTR6clZtdFd2bEw1ZFV6QWpWQUh3cDZKYWlMdktpZy1ZdmpWaFBTaFBsbTJDSUEwdHhWQXczVzJnbVNLQ0FVTndxZ1lWcDhwd2w4NC1qa1E3UDNjcHc?oc=5" }
+  ];
+  // AUTO:ARTICLES:END
+
+  // AUTO:TIMELINE:START — partially auto-managed: refresh-news.py may APPEND filing-derived entries (S-1, 424B, etc.). Hand-curated narrative events are preserved.
   const TIMELINE = [
     { date: "2002-03-14", title: "SpaceX founded by Elon Musk",
       desc: "Space Exploration Technologies Corp. incorporated in Hawthorne, California." },
@@ -940,23 +1008,90 @@
     { date: "2026-12-15", title: "Insider lockup expires", future: true,
       desc: "Standard 180-day lockup measured from a June 18 first trade. Employees and pre-IPO holders can sell — historically a downside catalyst as supply hits the market." }
   ];
+  // AUTO:TIMELINE:END
 
+  // AUTO:FILINGS:START — partially auto-managed: refresh-news.py updates "Updated" dates on live links and appends SEC-detected filings. Hand-curated entries are preserved.
   const FILINGS = [
     { type: "DRAFT S-1", title: "Confidential draft registration",   meta: "First public S-1 expected May 15-22",        url: "https://efts.sec.gov/LATEST/search-index?q=%22Space+Exploration+Technologies%22&forms=DRS",                                                              date: "2026-04-01", dateKind: "Filed" },
     { type: "FORM D",    title: "SpaceX 4 Nov 2024 (CGF2021)",       meta: "Exempt offering · CIK 2047425",              url: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0002047425&type=&dateb=&owner=include&count=40", date: "2024-12-05", dateKind: "Filed" },
     { type: "FORM D",    title: "SpaceX Jun 2023 (CGF2021)",         meta: "Exempt offering · CIK 1992247",              url: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001992247&type=&dateb=&owner=include&count=40", date: "2023-09-07", dateKind: "Filed" },
     { type: "FORM D",    title: "SpaceX Fund One (Maybrook)",        meta: "Exempt offering · CIK 1819923",              url: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001819923&type=&dateb=&owner=include&count=40", date: "2020-10-07", dateKind: "Filed" },
     { type: "FORM D",    title: "SpaceX Series (Pre-IPO Marketplace)", meta: "Exempt offerings · CIK 1826165",           url: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001826165&type=&dateb=&owner=include&count=40", date: "2020-09-28", dateKind: "Filed" },
-    { type: "SEC EDGAR", title: "Full-text search · SpaceX",         meta: "All filings mentioning Space Exploration Technologies", url: "https://efts.sec.gov/LATEST/search-index?q=%22Space+Exploration+Technologies%22&dateRange=custom&startdt=2025-01-01&enddt=2026-12-31", date: "2026-04-28", dateKind: "Updated" },
-    { type: "SEC EDGAR", title: "Company search",                    meta: "Browse SpaceX filer history on EDGAR",       url: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&company=space+exploration+technologies&type=&dateb=&owner=include&count=40",        date: "2026-04-28", dateKind: "Updated" },
-    { type: "SECONDARY", title: "Hiive · SpaceX order book",         meta: "Live bids/asks · indicative pricing",        url: "https://www.hiive.com/securities/spacex-stock",                                                                                                  date: "2026-04-28", dateKind: "Updated" },
-    { type: "SECONDARY", title: "Forge Global · SpaceX",             meta: "Forge Price · pre-IPO secondary data",       url: "https://forgeglobal.com/spacex_stock/",                                                                                                          date: "2026-04-28", dateKind: "Updated" },
-    { type: "MARKET DATA", title: "Yahoo Finance · SPAX.PVT",        meta: "Private valuation history",                  url: "https://finance.yahoo.com/quote/SPAX.PVT/",                                                                                                      date: "2026-04-28", dateKind: "Updated" }
+    { type: "SEC EDGAR", title: "Full-text search · SpaceX",         meta: "All filings mentioning Space Exploration Technologies", url: "https://efts.sec.gov/LATEST/search-index?q=%22Space+Exploration+Technologies%22&dateRange=custom&startdt=2025-01-01&enddt=2026-12-31", date: "2026-05-13", dateKind: "Updated" },
+    { type: "SEC EDGAR", title: "Company search",                    meta: "Browse SpaceX filer history on EDGAR",       url: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&company=space+exploration+technologies&type=&dateb=&owner=include&count=40",        date: "2026-05-13", dateKind: "Updated" },
+    { type: "SECONDARY", title: "Hiive · SpaceX order book",         meta: "Live bids/asks · indicative pricing",        url: "https://www.hiive.com/securities/spacex-stock",                                                                                                  date: "2026-05-13", dateKind: "Updated" },
+    { type: "SECONDARY", title: "Forge Global · SpaceX",             meta: "Forge Price · pre-IPO secondary data",       url: "https://forgeglobal.com/spacex_stock/",                                                                                                          date: "2026-05-13", dateKind: "Updated" },
+    { type: "MARKET DATA", title: "Yahoo Finance · SPAX.PVT",        meta: "Private valuation history",                  url: "https://finance.yahoo.com/quote/SPAX.PVT/",                                                                                                      date: "2026-05-13", dateKind: "Updated" }
   ];
+  // AUTO:FILINGS:END
 
   const $ = (id) => document.getElementById(id);
   const pad = (n) => String(n).padStart(2, '0');
   const fmtDate = (iso) => new Date(iso + 'T00:00:00').toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+  const slug = (s) => String(s).toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '')
+    .slice(0, 60);
+
+  // === Camera / PNG snapshot ===============================================
+  // html2canvas is ~46KB gzipped — only load it the first time someone
+  // actually clicks a camera, so the cold page-load cost is zero.
+  const HTML2CANVAS_CDN = 'https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js';
+  let html2canvasPromise = null;
+  function loadHtml2Canvas() {
+    if (window.html2canvas) return Promise.resolve(window.html2canvas);
+    if (html2canvasPromise) return html2canvasPromise;
+    html2canvasPromise = new Promise((resolve, reject) => {
+      const s = document.createElement('script');
+      s.src = HTML2CANVAS_CDN;
+      s.async = true;
+      s.onload = () => resolve(window.html2canvas);
+      s.onerror = () => { html2canvasPromise = null; reject(new Error('Failed to load html2canvas')); };
+      document.head.appendChild(s);
+    });
+    return html2canvasPromise;
+  }
+
+  function camBtnHTML(label) {
+    return `<button type="button" class="cam-btn" aria-label="${label}" title="${label}">
+      <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M3 7h3l2-2h8l2 2h3a1 1 0 0 1 1 1v11a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1z"/>
+        <circle cx="12" cy="13" r="4"/>
+      </svg>
+    </button>`;
+  }
+
+  async function snapshot(ev, el, filename) {
+    ev.preventDefault();
+    ev.stopPropagation();
+    const btn = ev.currentTarget;
+    btn.disabled = true;
+    el.classList.add('capturing');
+    try {
+      const h2c = await loadHtml2Canvas();
+      const canvas = await h2c(el, {
+        backgroundColor: getComputedStyle(document.body).backgroundColor || '#0b0d12',
+        scale: Math.min(window.devicePixelRatio || 1, 2),
+        logging: false,
+        useCORS: true
+      });
+      const blob = await new Promise(res => canvas.toBlob(res, 'image/png'));
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `${filename}.png`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+    } catch (err) {
+      console.error('snapshot failed:', err);
+      alert('Sorry — couldn\'t generate the PNG. Try again in a moment.');
+    } finally {
+      el.classList.remove('capturing');
+      btn.disabled = false;
+    }
+  }
 
   function updateCountdown() {
     const diff = IPO_DATE - new Date();
@@ -992,8 +1127,12 @@
           <div class="a-title">${a.title}</div>
           <div class="a-src">${a.source}</div>
         </div>
+        ${camBtnHTML('Save this article as PNG')}
         <div class="a-date">${fmtDate(a.date)}</div>
       `;
+      const cam = el.querySelector('.cam-btn');
+      const name = `spacex-ipo-article-${slug(a.source)}-${a.date}`;
+      cam.addEventListener('click', (ev) => snapshot(ev, el, name));
       c.appendChild(el);
     });
     $('articles-stamp').textContent = `5 newest of ${ARTICLE_POOL.length} tracked sources`;
@@ -1026,6 +1165,7 @@
       const el = document.createElement('div');
       el.className = 'tl-event ' + statusClass;
       el.innerHTML = `
+        ${camBtnHTML('Save this timeline event as PNG')}
         <div class="tl-date">
           ${dateStr}
           <span class="tl-status ${statusClass}">${statusLabel}</span>
@@ -1033,6 +1173,9 @@
         <div class="tl-title">${e.title}</div>
         <div class="tl-desc">${e.desc}</div>
       `;
+      const cam = el.querySelector('.cam-btn');
+      const name = `spacex-ipo-timeline-${e.date}-${slug(e.title)}`;
+      cam.addEventListener('click', (ev) => snapshot(ev, el, name));
       c.appendChild(el);
     });
   }
