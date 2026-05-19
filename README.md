@@ -50,6 +50,22 @@ To run it manually: GitHub → **Actions** tab → **Refresh news + filings** �
 
 ## Changelog
 
+### v1.3.1 — 2026-05-19
+- **Major news refresh** for the manual-only fields the auto-refresh deliberately doesn't touch. Reuters reported May 15 that the IPO timeline has been substantially accelerated and shareholders approved a 5-for-1 forward stock split.
+- **Countdown pivoted from June 18 → June 11** (earliest of the new June 11–12 pricing window). Footer disclaimer and countdown caption updated to match.
+- **Hero subtitle** now reads "Roadshow June 4 · pricing as early as June 11 · first trade as early as June 12 · Nasdaq."
+- **Price benchmark switched to post-split** (~$105–$110), with a clear note explaining the 5-for-1 split so anyone who saw the pre-split $525–$530 understands the math. Pre-split number and the $1.75T valuation still shown for context.
+- **Ticker ribbon** tightened: $SPCX on Nasdaq is now Reuters' and Bloomberg's working assumption rather than pure speculation; final confirmation still gated on the public S-1. Dropped the $SPCE alternative mention.
+- **Timeline events** (newest at top):
+  - **Added** May 15 "5-for-1 forward stock split approved"
+  - **Added** May 17 "BlackRock anchor talks reported ($5–10B)"
+  - **Updated** May 15 "Public S-1 expected" → May 20 (Reuters' target date)
+  - **Updated** June 8 "IPO roadshow begins" → June 4
+  - **Replaced** June 18 "Earliest pricing & first trade" with two events: June 11 "Earliest pricing" + June 12 "First trade on Nasdaq"
+  - **Removed** June 11 "Retail investor day" (conflicted with the new June 11 pricing date; will re-add if a separate retail event is reconfirmed for the compressed timeline)
+  - **Updated** Dec 15 "Insider lockup expires" → Dec 9 (180 days from a June 12 first trade)
+- **.ics and Google Calendar event descriptions** rewritten to match the new timeline, price, and ticker.
+
 ### v1.3.0 — 2026-05-13
 - **Daily auto-refresh via GitHub Actions.** A new `.github/workflows/refresh-news.yml` runs at 14:00 UTC every day (and on demand from the Actions tab) and pushes a commit only when content actually changed. The accompanying `.scripts/refresh-news.py`:
   - Fully replaces `ARTICLE_POOL` from the [Google News RSS feed](https://news.google.com/rss/search?q=%22SpaceX%22+IPO) (no API key needed; aggregates Bloomberg, CNBC, Reuters, WSJ, Motley Fool, Yahoo, etc.) — keeps the 25 newest, dedupes by title+source, drops anything older than 60 days.

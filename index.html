@@ -801,24 +801,24 @@
     <h1 class="hero-date">June 2026</h1>
 
     <div class="hero-sub">
-      Roadshow week of June 8 · pricing window June 18–30
+      Roadshow June 4 · pricing as early as June 11 · first trade as early as June 12 · Nasdaq
     </div>
 
     <div class="ticker-ribbon">
       <div class="ticker-left">
-        <div class="ticker-lbl">Likely Ticker</div>
+        <div class="ticker-lbl">Expected Ticker</div>
         <div class="ticker-sym">$SPCX</div>
       </div>
       <div class="ticker-right">
         <span class="ticker-exch">NASDAQ</span>
-        <span class="ticker-note">SPCX was freed up in April when Tuttle Capital swapped their ETF to SPCK — same playbook META used in 2022. Some outlets are also floating <strong>$SPCE</strong> (Virgin Galactic's old ticker). Neither is officially confirmed by SpaceX — the ticker drops with the public S-1.</span>
+        <span class="ticker-note">Reuters and Bloomberg now treat <strong>$SPCX</strong> on Nasdaq as the working assumption — Tuttle Capital freed up the ticker in April (same playbook META used in 2022). Final confirmation drops with the public S-1.</span>
       </div>
     </div>
 
     <div class="price-block">
-      <div class="price-label">IPO Price Benchmark</div>
-      <div class="price-value">~$525–$530</div>
-      <div class="price-range">Per-share target at $1.75T–$2T valuation · Secondary mark $661 (Hiive 05/19) · Bullish range up to $877</div>
+      <div class="price-label">IPO Price Benchmark (post-split)</div>
+      <div class="price-value">~$105–$110</div>
+      <div class="price-range">Reflects the 5-for-1 forward split private shareholders approved May 15. Pre-split benchmark was ~$525–$530 at the targeted $1.75T valuation; $75B raise. Hiive secondary mark $661 (pre-split).</div>
     </div>
 
     <div class="countdown" id="countdown">
@@ -828,7 +828,7 @@
       <div class="cd-cell"><div class="cd-num" id="cd-s">--</div><div class="cd-lbl">Sec</div></div>
     </div>
     <div class="countdown-caption" id="countdown-caption">
-      Counting to June 18, 2026 — the earliest of the June 18–30 window. Better to be ready early than caught late. Updates when SpaceX confirms a hard date.
+      Counting to June 11, 2026 — earliest pricing date in the accelerated June 11–12 window. Reuters reports SpaceX is targeting June 11 pricing and June 12 first trade. Better to be ready early than caught late.
     </div>
   </section>
 
@@ -932,10 +932,10 @@
 
   <footer>
     <div class="disc">
-      <strong>Not investment advice.</strong> Figures are publicly reported estimates from secondary markets (Hiive, Forge) and financial press (Bloomberg, CNBC, Reuters, WSJ, Motley Fool). SpaceX filed a confidential draft S-1 on April 1, 2026 and held closed-door analyst meetings April 21–23, but as of late April has not publicly confirmed an IPO date, offer price, or ticker. The countdown targets June 18, 2026 — the earliest of the reported June 18–30 pricing window — on the principle that being ready early beats being caught late.
+      <strong>Not investment advice.</strong> Figures are publicly reported estimates from secondary markets (Hiive, Forge) and financial press (Bloomberg, CNBC, Reuters, WSJ, Motley Fool). SpaceX filed a confidential draft S-1 on April 1, 2026 and approved a 5-for-1 forward stock split May 15. As of May 2026 the company has not formally confirmed the IPO date, offer price, or ticker, but Reuters reports an accelerated timeline targeting roadshow June 4, pricing as early as June 11, and first trade June 12 on Nasdaq as $SPCX. The countdown targets June 11 — earliest of the reported window — on the principle that being ready early beats being caught late.
     </div>
     <div class="meta">
-      <span class="version-badge">v1.3.0</span>
+      <span class="version-badge">v1.3.1</span>
       © <span id="year"></span> · built for you · updated <span id="built"></span>
     </div>
   </footer>
@@ -943,8 +943,8 @@
 </div>
 
 <script>
-  const IPO_DATE = new Date('2026-06-18T09:30:00-04:00');
-  const IPO_DATE_LABEL = 'June 18, 2026';
+  const IPO_DATE = new Date('2026-06-11T09:30:00-04:00');
+  const IPO_DATE_LABEL = 'June 11, 2026';
 
   // AUTO:ARTICLES:START — managed by .github/workflows/refresh-news.yml; edits here will be overwritten on the next cron run
 
@@ -997,16 +997,20 @@
       desc: "Tuttle Capital swaps their SPAC ETF ticker from SPCX to SPCK — mirrors META's 2022 playbook." },
     { date: "2026-04-21", title: "Closed-door analyst meetings",
       desc: "April 21–23 institutional pre-marketing — long-term growth strategy and financials shared with Wall Street analysts under embargo." },
-    { date: "2026-05-15", title: "Public S-1 expected", future: true,
-      desc: "Window May 15–22. Must drop at least 15 days before roadshow. Will reveal revenue, margins, defense contracts, governance, and the official ticker symbol." },
-    { date: "2026-06-08", title: "IPO roadshow begins", future: true,
-      desc: "Shotwell likely leads institutional pitch across major financial centers over ~2 weeks." },
-    { date: "2026-06-11", title: "Retail investor day", future: true,
-      desc: "Unusual mid-roadshow retail push — ~1,500 retail investors invited; underwriters want demand locked in early. Up to 30% retail allocation reportedly planned." },
-    { date: "2026-06-18", title: "Earliest pricing & first trade", future: true,
-      desc: "Front edge of the June 18–30 pricing window — the date this site counts down to. Target $1.75T–$2T valuation, ~$525–530/share benchmark, $75B raise." },
-    { date: "2026-12-15", title: "Insider lockup expires", future: true,
-      desc: "Standard 180-day lockup measured from a June 18 first trade. Employees and pre-IPO holders can sell — historically a downside catalyst as supply hits the market." }
+    { date: "2026-05-15", title: "5-for-1 forward stock split approved",
+      desc: "Private shareholders approve a 5-for-1 forward split — increases outstanding shares 5x and cuts per-share price 80% to put the IPO within reach of more retail investors." },
+    { date: "2026-05-17", title: "BlackRock anchor talks reported",
+      desc: "BlackRock in advanced discussions for a $5–10B anchor commitment, providing major institutional credibility before public trading begins." },
+    { date: "2026-05-20", title: "Public S-1 expected", future: true,
+      desc: "Reuters reports SpaceX targeting Wednesday May 20 to make the prospectus public. Will reveal revenue, margins, defense contracts, governance, and the official ticker symbol." },
+    { date: "2026-06-04", title: "IPO roadshow begins", future: true,
+      desc: "Accelerated from the originally reported June 8. Shotwell likely leads the institutional pitch across major financial centers — compressed from the typical ~2 weeks to roughly one." },
+    { date: "2026-06-11", title: "Earliest pricing", future: true,
+      desc: "Front edge of the new June 11–12 pricing window — the date this site counts down to. Target $1.75T valuation, ~$105–110/share post-split, $75B raise." },
+    { date: "2026-06-12", title: "First trade on Nasdaq", future: true,
+      desc: "Expected ticker $SPCX. Could be the biggest IPO in stock-market history; demand reportedly 10–20× oversubscribed." },
+    { date: "2026-12-09", title: "Insider lockup expires", future: true,
+      desc: "Standard 180-day lockup measured from a June 12 first trade. Employees and pre-IPO holders can sell — historically a downside catalyst as supply hits the market." }
   ];
   // AUTO:TIMELINE:END
 
@@ -1258,7 +1262,7 @@
     if ($('alert-t1').checked)   alarms.push({ trig: '-P1D',   desc: 'SpaceX IPO tomorrow' });
     if ($('alert-t30m').checked) alarms.push({ trig: '-PT30M', desc: 'SpaceX IPO in 30 min — get ready to buy' });
     const alarmBlocks = alarms.map(a => `BEGIN:VALARM\nTRIGGER:${a.trig}\nACTION:DISPLAY\nDESCRIPTION:${a.desc}\nEND:VALARM`).join('\n');
-    const ics = `BEGIN:VCALENDAR\nVERSION:2.0\nPRODID:-//SpaceX IPO Tracker//EN\nCALSCALE:GREGORIAN\nMETHOD:PUBLISH\nBEGIN:VEVENT\nUID:spacex-ipo-${stamp}@local\nDTSTAMP:${stamp}\nDTSTART:${fmt(dt)}\nDTEND:${fmt(dtEnd)}\nSUMMARY:SpaceX IPO — earliest possible first trade\nDESCRIPTION:Front edge of the June 18-30 SpaceX IPO pricing window. UNCONFIRMED. Target $1.75T-$2T valuation\\, ~$525-530/share benchmark\\, $75B raise. Likely ticker $SPCX (or $SPCE). Verify latest at spacex.bookhockeys.com before trading.\nLOCATION:Nasdaq (estimated)\nSTATUS:TENTATIVE\n${alarmBlocks}\nEND:VEVENT\nEND:VCALENDAR`;
+    const ics = `BEGIN:VCALENDAR\nVERSION:2.0\nPRODID:-//SpaceX IPO Tracker//EN\nCALSCALE:GREGORIAN\nMETHOD:PUBLISH\nBEGIN:VEVENT\nUID:spacex-ipo-${stamp}@local\nDTSTAMP:${stamp}\nDTSTART:${fmt(dt)}\nDTEND:${fmt(dtEnd)}\nSUMMARY:SpaceX IPO — earliest pricing date\nDESCRIPTION:Front edge of the accelerated June 11-12 SpaceX IPO pricing window per Reuters. Target $1.75T valuation\\, ~$105-110/share post-split (5-for-1 split approved May 15)\\, $75B raise. Expected ticker $SPCX on Nasdaq. Verify latest at spacex.bookhockeys.com before trading.\nLOCATION:Nasdaq (estimated)\nSTATUS:TENTATIVE\n${alarmBlocks}\nEND:VEVENT\nEND:VCALENDAR`;
     const blob = new Blob([ics], { type: 'text/calendar' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
@@ -1278,9 +1282,9 @@
     const fmt = (d) => d.toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, '');
     const params = new URLSearchParams({
       action: 'TEMPLATE',
-      text: 'SpaceX IPO — earliest possible first trade',
+      text: 'SpaceX IPO — earliest pricing date',
       dates: `${fmt(dt)}/${fmt(dtEnd)}`,
-      details: 'Front edge of the June 18-30 SpaceX IPO pricing window. UNCONFIRMED. Target $1.75T-$2T valuation, ~$525-530/share benchmark, $75B raise. Likely ticker $SPCX (or $SPCE). Verify latest at spacex.bookhockeys.com before trading.',
+      details: 'Front edge of the accelerated June 11-12 SpaceX IPO pricing window per Reuters. Target $1.75T valuation, ~$105-110/share post-split (5-for-1 split approved May 15), $75B raise. Expected ticker $SPCX on Nasdaq. Verify latest at spacex.bookhockeys.com before trading.',
       location: 'Nasdaq (estimated)'
     });
     return 'https://calendar.google.com/calendar/render?' + params.toString();
