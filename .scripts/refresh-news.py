@@ -141,40 +141,55 @@ def filter_articles(articles, days=60, cap=25):
 
 
 # === SEC EDGAR ===============================================================
-EDGAR_SEARCH = "https://efts.sec.gov/LATEST/search-index"
-# Only forms that would be material milestones for an IPO. Form D is
-# private-placement noise; we keep the hand-curated CIK-specific Form D
-# entries already in FILINGS, but the script won't add more.
-EDGAR_FORMS = "S-1,S-1/A,F-1,F-1/A,DRS,DRS/A,424B1,424B2,424B3,424B4,8-A12B"
+# The full-text search endpoint (efts.sec.gov/LATEST/search-index) keeps
+# returning 403 to GitHub Actions runner IPs even with a compliant UA, so
+# v1.3.2 switched to polling each SpaceX-related CIK directly via the
+# data.sec.gov submissions API. Much more reliable.
+SPACEX_CIK = "1181412"  # SPACE EXPLORATION TECHNOLOGIES CORP (S-1 / DRS filer)
+RELATED_CIKS = [           # Historical Form D filers; included for completeness
+    "1819923",  # SpaceX Fund One (Maybrook)
+    "1826165",  # SpaceX Series (Pre-IPO Marketplace)
+    "1992247",  # SpaceX Jun 2023 (CGF2021)
+    "2047425",  # SpaceX 4 Nov 2024 (CGF2021)
+]
+INTERESTING_FORMS = {
+    "S-1", "S-1/A", "F-1", "F-1/A",
+    "DRS", "DRS/A",
+    "424B1", "424B2", "424B3", "424B4", "424B5",
+    "8-A12B", "10-K",
+}
 
 
 def edgar_filings():
-    params = {
-        "q": '"Space Exploration Technologies"',
-        "dateRange": "custom",
-        "startdt": "2026-01-01",
-        "enddt": dt.date.today().isoformat(),
-        "forms": EDGAR_FORMS,
-    }
-    url = f"{EDGAR_SEARCH}?{urlencode(params)}"
-    body = fetch(url, accept="application/json")
-    data = json.loads(body)
-    hits = data.get("hits", {}).get("hits", [])
+    """Poll SpaceX's CIK directly + the historical Form-D-filer CIKs for
+    IPO-material forms. Returns a list of dicts in the shape the rest of
+    the script expects: {form, date, ciks, accession, filer}."""
     out = []
-    for h in hits:
-        src = h.get("_source", {})
-        # display_names like "SPACE EXPLORATION TECHNOLOGIES CORP."
-        names = " ".join(src.get("display_names", []) or [])
-        if "SPACE EXPLORATION TECHNOLOGIES" not in names.upper() \
-                and "SPACEX" not in names.upper():
-            continue  # Filing mentions SpaceX in the doc but isn't FROM SpaceX
-        out.append({
-            "form": src.get("form", ""),
-            "date": src.get("file_date", ""),
-            "ciks": src.get("ciks", []),
-            "accession": src.get("adsh", ""),
-            "filer": names,
-        })
+    for cik in [SPACEX_CIK] + RELATED_CIKS:
+        try:
+            body = fetch(
+                f"https://data.sec.gov/submissions/CIK{cik.zfill(10)}.json",
+                accept="application/json",
+            )
+            data = json.loads(body)
+        except Exception as e:
+            print(f"  WARNING: EDGAR CIK {cik} fetch failed: {e}", file=sys.stderr)
+            continue
+        name = data.get("name", f"CIK {cik}")
+        recent = data.get("filings", {}).get("recent", {})
+        forms = recent.get("form", [])
+        dates = recent.get("filingDate", [])
+        accs = recent.get("accessionNumber", [])
+        for form, date, acc in zip(forms, dates, accs):
+            if form not in INTERESTING_FORMS:
+                continue
+            out.append({
+                "form": form,
+                "date": date,
+                "ciks": [cik],
+                "accession": acc,
+                "filer": name,
+            })
     return out
 
 

@@ -50,6 +50,18 @@ To run it manually: GitHub → **Actions** tab → **Refresh news + filings** �
 
 ## Changelog
 
+### v1.3.2 — 2026-05-28
+- **The public S-1 actually filed on May 20, 2026.** Accession `0001628280-26-036936` under CIK `1181412` (Space Exploration Technologies Corp.). Confirms $SPCX on Nasdaq; underwriters Morgan Stanley (left-lead), Goldman Sachs, BofA, Citi, JPMorgan; price range deliberately blank, to be set during the roadshow.
+- **Timeline updated** to reflect what actually happened vs. what was predicted:
+  - "Confidential S-1 filed" date corrected from April 1 → **March 30** per SEC records (April 1 was the press-report date)
+  - **Added** May 7 "Confidential S-1 amendment (DRS/A) filed" (accession `0001628279-26-000583`)
+  - "Public S-1 expected" → **"Public S-1 filed on EDGAR"** with full underwriter list in the description
+- **FILINGS** gets three real entries replacing the placeholder "Confidential draft registration": the public S-1 (linking to the actual SEC archive at [sec.gov/Archives/.../spaceexplorationtechnologi.htm](https://www.sec.gov/Archives/edgar/data/1181412/000162828026036936/spaceexplorationtechnologi.htm)), the May 7 DRS/A, and the March 30 original DRS.
+- **Ticker ribbon** language tightened from "Expected Ticker / working assumption" → "Confirmed Ticker / Officially confirmed in S-1."
+- **Price block** caveat reworded — the S-1 cover left the price range blank, so the ~$105–$110 number is now framed as a working estimate pending the roadshow.
+- **Footer disclaimer** rewritten to reflect the S-1 being public, the ticker being official, and the price range being TBD.
+- **Bot's EDGAR poller rewritten.** It had been silently 403'ing from GitHub Actions IPs against the `efts.sec.gov/LATEST/search-index` endpoint, which is why the May 20 S-1 wasn't auto-detected. Now polls SpaceX's CIK directly via `https://data.sec.gov/submissions/CIK0001181412.json` (plus the four historical Form D filer CIKs), which is far more reliable. When the 424B prospectus drops at pricing, the bot should now actually catch it and append the "Final prospectus (424B) filed" timeline event automatically.
+
 ### v1.3.1 — 2026-05-19
 - **Major news refresh** for the manual-only fields the auto-refresh deliberately doesn't touch. Reuters reported May 15 that the IPO timeline has been substantially accelerated and shareholders approved a 5-for-1 forward stock split.
 - **Countdown pivoted from June 18 → June 11** (earliest of the new June 11–12 pricing window). Footer disclaimer and countdown caption updated to match.
