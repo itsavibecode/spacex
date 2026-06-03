@@ -50,6 +50,15 @@ To run it manually: GitHub → **Actions** tab → **Refresh news + filings** �
 
 ## Changelog
 
+### v1.3.3 — 2026-06-03
+- **Fixed $135 IPO price disclosed today.** CNBC reports SpaceX is going to market with a fixed $135 per share — no traditional book-built range — at the targeted $1.75T valuation. This is unusual for an IPO of this size. The price block flipped from "Working estimate ~$105-$110" to **"IPO Offer Price (fixed) $135.00"** with a clear caveat about the atypical structure.
+- **Two new S-1 amendments hand-added** (bot's EDGAR poller still blocked from GH Actions IPs):
+  - **June 1 — S-1/A #1** (accession `0001628280-26-039276`) disclosed up to 5% of shares reserved for employees / friends-and-family
+  - **June 3 — S-1/A #2** (accession `0001628280-26-040364`) reportedly contains the fixed-price offering terms
+- **Timeline events** added for both amendments + the fixed-price disclosure. The June 11 event renamed from "Earliest pricing" → "Pricing" since the date is no longer a "as early as" estimate, and the June 12 event description tightened.
+- **Hero subtitle** rewritten: "Roadshow starts June 4 · pricing June 11 at $135 fixed · first trade June 12 on Nasdaq as $SPCX."
+- **Countdown caption, footer disclaimer, .ics summary, and Google Calendar event description** all updated to reflect the fixed $135 price and the actual amendment-derived dates.
+
 ### v1.3.2 — 2026-05-28
 - **The public S-1 actually filed on May 20, 2026.** Accession `0001628280-26-036936` under CIK `1181412` (Space Exploration Technologies Corp.). Confirms $SPCX on Nasdaq; underwriters Morgan Stanley (left-lead), Goldman Sachs, BofA, Citi, JPMorgan; price range deliberately blank, to be set during the roadshow.
 - **Timeline updated** to reflect what actually happened vs. what was predicted:

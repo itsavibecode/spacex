@@ -801,7 +801,7 @@
     <h1 class="hero-date">June 2026</h1>
 
     <div class="hero-sub">
-      Roadshow June 4 · pricing as early as June 11 · first trade as early as June 12 · Nasdaq
+      Roadshow starts June 4 · pricing June 11 at $135 fixed · first trade June 12 on Nasdaq as $SPCX
     </div>
 
     <div class="ticker-ribbon">
@@ -816,9 +816,9 @@
     </div>
 
     <div class="price-block">
-      <div class="price-label">IPO Price Benchmark (post-split)</div>
-      <div class="price-value">~$105–$110</div>
-      <div class="price-range">Working estimate — the S-1 cover page left the price range blank, to be set during the roadshow on institutional demand. Reflects the 5-for-1 forward split approved May 15; targeted $1.75T valuation, $75B raise.</div>
+      <div class="price-label">IPO Offer Price (fixed)</div>
+      <div class="price-value">$135.00</div>
+      <div class="price-range">Per CNBC June 3: SpaceX is going to market with a <strong>fixed $135 per share</strong>, not a traditional book-built range. Implies the targeted $1.75T valuation; $75B raise. Post 5-for-1 forward split (May 15). Unusual structure — most IPOs price within a range set during the roadshow.</div>
     </div>
 
     <div class="countdown" id="countdown">
@@ -828,7 +828,7 @@
       <div class="cd-cell"><div class="cd-num" id="cd-s">--</div><div class="cd-lbl">Sec</div></div>
     </div>
     <div class="countdown-caption" id="countdown-caption">
-      Counting to June 11, 2026 — earliest pricing date in the accelerated June 11–12 window. Reuters reports SpaceX is targeting June 11 pricing and June 12 first trade. Better to be ready early than caught late.
+      Counting to June 11, 2026 — pricing date per the June 3 S-1/A. SpaceX is going to market with a fixed $135 per share. First trade on Nasdaq June 12 as $SPCX.
     </div>
   </section>
 
@@ -932,10 +932,10 @@
 
   <footer>
     <div class="disc">
-      <strong>Not investment advice.</strong> SpaceX filed its public S-1 on EDGAR May 20, 2026 (CIK 1181412), confirming the $SPCX ticker on Nasdaq. The cover page left the price range blank — it will be set during the roadshow in early June. Reuters and Bloomberg report targets of roadshow June 4, pricing as early as June 11, and first trade as early as June 12. Per-share price reflects the 5-for-1 forward split approved May 15. The countdown targets June 11 — earliest of the reported window — on the principle that being ready early beats being caught late. Figures from public filings, secondary markets (Hiive, Forge), and financial press.
+      <strong>Not investment advice.</strong> SpaceX filed its public S-1 on EDGAR May 20, 2026 (CIK 1181412) confirming $SPCX on Nasdaq, and amended it twice — June 1 (5% employee/friends allocation) and June 3 (per CNBC, a fixed $135 offer price, atypical for an IPO this size). Roadshow begins June 4; pricing June 11; first trade June 12. Per-share price reflects the 5-for-1 forward split approved May 15. Figures from public SEC filings and financial press (CNBC, Reuters, Bloomberg, Motley Fool).
     </div>
     <div class="meta">
-      <span class="version-badge">v1.3.2</span>
+      <span class="version-badge">v1.3.3</span>
       © <span id="year"></span> · built for you · updated <span id="built"></span>
     </div>
   </footer>
@@ -1005,12 +1005,16 @@
       desc: "BlackRock in advanced discussions for a $5–10B anchor commitment, providing major institutional credibility before public trading begins." },
     { date: "2026-05-20", title: "Public S-1 filed on EDGAR",
       desc: "SpaceX files its full public S-1 prospectus (accession 0001628280-26-036936) — ticker $SPCX on Nasdaq officially confirmed. Underwriters: Morgan Stanley (left-lead), Goldman Sachs, BofA, Citi, JPMorgan. Price range left blank — to be set during the roadshow." },
+    { date: "2026-06-01", title: "S-1/A amendment + 5% employee allocation",
+      desc: "First public S-1 amendment (accession 0001628280-26-039276) — CNBC reports SpaceX is setting aside up to 5% of shares for current and former employees plus friends-and-family." },
+    { date: "2026-06-03", title: "Fixed $135 IPO price disclosed",
+      desc: "Second S-1/A (accession 0001628280-26-040364) reportedly contains the offering terms. Per CNBC: SpaceX is going to market with a FIXED $135 per share — no traditional book-built range — at the $1.75T valuation. Atypical IPO structure." },
     { date: "2026-06-04", title: "IPO roadshow begins", future: true,
-      desc: "Accelerated from the originally reported June 8. Shotwell likely leads the institutional pitch across major financial centers — compressed from the typical ~2 weeks to roughly one." },
-    { date: "2026-06-11", title: "Earliest pricing", future: true,
-      desc: "Front edge of the new June 11–12 pricing window — the date this site counts down to. Target $1.75T valuation, ~$105–110/share post-split, $75B raise." },
+      desc: "Shotwell likely leads the institutional pitch across major financial centers — compressed from the typical ~2 weeks to roughly one." },
+    { date: "2026-06-11", title: "Pricing", future: true,
+      desc: "Allocation finalized. Target $1.75T valuation at $135/share post-split, $75B raise." },
     { date: "2026-06-12", title: "First trade on Nasdaq", future: true,
-      desc: "Expected ticker $SPCX. Could be the biggest IPO in stock-market history; demand reportedly 10–20× oversubscribed." },
+      desc: "Ticker $SPCX. Could be the biggest IPO in stock-market history; demand reportedly 10–20× oversubscribed." },
     { date: "2026-12-09", title: "Insider lockup expires", future: true,
       desc: "Standard 180-day lockup measured from a June 12 first trade. Employees and pre-IPO holders can sell — historically a downside catalyst as supply hits the market." }
   ];
@@ -1018,6 +1022,8 @@
 
   // AUTO:FILINGS:START — partially auto-managed: refresh-news.py updates "Updated" dates on live links and appends SEC-detected filings. Hand-curated entries are preserved.
   const FILINGS = [
+    { type: "S-1/A",     title: "S-1 amendment #2 ($135 fixed price)", meta: "CIK 1181412 · accession 0001628280-26-040364 · reportedly contains the $135 fixed offering price", url: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001181412&type=S-1&dateb=&owner=include&count=40", date: "2026-06-03", dateKind: "Filed" },
+    { type: "S-1/A",     title: "S-1 amendment #1",                  meta: "CIK 1181412 · accession 0001628280-26-039276 · 5% employee/friends allocation disclosed", url: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001181412&type=S-1&dateb=&owner=include&count=40", date: "2026-06-01", dateKind: "Filed" },
     { type: "S-1",       title: "Public S-1 prospectus",            meta: "SPACE EXPLORATION TECHNOLOGIES CORP · CIK 1181412 · accession 0001628280-26-036936", url: "https://www.sec.gov/Archives/edgar/data/1181412/000162828026036936/spaceexplorationtechnologi.htm", date: "2026-05-20", dateKind: "Filed" },
     { type: "DRS/A",     title: "Confidential S-1 amendment",       meta: "CIK 1181412 · accession 0001628279-26-000583", url: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001181412&type=DRS&dateb=&owner=include&count=40", date: "2026-05-07", dateKind: "Filed" },
     { type: "DRS",       title: "Original confidential draft",      meta: "CIK 1181412 · accession 0001628280-26-021860", url: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001181412&type=DRS&dateb=&owner=include&count=40", date: "2026-03-30", dateKind: "Filed" },
@@ -1266,7 +1272,7 @@
     if ($('alert-t1').checked)   alarms.push({ trig: '-P1D',   desc: 'SpaceX IPO tomorrow' });
     if ($('alert-t30m').checked) alarms.push({ trig: '-PT30M', desc: 'SpaceX IPO in 30 min — get ready to buy' });
     const alarmBlocks = alarms.map(a => `BEGIN:VALARM\nTRIGGER:${a.trig}\nACTION:DISPLAY\nDESCRIPTION:${a.desc}\nEND:VALARM`).join('\n');
-    const ics = `BEGIN:VCALENDAR\nVERSION:2.0\nPRODID:-//SpaceX IPO Tracker//EN\nCALSCALE:GREGORIAN\nMETHOD:PUBLISH\nBEGIN:VEVENT\nUID:spacex-ipo-${stamp}@local\nDTSTAMP:${stamp}\nDTSTART:${fmt(dt)}\nDTEND:${fmt(dtEnd)}\nSUMMARY:SpaceX IPO — earliest pricing date\nDESCRIPTION:Front edge of the accelerated June 11-12 SpaceX IPO pricing window per Reuters. Target $1.75T valuation\\, ~$105-110/share post-split (5-for-1 split approved May 15)\\, $75B raise. Expected ticker $SPCX on Nasdaq. Verify latest at spacex.bookhockeys.com before trading.\nLOCATION:Nasdaq (estimated)\nSTATUS:TENTATIVE\n${alarmBlocks}\nEND:VEVENT\nEND:VCALENDAR`;
+    const ics = `BEGIN:VCALENDAR\nVERSION:2.0\nPRODID:-//SpaceX IPO Tracker//EN\nCALSCALE:GREGORIAN\nMETHOD:PUBLISH\nBEGIN:VEVENT\nUID:spacex-ipo-${stamp}@local\nDTSTAMP:${stamp}\nDTSTART:${fmt(dt)}\nDTEND:${fmt(dtEnd)}\nSUMMARY:SpaceX IPO — pricing day ($135 fixed)\nDESCRIPTION:SpaceX IPO pricing per the June 3 S-1/A. Going to market with a FIXED $135 per share (no traditional range) at the $1.75T valuation\\, $75B raise. Ticker $SPCX on Nasdaq. First trade June 12. Verify latest at spacex.bookhockeys.com before trading.\nLOCATION:Nasdaq (estimated)\nSTATUS:TENTATIVE\n${alarmBlocks}\nEND:VEVENT\nEND:VCALENDAR`;
     const blob = new Blob([ics], { type: 'text/calendar' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
@@ -1286,9 +1292,9 @@
     const fmt = (d) => d.toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, '');
     const params = new URLSearchParams({
       action: 'TEMPLATE',
-      text: 'SpaceX IPO — earliest pricing date',
+      text: 'SpaceX IPO — pricing day ($135 fixed)',
       dates: `${fmt(dt)}/${fmt(dtEnd)}`,
-      details: 'Front edge of the accelerated June 11-12 SpaceX IPO pricing window per Reuters. Target $1.75T valuation, ~$105-110/share post-split (5-for-1 split approved May 15), $75B raise. Expected ticker $SPCX on Nasdaq. Verify latest at spacex.bookhockeys.com before trading.',
+      details: 'SpaceX IPO pricing per the June 3 S-1/A. Going to market with a FIXED $135 per share (no traditional range) at the $1.75T valuation, $75B raise. Ticker $SPCX on Nasdaq. First trade June 12. Verify latest at spacex.bookhockeys.com before trading.',
       location: 'Nasdaq (estimated)'
     });
     return 'https://calendar.google.com/calendar/render?' + params.toString();
