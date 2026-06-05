@@ -50,6 +50,11 @@ To run it manually: GitHub → **Actions** tab → **Refresh news + filings** �
 
 ## Changelog
 
+### v1.3.4 — 2026-06-03
+- **OG image regenerated.** The 1200×630 share-preview PNG had been stale since v1.2.2 — still showing `~$525-$530`, `LIKELY TICKER`, `UNCONFIRMED · TARGET WINDOW`, and the original "Roadshow week of June 8 · Pricing window June 18-30" subtitle. Anyone who shared the link in iMessage / Discord / Slack / LinkedIn was seeing the old v1.2.x story. Now displays `$135.00`, `CONFIRMED TICKER · $SPCX`, `CONFIRMED · PRICING JUNE 11`, and the current subtitle. `.scripts/build-og-image.py` updated to match. Re-run after every hero/price change.
+- **Share count + Fidelity retail access** folded into the disclaimer and the Broker prep section. ~555.6M shares at $135 = $75B raise (the math checks). Fidelity confirmed as SpaceX's named retail-access broker, so it's now elevated to the top of the broker list with a bold note about opting in before June 11. Schwab dropped down; the 5% employee carve-out from v1.3.3 added as a separate line for clarity.
+- **June 4 timeline event** updated from generic "IPO roadshow begins" → "IPO roadshow + retail access opens" with the now-known specifics: dedicated SpaceX investor website + roadshow presentation + Fidelity retail opens.
+
 ### v1.3.3 — 2026-06-03
 - **Fixed $135 IPO price disclosed today.** CNBC reports SpaceX is going to market with a fixed $135 per share — no traditional book-built range — at the targeted $1.75T valuation. This is unusual for an IPO of this size. The price block flipped from "Working estimate ~$105-$110" to **"IPO Offer Price (fixed) $135.00"** with a clear caveat about the atypical structure.
 - **Two new S-1 amendments hand-added** (bot's EDGAR poller still blocked from GH Actions IPs):

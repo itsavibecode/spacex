@@ -60,7 +60,7 @@ d.text((brand_x + 22 + slash_w + 10, brand_y + 4), "/  Tracker",
        font=brand_font, fill=INK_FAINT)
 
 # Status pill (top-right)
-status_text = "UNCONFIRMED · TARGET WINDOW"
+status_text = "CONFIRMED · PRICING JUNE 11"
 status_font = f("Inter-SemiBold.ttf", 14)
 sw, sh = text_size(d, status_text, status_font)
 sp_x2 = W - PAD - 36
@@ -83,7 +83,7 @@ d.text(((W - dw) / 2, date_y), date_text, font=date_font, fill=INK)
 
 # Subtitle under the date, with breathing room based on the font's true height
 sub_font = f("Inter-Medium.ttf", 24)
-sub_text = "Roadshow week of June 8  ·  Pricing window June 18–30"
+sub_text = "Roadshow June 4  ·  Pricing June 11  ·  First trade June 12"
 sw2, _ = text_size(d, sub_text, sub_font)
 d.text(((W - sw2) / 2, date_y + date_visual_height + 8),
        sub_text, font=sub_font, fill=INK_DIM)
@@ -98,7 +98,7 @@ d.rounded_rectangle([tk_x, row_y, tk_x + tk_w, row_y + tk_h],
                     radius=14, fill=PANEL, outline=LINE, width=1)
 
 lbl_font = f("Inter-SemiBold.ttf", 13)
-d.text((tk_x + 22, row_y + 18), "LIKELY TICKER", font=lbl_font, fill=INK_DIM)
+d.text((tk_x + 22, row_y + 18), "CONFIRMED TICKER", font=lbl_font, fill=INK_DIM)
 
 ticker_font = f("consolab.ttf", 44)
 d.text((tk_x + 22, row_y + 40), "$SPCX", font=ticker_font, fill=ACCENT)
@@ -116,10 +116,10 @@ pr_w = 540
 pr_x = W - PAD - 36 - pr_w
 d.rounded_rectangle([pr_x, row_y, pr_x + pr_w, row_y + tk_h],
                     radius=14, fill=PANEL, outline=LINE, width=1)
-d.text((pr_x + 26, row_y + 18), "IPO PRICE BENCHMARK",
+d.text((pr_x + 26, row_y + 18), "IPO OFFER PRICE (FIXED)",
        font=lbl_font, fill=INK_DIM)
-price_font = f("ariblk.ttf", 56)
-d.text((pr_x + 26, row_y + 38), "~$525–$530",
+price_font = f("ariblk.ttf", 62)
+d.text((pr_x + 26, row_y + 38), "$135.00",
        font=price_font, fill=ACCENT2)
 
 # --- Footer URL -------------------------------------------------------------
