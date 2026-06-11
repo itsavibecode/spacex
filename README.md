@@ -50,6 +50,20 @@ To run it manually: GitHub → **Actions** tab → **Refresh news + filings** �
 
 ## Changelog
 
+### v1.3.5 — 2026-06-11 (pricing day)
+- **It's pricing day.** SpaceX prices today at $135 fixed, $1.75T post-money valuation. First trade tomorrow on Nasdaq as $SPCX — the biggest IPO in stock-market history. Direct EDGAR check turned up a flurry of pre-trade filings the bot's poller missed; hand-pulled and added below.
+- **Hero subtitle** rewritten for "it's today" tense: "Pricing today at $135 fixed · First trade tomorrow on Nasdaq as $SPCX · 555.6M shares + 83.33M greenshoe."
+- **Countdown caption** now reads "Pricing happens today after market close at the fixed $135 per share. $SPCX opens for trading tomorrow on Nasdaq — the biggest IPO in stock-market history."
+- **Footer disclaimer** rewritten — adds greenshoe (83.33M shares = up to $86.2B fully exercised), reported $70B+ retail demand, June 10 Nasdaq listing approval, and removes pre-pricing tense throughout.
+- **Three new TIMELINE events** between June 4 roadshow and June 11 pricing:
+  - **June 8** — First FWP (Free Writing Prospectus) filed; second FWP June 9. Roadshow marketing materials live on EDGAR.
+  - **June 10** — Nasdaq listing approved. Form 8-A12B filed + Nasdaq CERT issued = all pre-trade clearances in place.
+  - **June 11 (today)** — Pricing day description expanded with the actual offering specifics (555.6M + 83.33M greenshoe @ $135; ~$75-86B raise; $70B+ retail demand; 1,500-attendee retail event).
+- **Two new FILINGS entries** at the top of the list:
+  - **8-A12B** (accession 0001628280-26-042107) with the paired Nasdaq CERT noted
+  - **FWP** (accession 0001628280-26-041761) with the June 8 FWP noted (0001628280-26-041365)
+- **Roadshow event description** updated with the ~125 analysts from 21 banks specifics now that the actual roadshow attendance is reported.
+
 ### v1.3.4 — 2026-06-03
 - **OG image regenerated.** The 1200×630 share-preview PNG had been stale since v1.2.2 — still showing `~$525-$530`, `LIKELY TICKER`, `UNCONFIRMED · TARGET WINDOW`, and the original "Roadshow week of June 8 · Pricing window June 18-30" subtitle. Anyone who shared the link in iMessage / Discord / Slack / LinkedIn was seeing the old v1.2.x story. Now displays `$135.00`, `CONFIRMED TICKER · $SPCX`, `CONFIRMED · PRICING JUNE 11`, and the current subtitle. `.scripts/build-og-image.py` updated to match. Re-run after every hero/price change.
 - **Share count + Fidelity retail access** folded into the disclaimer and the Broker prep section. ~555.6M shares at $135 = $75B raise (the math checks). Fidelity confirmed as SpaceX's named retail-access broker, so it's now elevated to the top of the broker list with a bold note about opting in before June 11. Schwab dropped down; the 5% employee carve-out from v1.3.3 added as a separate line for clarity.

@@ -801,7 +801,7 @@
     <h1 class="hero-date">June 2026</h1>
 
     <div class="hero-sub">
-      Roadshow starts June 4 · pricing June 11 at $135 fixed · first trade June 12 on Nasdaq as $SPCX
+      Pricing today at $135 fixed · First trade tomorrow on Nasdaq as $SPCX · 555.6M shares + 83.33M greenshoe
     </div>
 
     <div class="ticker-ribbon">
@@ -828,7 +828,7 @@
       <div class="cd-cell"><div class="cd-num" id="cd-s">--</div><div class="cd-lbl">Sec</div></div>
     </div>
     <div class="countdown-caption" id="countdown-caption">
-      Counting to June 11, 2026 — pricing date per the June 3 S-1/A. SpaceX is going to market with a fixed $135 per share. First trade on Nasdaq June 12 as $SPCX.
+      Pricing happens today after market close at the fixed $135 per share. $SPCX opens for trading tomorrow on Nasdaq — the biggest IPO in stock-market history.
     </div>
   </section>
 
@@ -933,10 +933,10 @@
 
   <footer>
     <div class="disc">
-      <strong>Not investment advice.</strong> SpaceX filed its public S-1 on EDGAR May 20, 2026 (CIK 1181412) confirming $SPCX on Nasdaq, and amended it twice — June 1 (5% employee/friends allocation) and June 3 (per CNBC, a fixed $135 offer price, atypical for an IPO this size). At $135 × ~555.6M shares the deal raises ~$75B at the targeted $1.75T valuation. Roadshow begins June 4 with Fidelity opening retail access; pricing June 11; first trade June 12. Per-share price reflects the 5-for-1 forward split approved May 15. Figures from public SEC filings and financial press (CNBC, Reuters, Bloomberg, Motley Fool).
+      <strong>Not investment advice.</strong> SpaceX is pricing today (June 11) at a fixed $135 per share — atypical for an IPO this size — at the $1.75T post-money valuation. 555.6M primary shares plus an 83.33M underwriter greenshoe option implies $75B–$86.2B raised. Reported retail demand >$70B. $SPCX begins trading on Nasdaq tomorrow June 12. Public S-1 (CIK 1181412) filed May 20, amended June 1 (5% employee/friends allocation) and June 3 (fixed price). Nasdaq listing approved June 10 (Form 8-A12B). Per-share price reflects the 5-for-1 forward split approved May 15. Figures from public SEC filings and financial press (CNBC, Reuters, Bloomberg, Motley Fool).
     </div>
     <div class="meta">
-      <span class="version-badge">v1.3.4</span>
+      <span class="version-badge">v1.3.5</span>
       © <span id="year"></span> · built for you · updated <span id="built"></span>
     </div>
   </footer>
@@ -1010,12 +1010,16 @@
       desc: "First public S-1 amendment (accession 0001628280-26-039276) — CNBC reports SpaceX is setting aside up to 5% of shares for current and former employees plus friends-and-family." },
     { date: "2026-06-03", title: "Fixed $135 IPO price disclosed",
       desc: "Second S-1/A (accession 0001628280-26-040364) reportedly contains the offering terms. Per CNBC: SpaceX is going to market with a FIXED $135 per share — no traditional book-built range — at the $1.75T valuation. Atypical IPO structure." },
-    { date: "2026-06-04", title: "IPO roadshow + retail access opens", future: true,
-      desc: "Roadshow officially kicks off. SpaceX launches a dedicated investor website + releases its full roadshow presentation. Fidelity opens retail access to $SPCX shares for opted-in customers." },
-    { date: "2026-06-11", title: "Pricing", future: true,
-      desc: "Allocation finalized. Target $1.75T valuation at $135/share post-split, $75B raise." },
+    { date: "2026-06-04", title: "IPO roadshow + retail access opens",
+      desc: "Roadshow officially kicks off — ~125 analysts from 21 banks meet management. SpaceX launches a dedicated investor website + releases its full roadshow presentation. Fidelity opens retail access to $SPCX shares for opted-in customers." },
+    { date: "2026-06-08", title: "Free Writing Prospectus filed",
+      desc: "First FWP (accession 0001628280-26-041365) — roadshow marketing materials live on EDGAR. Second FWP follows June 9 (accession 0001628280-26-041761)." },
+    { date: "2026-06-10", title: "Nasdaq listing approved",
+      desc: "SpaceX files Form 8-A12B (accession 0001628280-26-042107) to register $SPCX with Nasdaq. Nasdaq certifies (CERT accession 0000876796-26-000014). All pre-trade clearances now in place." },
+    { date: "2026-06-11", title: "Pricing day · $135 fixed",
+      desc: "555.6M primary shares + 83.33M underwriter greenshoe option @ $135 = $75B raise (up to $86.2B fully exercised) at $1.75T valuation. Reported $70B+ in retail demand. Dedicated retail investor event for ~1,500 attendees. Pricing happens after market close; first trade June 12." },
     { date: "2026-06-12", title: "First trade on Nasdaq", future: true,
-      desc: "Ticker $SPCX. Could be the biggest IPO in stock-market history; demand reportedly 10–20× oversubscribed." },
+      desc: "$SPCX opens trading on Nasdaq — the biggest IPO in stock-market history." },
     { date: "2026-12-09", title: "Insider lockup expires", future: true,
       desc: "Standard 180-day lockup measured from a June 12 first trade. Employees and pre-IPO holders can sell — historically a downside catalyst as supply hits the market." }
   ];
@@ -1023,6 +1027,8 @@
 
   // AUTO:FILINGS:START — partially auto-managed: refresh-news.py updates "Updated" dates on live links and appends SEC-detected filings. Hand-curated entries are preserved.
   const FILINGS = [
+    { type: "8-A12B",    title: "Nasdaq listing registration",       meta: "CIK 1181412 · accession 0001628280-26-042107 · Form 8-A to register $SPCX with Nasdaq; Nasdaq CERT 0000876796-26-000014", url: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001181412&type=8-A12B&dateb=&owner=include&count=40", date: "2026-06-10", dateKind: "Filed" },
+    { type: "FWP",       title: "Free Writing Prospectus",           meta: "CIK 1181412 · accession 0001628280-26-041761 · roadshow marketing materials (earlier FWP June 8: 0001628280-26-041365)", url: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001181412&type=FWP&dateb=&owner=include&count=40", date: "2026-06-09", dateKind: "Filed" },
     { type: "S-1/A",     title: "S-1 amendment #2 ($135 fixed price)", meta: "CIK 1181412 · accession 0001628280-26-040364 · reportedly contains the $135 fixed offering price", url: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001181412&type=S-1&dateb=&owner=include&count=40", date: "2026-06-03", dateKind: "Filed" },
     { type: "S-1/A",     title: "S-1 amendment #1",                  meta: "CIK 1181412 · accession 0001628280-26-039276 · 5% employee/friends allocation disclosed", url: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001181412&type=S-1&dateb=&owner=include&count=40", date: "2026-06-01", dateKind: "Filed" },
     { type: "S-1",       title: "Public S-1 prospectus",            meta: "SPACE EXPLORATION TECHNOLOGIES CORP · CIK 1181412 · accession 0001628280-26-036936", url: "https://www.sec.gov/Archives/edgar/data/1181412/000162828026036936/spaceexplorationtechnologi.htm", date: "2026-05-20", dateKind: "Filed" },
@@ -1111,8 +1117,10 @@
   function updateCountdown() {
     const diff = IPO_DATE - new Date();
     if (diff <= 0) {
+      // Don't override the static HTML caption — it's hand-written for the
+      // current pricing/trade-day context (e.g. "Pricing happens today...")
+      // and is more informative than a generic fallback.
       ['cd-d','cd-h','cd-m','cd-s'].forEach(id => $(id).textContent = '00');
-      $('countdown-caption').textContent = 'IPO window has arrived — verify live status';
       return;
     }
     $('cd-d').textContent = pad(Math.floor(diff / 86400000));
