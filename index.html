@@ -219,6 +219,37 @@
     text-transform: uppercase;
     margin-top: 10px;
   }
+  .live-banner {
+    margin: 52px auto 0;
+    max-width: 720px;
+    padding: 28px 24px;
+    background: linear-gradient(135deg, rgba(95,217,157,0.10), rgba(95,217,157,0.04));
+    border: 1px solid rgba(95,217,157,0.45);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+  }
+  .live-banner .live-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--good);
+    box-shadow: 0 0 0 0 rgba(95,217,157,0.6);
+    animation: pulse-live 1.6s infinite;
+  }
+  @keyframes pulse-live {
+    0% { box-shadow: 0 0 0 0 rgba(95,217,157,0.6); }
+    70% { box-shadow: 0 0 0 14px rgba(95,217,157,0); }
+    100% { box-shadow: 0 0 0 0 rgba(95,217,157,0); }
+  }
+  .live-banner .live-text {
+    font-size: clamp(20px, 3.5vw, 28px);
+    font-weight: 700;
+    color: var(--good);
+    letter-spacing: -0.01em;
+  }
   .countdown-caption {
     text-align: center;
     margin-top: 18px;
@@ -827,6 +858,10 @@
       <div class="cd-cell"><div class="cd-num" id="cd-m">--</div><div class="cd-lbl">Min</div></div>
       <div class="cd-cell"><div class="cd-num" id="cd-s">--</div><div class="cd-lbl">Sec</div></div>
     </div>
+    <div class="live-banner" id="live-banner" hidden>
+      <span class="live-dot" aria-hidden="true"></span>
+      <span class="live-text">$SPCX trading live on Nasdaq</span>
+    </div>
     <div class="countdown-caption" id="countdown-caption">
       The IPO is live. $SPCX opened trading on Nasdaq today after pricing at $135 last night — the largest IPO in stock-market history. SEC effective notice was issued June 11; the 424B4 final prospectus filed June 12.
     </div>
@@ -936,7 +971,7 @@
       <strong>Not investment advice.</strong> SpaceX priced its IPO June 11 at a fixed $135 per share, and $SPCX began trading on Nasdaq today, June 12. Final 424B4 prospectus filed (accession 0001628280-26-042639). 555.6M primary shares plus an 83.33M underwriter greenshoe option = $75B–$86.2B raised at the $1.77T post-money valuation. Reported $70B+ in retail demand. Public S-1 (CIK 1181412) filed May 20, amended June 1 (5% employee/friends allocation) and June 3 (fixed price). Per-share price reflects the 5-for-1 forward split approved May 15. For live intraday price, check your broker. Figures from public SEC filings and financial press (CNBC, Reuters, Bloomberg, Motley Fool).
     </div>
     <div class="meta">
-      <span class="version-badge">v1.4.0</span>
+      <span class="version-badge">v1.4.1</span>
       © <span id="year"></span> · built for you · updated <span id="built"></span>
     </div>
   </footer>
@@ -1119,12 +1154,22 @@
   function updateCountdown() {
     const diff = IPO_DATE - new Date();
     if (diff <= 0) {
-      // Don't override the static HTML caption — it's hand-written for the
-      // current pricing/trade-day context (e.g. "Pricing happens today...")
+      // IPO has happened — hide the now-meaningless zero countdown grid
+      // and show the LIVE banner instead. Don't override the static HTML
+      // caption — it's hand-written for the current trade-day context
       // and is more informative than a generic fallback.
-      ['cd-d','cd-h','cd-m','cd-s'].forEach(id => $(id).textContent = '00');
+      const cd = $('countdown');
+      const lb = $('live-banner');
+      if (cd) cd.hidden = true;
+      if (lb) lb.hidden = false;
       return;
     }
+    // Still counting down — make sure the live banner is hidden and the
+    // grid is visible (in case the page is left open across midnight).
+    const cd = $('countdown');
+    const lb = $('live-banner');
+    if (cd) cd.hidden = false;
+    if (lb) lb.hidden = true;
     $('cd-d').textContent = pad(Math.floor(diff / 86400000));
     $('cd-h').textContent = pad(Math.floor((diff / 3600000) % 24));
     $('cd-m').textContent = pad(Math.floor((diff / 60000) % 60));

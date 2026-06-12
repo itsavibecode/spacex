@@ -50,6 +50,9 @@ To run it manually: GitHub → **Actions** tab → **Refresh news + filings** �
 
 ## Changelog
 
+### v1.4.1 — 2026-06-12 (live banner replaces zero countdown)
+- **Countdown replaced with a pulsing "$SPCX trading live on Nasdaq" banner** once the IPO date passes. Showing `00 00 00 00` reads as "broken countdown" rather than "the moment has arrived"; the live banner — green dot, pulsing animation, prominent "$SPCX trading live on Nasdaq" — communicates the actual state. New `.live-banner` element sits where the countdown grid used to be; JS toggles `hidden` on both elements based on `IPO_DATE - new Date()`.
+
 ### v1.4.0 — 2026-06-12 (first trade — IT'S LIVE)
 - **$SPCX is trading on Nasdaq.** SpaceX priced June 11 at $135 fixed and began trading June 12 — the largest IPO in stock-market history. Opening trade indications walked from $175 → $160 → ~$150–$155 (~11–15% pop above the IPO price). Bell-ringing ceremonies at Nasdaq MarketSite and Starbase.
 - **Major version bump (v1.4)** because this is the moment the tracker was built for. The site pivots from "tracking an upcoming IPO" to "tracking a live one."
