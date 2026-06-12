@@ -50,6 +50,24 @@ To run it manually: GitHub → **Actions** tab → **Refresh news + filings** �
 
 ## Changelog
 
+### v1.4.0 — 2026-06-12 (first trade — IT'S LIVE)
+- **$SPCX is trading on Nasdaq.** SpaceX priced June 11 at $135 fixed and began trading June 12 — the largest IPO in stock-market history. Opening trade indications walked from $175 → $160 → ~$150–$155 (~11–15% pop above the IPO price). Bell-ringing ceremonies at Nasdaq MarketSite and Starbase.
+- **Major version bump (v1.4)** because this is the moment the tracker was built for. The site pivots from "tracking an upcoming IPO" to "tracking a live one."
+- **Hero rewritten**:
+  - Status pill: "Unconfirmed · target window" → **"Live · Trading on Nasdaq"**
+  - Big date: "June 2026" → **"June 12, 2026"**
+  - Subtitle: "$SPCX is trading on Nasdaq · Priced at $135 · Opening indications $150–$175 · Largest IPO in stock-market history"
+- **Price block** now labeled "IPO Offer Price (final)" with a description that points readers to their broker or Nasdaq for live intraday price (this site doesn't quote intraday).
+- **Countdown caption** flipped to "The IPO is live. $SPCX opened trading on Nasdaq today after pricing at $135 last night…"
+- **Three new timeline events / event updates**:
+  - **June 11** "Pricing day · $135 fixed" → **"Priced at $135 + SEC effective"** — adds the EFFECT notice (accession 9999999995-26-001968) and six Form 3 insider beneficial-ownership filings (accessions 0001628280-26-042631 through 042636)
+  - **June 12** "First trade on Nasdaq" → **"First trade on Nasdaq — $SPCX is LIVE"** — adds the 424B4 final prospectus (accession 0001628280-26-042639), the bell-ringing ceremonies, and the opening-trade indication walk
+- **Two new top-of-list FILINGS entries**:
+  - **424B4** final prospectus (accession `0001628280-26-042639`) — confirms the $135 fixed pricing
+  - **EFFECT** SEC notice of effectiveness (accession `9999999995-26-001968`)
+- **OG image regenerated** for the new live state — "LIVE · TRADING ON NASDAQ" status pill + "Priced $135 · First trade June 12 · Opening $150-$175 indication" subtitle. Anyone sharing the link sees the right story.
+- **Footer disclaimer** rewritten for past-tense IPO — adds the 424B4 confirmation and the $1.77T post-money valuation (slightly above the $1.75T target because of share-class math).
+
 ### v1.3.5 — 2026-06-11 (pricing day)
 - **It's pricing day.** SpaceX prices today at $135 fixed, $1.75T post-money valuation. First trade tomorrow on Nasdaq as $SPCX — the biggest IPO in stock-market history. Direct EDGAR check turned up a flurry of pre-trade filings the bot's poller missed; hand-pulled and added below.
 - **Hero subtitle** rewritten for "it's today" tense: "Pricing today at $135 fixed · First trade tomorrow on Nasdaq as $SPCX · 555.6M shares + 83.33M greenshoe."

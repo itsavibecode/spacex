@@ -60,7 +60,7 @@ d.text((brand_x + 22 + slash_w + 10, brand_y + 4), "/  Tracker",
        font=brand_font, fill=INK_FAINT)
 
 # Status pill (top-right)
-status_text = "CONFIRMED · PRICING JUNE 11"
+status_text = "LIVE · TRADING ON NASDAQ"
 status_font = f("Inter-SemiBold.ttf", 14)
 sw, sh = text_size(d, status_text, status_font)
 sp_x2 = W - PAD - 36
@@ -83,7 +83,7 @@ d.text(((W - dw) / 2, date_y), date_text, font=date_font, fill=INK)
 
 # Subtitle under the date, with breathing room based on the font's true height
 sub_font = f("Inter-Medium.ttf", 24)
-sub_text = "Roadshow June 4  ·  Pricing June 11  ·  First trade June 12"
+sub_text = "Priced $135  ·  First trade June 12  ·  Opening $150–$175 indication"
 sw2, _ = text_size(d, sub_text, sub_font)
 d.text(((W - sw2) / 2, date_y + date_visual_height + 8),
        sub_text, font=sub_font, fill=INK_DIM)
