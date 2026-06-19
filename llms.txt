@@ -1,20 +1,21 @@
 # SpaceX IPO Tracker
 
-> A single-page tracker for the upcoming SpaceX initial public offering. It surfaces the estimated IPO date, per-share price benchmark, speculated ticker symbol, a live countdown, a timeline of past and upcoming milestones, links to SEC filings and secondary-market data, and on-device reminder mechanisms (.ics calendar download with VALARM blocks, browser notifications). Built and maintained by an individual retail investor — not affiliated with SpaceX.
+> A single-page tracker for the SpaceX initial public offering. It surfaces the IPO date, per-share price, ticker, a live status indicator, a timeline of milestones, links to SEC filings and secondary-market data, and on-device reminder mechanisms (.ics calendar download with VALARM blocks, browser notifications). Not affiliated with SpaceX.
 
-## What's tracked
+## Current status (post-IPO)
 
-- **Estimated IPO date:** June 18–30, 2026 (midpoint June 22). Unconfirmed by SpaceX.
-- **Price benchmark:** ~$525–$530 per share at the targeted $1.75T–$2T valuation. Secondary-market mark separately tracked from Hiive.
-- **Ticker speculation:** $SPCX (freed up by Tuttle Capital in April 2026) and $SPCE (Virgin Galactic's old ticker). Officially undisclosed until the public S-1.
-- **Filing status:** Confidential draft S-1 filed April 1, 2026. Closed-door analyst meetings April 21–23. Public S-1 expected May 15–22.
+- **IPO date:** Priced June 11, 2026 — first trade June 12, 2026 on Nasdaq.
+- **Offer price:** $135 per share (fixed, per the 424B4 final prospectus).
+- **Ticker:** $SPCX on Nasdaq (officially confirmed in the May 20 S-1).
+- **Valuation:** ~$1.77T post-money at the IPO price.
+- **Size:** 555.6M primary shares + 83.33M underwriter greenshoe option = $75B–$86.2B raised.
+- **Filing trail:** Confidential DRS March 30, DRS/A May 7, public S-1 May 20, two S-1/A amendments (June 1 + June 3), 8-A12B Nasdaq listing form June 10, EFFECT notice June 11, 424B4 final prospectus June 12 — all under CIK 1181412 (Space Exploration Technologies Corp.).
 
 ## Constraints
 
-- Static GitHub Pages site, no backend. No SMS or email is ever sent. Reminder delivery is via the downloaded .ics file (native phone/desktop alarms) and browser notifications (while a tab or installed PWA is open).
-- Not investment advice. All figures sourced from public reporting (SEC, Bloomberg, CNBC, Reuters, WSJ, Motley Fool, Hiive, Forge).
+- Static site hosted on GitHub Pages, no backend. No SMS or email is ever sent. Reminder delivery is via the downloaded .ics file (native phone/desktop alarms) and browser notifications (while a tab or installed PWA is open).
+- Not investment advice. All figures sourced from public SEC filings and reporting (Bloomberg, CNBC, Reuters, WSJ, Motley Fool, Hiive, Forge).
 
 ## Source
 
-- Repository: https://github.com/itsavibecode/spacex
 - Live: https://spacex.bookhockeys.com/

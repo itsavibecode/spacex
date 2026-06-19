@@ -50,6 +50,13 @@ To run it manually: GitHub → **Actions** tab → **Refresh news + filings** �
 
 ## Changelog
 
+### v1.4.2 — 2026-06-12 (privacy scrub)
+- **Removed every reference to the maintainer's GitHub handle from the publicly-served site surface.** Three real references existed: `<meta name="author">` in `index.html`, the JSON-LD WebSite `publisher.name` field, and an explicit `Repository:` line in `llms.txt`. All three removed.
+- **`llms.txt` rewritten end-to-end** while I was in there — it was still v1.2-era stale (talked about $525–$530 estimate, June 18–30 window, "speculated $SPCX"). Now describes the live, post-IPO state cleanly: $135 fixed, $SPCX trading on Nasdaq, ~$1.77T post-money valuation, full filing trail.
+- Generic "GitHub Pages" hosting mentions (describing deployment, not user identity) left in place.
+- OG image PNG already had only `spacex.bookhockeys.com` in the footer — no regeneration needed.
+- Verified clean: `grep -i "itsavibecode\|github.com"` returns zero hits across `index.html`, `llms.txt`, `robots.txt`, `sitemap.xml`, `CNAME`, `og-image.png`, `apple-touch-icon.png`, and `README.md`.
+
 ### v1.4.1 — 2026-06-12 (live banner replaces zero countdown)
 - **Countdown replaced with a pulsing "$SPCX trading live on Nasdaq" banner** once the IPO date passes. Showing `00 00 00 00` reads as "broken countdown" rather than "the moment has arrived"; the live banner — green dot, pulsing animation, prominent "$SPCX trading live on Nasdaq" — communicates the actual state. New `.live-banner` element sits where the countdown grid used to be; JS toggles `hidden` on both elements based on `IPO_DATE - new Date()`.
 
