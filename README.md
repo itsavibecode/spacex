@@ -50,6 +50,12 @@ To run it manually: GitHub → **Actions** tab → **Refresh news + filings** �
 
 ## Changelog
 
+### v1.5.1 — 2026-06-21 (delete the dead countdown)
+- The countdown grid was hidden post-IPO but still in the DOM, plus its CSS, JS, and the `setInterval` that fired every second to do nothing. Removed entirely now that the site has permanently shifted to post-IPO mode.
+- Specifically deleted: the four `.cd-cell` HTML elements, `.countdown` / `.cd-cell` / `.cd-num` / `.cd-lbl` CSS rules, `updateCountdown()` function, the `setInterval(updateCountdown, 1000)` call, the `updateCountdown()` boot call, and the now-unused `pad()` helper. The `<div class="live-banner">` no longer needs the `hidden` attribute — it's always visible.
+- Kept: `IPO_DATE` constant (still used by the .ics download and Google Calendar template link as a historical-event timestamp), the `.ts` UTC clock in the top bar, and the static countdown caption beneath the banner (which now reads as the post-IPO summary).
+- Net change: a leaner page with no dead DOM/CSS/JS that future-me has to scratch his head about.
+
 ### v1.5.0 — 2026-06-21 (post-IPO settled)
 - **Minor version bump** because the site has shifted from "tracking a live IPO" to "tracking the aftermath" — a different phase.
 - **Greenshoe fully exercised — the new headline.** Underwriters took the full 83.33M over-allotment on June 15; total offering 638.9M shares × $135 = **$85.7B raised**, the actual record (vs. the $75B baseline before greenshoe). Hero subtitle, price-block caveat, countdown caption, footer disclaimer, and OG image all updated.

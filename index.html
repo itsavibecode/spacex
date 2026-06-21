@@ -187,36 +187,6 @@
     color: var(--ink-faint);
   }
 
-  .countdown {
-    margin: 52px auto 0;
-    max-width: 720px;
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 10px;
-  }
-  .cd-cell {
-    padding: 22px 10px 16px;
-    background: var(--panel);
-    border: 1px solid var(--line);
-    border-radius: 10px;
-    text-align: center;
-  }
-  .cd-num {
-    font-family: var(--mono);
-    font-weight: 700;
-    font-size: clamp(32px, 5.5vw, 48px);
-    line-height: 1;
-    color: var(--ink);
-    font-variant-numeric: tabular-nums;
-  }
-  .cd-lbl {
-    font-size: 11px;
-    font-weight: 600;
-    color: var(--ink-dim);
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    margin-top: 10px;
-  }
   .live-banner {
     margin: 52px auto 0;
     max-width: 720px;
@@ -850,13 +820,7 @@
       <div class="price-range">Confirmed in the 424B4 final prospectus June 12. <strong>Underwriters fully exercised the 83.33M greenshoe</strong> on June 15 — total offering 638.9M shares × $135 = <strong>$85.7B raised</strong>, surpassing Saudi Aramco's $29B (2019) record. SPCX day-one close $161 (+19%); hit a $225 intraday high before easing back. For live intraday price, check your broker or <a href="https://www.nasdaq.com/market-activity/stocks/spcx" target="_blank" rel="noopener" style="color: var(--accent-2); text-decoration: underline;">Nasdaq</a>.</div>
     </div>
 
-    <div class="countdown" id="countdown">
-      <div class="cd-cell"><div class="cd-num" id="cd-d">--</div><div class="cd-lbl">Days</div></div>
-      <div class="cd-cell"><div class="cd-num" id="cd-h">--</div><div class="cd-lbl">Hours</div></div>
-      <div class="cd-cell"><div class="cd-num" id="cd-m">--</div><div class="cd-lbl">Min</div></div>
-      <div class="cd-cell"><div class="cd-num" id="cd-s">--</div><div class="cd-lbl">Sec</div></div>
-    </div>
-    <div class="live-banner" id="live-banner" hidden>
+    <div class="live-banner">
       <span class="live-dot" aria-hidden="true"></span>
       <span class="live-text">$SPCX trading live on Nasdaq</span>
     </div>
@@ -969,7 +933,7 @@
       <strong>Not investment advice.</strong> SpaceX priced its IPO June 11, 2026 at a fixed $135 per share, and $SPCX began trading on Nasdaq June 12. Underwriters fully exercised the greenshoe June 15, bringing the total offering to 638.9M shares = <strong>$85.7B raised</strong> at the $1.77T post-money valuation — the largest IPO in stock-market history. Day-one close $161 (+19%); first-week high reportedly $225 intraday. Public S-1 (CIK 1181412) filed May 20, amended June 1 (5% employee/friends allocation) and June 3 (fixed price). Per-share figures reflect the 5-for-1 forward split approved May 15. The insider lockup is tiered — not a single Dec 8 cliff — with unlocks starting at Q2 earnings and Musk's ~6.4B shares not freeing until June 12, 2027. For live intraday price, check your broker. Figures from public SEC filings and financial press (CNBC, Reuters, Bloomberg, Motley Fool).
     </div>
     <div class="meta">
-      <span class="version-badge">v1.5.0</span>
+      <span class="version-badge">v1.5.1</span>
       © <span id="year"></span> · built for you · updated <span id="built"></span>
     </div>
   </footer>
@@ -1098,7 +1062,6 @@
   // AUTO:FILINGS:END
 
   const $ = (id) => document.getElementById(id);
-  const pad = (n) => String(n).padStart(2, '0');
   const fmtDate = (iso) => new Date(iso + 'T00:00:00').toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
   const slug = (s) => String(s).toLowerCase()
     .replace(/[^a-z0-9]+/g, '-')
@@ -1163,31 +1126,6 @@
       el.classList.remove('capturing');
       btn.disabled = false;
     }
-  }
-
-  function updateCountdown() {
-    const diff = IPO_DATE - new Date();
-    if (diff <= 0) {
-      // IPO has happened — hide the now-meaningless zero countdown grid
-      // and show the LIVE banner instead. Don't override the static HTML
-      // caption — it's hand-written for the current trade-day context
-      // and is more informative than a generic fallback.
-      const cd = $('countdown');
-      const lb = $('live-banner');
-      if (cd) cd.hidden = true;
-      if (lb) lb.hidden = false;
-      return;
-    }
-    // Still counting down — make sure the live banner is hidden and the
-    // grid is visible (in case the page is left open across midnight).
-    const cd = $('countdown');
-    const lb = $('live-banner');
-    if (cd) cd.hidden = false;
-    if (lb) lb.hidden = true;
-    $('cd-d').textContent = pad(Math.floor(diff / 86400000));
-    $('cd-h').textContent = pad(Math.floor((diff / 3600000) % 24));
-    $('cd-m').textContent = pad(Math.floor((diff / 60000) % 60));
-    $('cd-s').textContent = pad(Math.floor((diff / 1000) % 60));
   }
 
   function updateTs() {
@@ -1371,9 +1309,7 @@
   }
 
   document.addEventListener('DOMContentLoaded', () => {
-    updateCountdown();
     updateTs();
-    setInterval(updateCountdown, 1000);
     setInterval(updateTs, 1000);
     renderArticles();
     renderTimeline();
