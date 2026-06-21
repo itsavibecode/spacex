@@ -83,7 +83,7 @@ d.text(((W - dw) / 2, date_y), date_text, font=date_font, fill=INK)
 
 # Subtitle under the date, with breathing room based on the font's true height
 sub_font = f("Inter-Medium.ttf", 24)
-sub_text = "Priced $135  ·  First trade June 12  ·  Opening $150–$175 indication"
+sub_text = "Priced $135  ·  Greenshoe exercised  ·  $85.7B raised  ·  Trading on Nasdaq"
 sw2, _ = text_size(d, sub_text, sub_font)
 d.text(((W - sw2) / 2, date_y + date_visual_height + 8),
        sub_text, font=sub_font, fill=INK_DIM)

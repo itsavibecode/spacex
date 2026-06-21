@@ -50,6 +50,19 @@ To run it manually: GitHub → **Actions** tab → **Refresh news + filings** �
 
 ## Changelog
 
+### v1.5.0 — 2026-06-21 (post-IPO settled)
+- **Minor version bump** because the site has shifted from "tracking a live IPO" to "tracking the aftermath" — a different phase.
+- **Greenshoe fully exercised — the new headline.** Underwriters took the full 83.33M over-allotment on June 15; total offering 638.9M shares × $135 = **$85.7B raised**, the actual record (vs. the $75B baseline before greenshoe). Hero subtitle, price-block caveat, countdown caption, footer disclaimer, and OG image all updated.
+- **First-week trading reality folded in**: day-one close $161 (+19%), hit a $225 intraday high before easing. Site doesn't quote live intraday — that link goes to Nasdaq for that.
+- **Lockup schedule rewritten — was wrong.** What we had as a single Dec 9 cliff is actually a tiered/staggered unlock:
+  - **Late July/Aug** — Q2 earnings + ~20% unlock (+10% extra if SPCX is >30% above $135 IPO into that date)
+  - **~November** — Q3 earnings + 28% unlock (biggest single tranche)
+  - **December 8** — 180-day full lockup expires (corrected from Dec 9)
+  - **June 12, 2027** — Musk's ~6.4B shares unlock (366-day extended lockup, no early release)
+- **Four new TIMELINE events** for the post-IPO filing flurry: greenshoe exercise + Series Preferred conversion (June 15), governance/bylaws amendment (June 16), additional governance + first Form 4 insider trade (June 17). The June 12 first-trade event picked up the S-8 employee stock plan registration.
+- **Four new FILINGS entries**: three 8-Ks (June 15, 16, 17) + S-8 (June 12). Older entries preserved.
+- **OG image regenerated** with the new subtitle: "Priced $135 · Greenshoe exercised · $85.7B raised · Trading on Nasdaq."
+
 ### v1.4.2 — 2026-06-12 (privacy scrub)
 - **Removed every reference to the maintainer's GitHub handle from the publicly-served site surface.** Three real references existed: `<meta name="author">` in `index.html`, the JSON-LD WebSite `publisher.name` field, and an explicit `Repository:` line in `llms.txt`. All three removed.
 - **`llms.txt` rewritten end-to-end** while I was in there — it was still v1.2-era stale (talked about $525–$530 estimate, June 18–30 window, "speculated $SPCX"). Now describes the live, post-IPO state cleanly: $135 fixed, $SPCX trading on Nasdaq, ~$1.77T post-money valuation, full filing trail.
