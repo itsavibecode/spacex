@@ -50,6 +50,11 @@ To run it manually: GitHub → **Actions** tab → **Refresh news + filings** �
 
 ## Changelog
 
+### v1.5.3 — 2026-06-29 (refresh script: multi-query news + EDGAR Atom fallback)
+- **Bot's news refresh now runs 7 queries** instead of the single hardcoded `"SpaceX" IPO`. New queries: `"SpaceX" IPO`, `"SpaceX" stock`, `"SpaceX" SEC`, `"SpaceX" notes`, `"SpaceX" bonds`, `"SpaceX" earnings`, `"SPCX"`. Results merged + URL-deduped + freshest 25 kept after 60-day cutoff. Smoke test today: 642 unique items across 7 queries (vs. ~100 from the single old query), and it caught CNBC's "$25 billion bond sale drives huge demand" headline — exactly the kind of news the old narrow query was missing.
+- **EDGAR poller now tries an Atom RSS fallback** when `data.sec.gov` JSON returns 403. The Atom feed at `sec.gov/cgi-bin/browse-edgar?...&output=atom` is served by different SEC infrastructure than the JSON endpoint and typically has less aggressive throttling on CI IPs. Both paths return the same `{form, date, ciks, accession, filer}` shape so downstream insert logic is unchanged. Whether the Atom fallback actually clears 403 from GitHub Actions runners is "wait-and-see" — first real test is tomorrow's cron run.
+- **No content changes** — this is a script-only release. The next daily cron tick will exercise the new behavior and start picking up corporate-finance news that the old query missed.
+
 ### v1.5.2 — 2026-06-29 ($25B senior notes follow-on)
 - **SpaceX raised another $25B** in senior unsecured notes the week after the IPO. Combined with the IPO, that's **~$110.7B in equity + debt in three weeks**. Direct EDGAR check (bot still 403'd from CI) turned up three 8-Ks covering the notes deal:
   - **June 22 — Offering launched** (acc `0001628280-26-044489`). Disclosed ~$100.8B cash on the balance sheet as of June 19.

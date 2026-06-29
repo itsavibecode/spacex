@@ -64,7 +64,20 @@ def fetch(url, accept="*/*", retries=2):
 
 
 # === Google News RSS =========================================================
-GNEWS_URL = "https://news.google.com/rss/search?q=%22SpaceX%22+IPO&hl=en-US&gl=US&ceid=US:en"
+# Multiple queries instead of a single "SpaceX IPO" search — the original
+# narrow query missed the June 2026 $25B senior notes deal (no "IPO" in
+# any of the bond-deal headlines). Each variant fetches up to 100 items,
+# we dedupe by URL across the whole set and keep the freshest 25.
+GNEWS_QUERIES = [
+    "%22SpaceX%22+IPO",
+    "%22SpaceX%22+stock",
+    "%22SpaceX%22+SEC",
+    "%22SpaceX%22+notes",
+    "%22SpaceX%22+bonds",
+    "%22SpaceX%22+earnings",
+    "%22SPCX%22",
+]
+GNEWS_BASE = "https://news.google.com/rss/search?q={q}&hl=en-US&gl=US&ceid=US:en"
 
 # Friendly source names so the UI doesn't show "Bloomberg.com" next to "Bloomberg".
 SOURCE_NORMALIZE = {
@@ -95,15 +108,14 @@ def parse_pubdate(s):
         return None
 
 
-def google_news_articles():
-    body = fetch(GNEWS_URL, accept="application/rss+xml")
+def _parse_gnews_feed(body):
+    """Parse one Google News RSS payload into a list of article dicts."""
     root = ET.fromstring(body)
     out = []
     for item in root.iter("item"):
         title_raw = (item.findtext("title") or "").strip()
         link = (item.findtext("link") or "").strip()
         pub = (item.findtext("pubDate") or "").strip()
-        # Google News titles end with " - Source"
         m = re.match(r"^(.+?)\s+-\s+([^-]+)$", title_raw)
         if m:
             title, source = m.group(1).strip(), m.group(2).strip()
@@ -121,6 +133,29 @@ def google_news_articles():
             "url": link,
         })
     return out
+
+
+def google_news_articles():
+    """Fetch each query, merge, dedupe by URL. Per-query failures don't
+    sink the whole fetch — log and keep going."""
+    seen_urls = set()
+    merged = []
+    for q in GNEWS_QUERIES:
+        url = GNEWS_BASE.format(q=q)
+        try:
+            body = fetch(url, accept="application/rss+xml")
+            items = _parse_gnews_feed(body)
+        except Exception as e:
+            print(f"  WARNING: Google News query '{q}' failed: {e}", file=sys.stderr)
+            continue
+        before = len(merged)
+        for a in items:
+            if a["url"] in seen_urls:
+                continue
+            seen_urls.add(a["url"])
+            merged.append(a)
+        print(f"  Google News '{q}': {len(items)} items, {len(merged) - before} new after URL dedupe")
+    return merged
 
 
 def filter_articles(articles, days=60, cap=25):
@@ -160,36 +195,95 @@ INTERESTING_FORMS = {
 }
 
 
+ATOM_NS = "http://www.w3.org/2005/Atom"
+
+
+def _parse_edgar_atom(body, cik):
+    """Parse the SEC browse-edgar Atom XML feed. Returns same shape as the
+    JSON path. Used as the fallback when data.sec.gov 403s our IP."""
+    root = ET.fromstring(body)
+    name_el = root.find(f".//{{{ATOM_NS}}}conformed-name")
+    name = name_el.text.strip() if name_el is not None and name_el.text else f"CIK {cik}"
+    out = []
+    for entry in root.findall(f"{{{ATOM_NS}}}entry"):
+        content = entry.find(f"{{{ATOM_NS}}}content")
+        if content is None:
+            continue
+        # SEC nests their custom elements inside <content> — they inherit the
+        # Atom namespace via XML default-namespace inheritance.
+        form_el = content.find(f"{{{ATOM_NS}}}filing-type")
+        date_el = content.find(f"{{{ATOM_NS}}}filing-date")
+        acc_el = content.find(f"{{{ATOM_NS}}}accession-number")
+        if form_el is None or date_el is None or acc_el is None:
+            continue
+        out.append({
+            "form": (form_el.text or "").strip(),
+            "date": (date_el.text or "").strip(),
+            "ciks": [cik],
+            "accession": (acc_el.text or "").strip(),
+            "filer": name,
+        })
+    return out
+
+
+def _fetch_cik_json(cik):
+    """Primary path: data.sec.gov JSON. Returns list of filings or
+    raises on any error so the Atom fallback can take over."""
+    body = fetch(
+        f"https://data.sec.gov/submissions/CIK{cik.zfill(10)}.json",
+        accept="application/json",
+    )
+    data = json.loads(body)
+    name = data.get("name", f"CIK {cik}")
+    recent = data.get("filings", {}).get("recent", {})
+    forms = recent.get("form", [])
+    dates = recent.get("filingDate", [])
+    accs = recent.get("accessionNumber", [])
+    return [
+        {"form": form, "date": date, "ciks": [cik], "accession": acc, "filer": name}
+        for form, date, acc in zip(forms, dates, accs)
+    ]
+
+
+def _fetch_cik_atom(cik):
+    """Fallback path: browse-edgar Atom RSS feed. SEC's static-edge RSS
+    typically isn't as aggressively rate-limited as the data.sec.gov
+    JSON endpoint, so this often succeeds from GH Actions IPs even when
+    the primary path 403s."""
+    body = fetch(
+        f"https://www.sec.gov/cgi-bin/browse-edgar?"
+        f"action=getcompany&CIK={cik.zfill(10)}&type=&dateb=&owner=include&count=40&output=atom",
+        accept="application/atom+xml",
+    )
+    return _parse_edgar_atom(body, cik)
+
+
 def edgar_filings():
-    """Poll SpaceX's CIK directly + the historical Form-D-filer CIKs for
-    IPO-material forms. Returns a list of dicts in the shape the rest of
-    the script expects: {form, date, ciks, accession, filer}."""
+    """Poll SpaceX's CIK + the historical Form-D-filer CIKs for IPO-
+    material forms. Tries the JSON endpoint first; on 403 (the chronic
+    issue with GH Actions IPs) falls back to the Atom RSS feed. Returns
+    list of {form, date, ciks, accession, filer} dicts."""
     out = []
     for cik in [SPACEX_CIK] + RELATED_CIKS:
+        items = None
+        # Primary: JSON
         try:
-            body = fetch(
-                f"https://data.sec.gov/submissions/CIK{cik.zfill(10)}.json",
-                accept="application/json",
-            )
-            data = json.loads(body)
+            items = _fetch_cik_json(cik)
         except Exception as e:
-            print(f"  WARNING: EDGAR CIK {cik} fetch failed: {e}", file=sys.stderr)
-            continue
-        name = data.get("name", f"CIK {cik}")
-        recent = data.get("filings", {}).get("recent", {})
-        forms = recent.get("form", [])
-        dates = recent.get("filingDate", [])
-        accs = recent.get("accessionNumber", [])
-        for form, date, acc in zip(forms, dates, accs):
-            if form not in INTERESTING_FORMS:
+            print(f"  EDGAR CIK {cik} JSON failed ({e}); trying Atom fallback...",
+                  file=sys.stderr)
+        # Fallback: Atom RSS
+        if items is None:
+            try:
+                items = _fetch_cik_atom(cik)
+                print(f"  EDGAR CIK {cik}: Atom fallback succeeded ({len(items)} entries)")
+            except Exception as e2:
+                print(f"  WARNING: EDGAR CIK {cik} Atom fallback also failed: {e2}",
+                      file=sys.stderr)
                 continue
-            out.append({
-                "form": form,
-                "date": date,
-                "ciks": [cik],
-                "accession": acc,
-                "filer": name,
-            })
+        for it in items:
+            if it["form"] in INTERESTING_FORMS:
+                out.append(it)
     return out
 
 
@@ -355,7 +449,7 @@ def main():
     try:
         articles_raw = google_news_articles()
         articles = filter_articles(articles_raw)
-        print(f"  Google News: {len(articles_raw)} items -> {len(articles)} kept after dedupe + 60-day cutoff")
+        print(f"  Google News TOTAL: {len(articles_raw)} unique items across {len(GNEWS_QUERIES)} queries -> {len(articles)} kept after dedupe + 60-day cutoff")
         if articles:
             text = replace_articles(text, articles)
         else:
