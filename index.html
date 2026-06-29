@@ -930,10 +930,10 @@
 
   <footer>
     <div class="disc">
-      <strong>Not investment advice.</strong> SpaceX priced its IPO June 11, 2026 at a fixed $135 per share, and $SPCX began trading on Nasdaq June 12. Underwriters fully exercised the greenshoe June 15, bringing the total offering to 638.9M shares = <strong>$85.7B raised</strong> at the $1.77T post-money valuation — the largest IPO in stock-market history. Day-one close $161 (+19%); first-week high reportedly $225 intraday. Public S-1 (CIK 1181412) filed May 20, amended June 1 (5% employee/friends allocation) and June 3 (fixed price). Per-share figures reflect the 5-for-1 forward split approved May 15. The insider lockup is tiered — not a single Dec 8 cliff — with unlocks starting at Q2 earnings and Musk's ~6.4B shares not freeing until June 12, 2027. For live intraday price, check your broker. Figures from public SEC filings and financial press (CNBC, Reuters, Bloomberg, Motley Fool).
+      <strong>Not investment advice.</strong> SpaceX priced its IPO June 11, 2026 at a fixed $135 per share, and $SPCX began trading on Nasdaq June 12. Underwriters fully exercised the greenshoe June 15, bringing the total offering to 638.9M shares = <strong>$85.7B raised</strong> at the $1.77T post-money valuation — the largest IPO in stock-market history. Day-one close $161 (+19%); first-week high reportedly $225 intraday. Followed June 22–26 with a <strong>$25B senior unsecured notes offering</strong> (5 tranches, 2031–2056) priced via 144A/Reg S — ~$110.7B raised in three weeks total. Public S-1 (CIK 1181412) filed May 20, amended June 1 + June 3. Per-share figures reflect the 5-for-1 forward split approved May 15. The insider lockup is tiered — not a single Dec 8 cliff — with unlocks starting at Q2 earnings and Musk's ~6.4B shares not freeing until June 12, 2027. For live intraday price, check your broker. Figures from public SEC filings and financial press (CNBC, Reuters, Bloomberg, Motley Fool).
     </div>
     <div class="meta">
-      <span class="version-badge">v1.5.1</span>
+      <span class="version-badge">v1.5.2</span>
       © <span id="year"></span> · built for you · updated <span id="built"></span>
     </div>
   </footer>
@@ -1023,6 +1023,10 @@
       desc: "8-K (accession 0001628280-26-043411) discloses the amended and restated Certificate of Formation + Bylaws that take effect on IPO close, plus indemnification agreements with directors — standard post-IPO administrative housekeeping." },
     { date: "2026-06-17", title: "Additional governance + first Form 4 insider trade",
       desc: "Second governance 8-K (accession 0001628280-26-043865) plus the first post-IPO Form 4 insider transaction (accession 0001628280-26-044069). Stock saw its first full-session decline this day, -4.95% to $191.82 after hitting a $225 intraday peak earlier in the week." },
+    { date: "2026-06-22", title: "Launches $25B senior notes offering",
+      desc: "8-K (accession 0001628280-26-044489) launches the bond deal and discloses ~$100.8B cash on the balance sheet as of June 19. Same syndicate as the IPO leads the bookrunning." },
+    { date: "2026-06-26", title: "$25B senior notes closed (5 tranches)",
+      desc: "8-Ks 0001628280-26-044955 (pricing, June 23) + 0001628280-26-045763 (closing, June 26). Five tranches priced via 144A/Reg S: $7.0B 5.350% due 2031, $6.0B 5.650% due 2033, $6.0B 5.875% due 2036, $2.5B 6.600% due 2046, $3.5B 6.650% due 2056. Indenture with BNY Mellon Trust. Combined with the IPO, SpaceX has raised ~$110.7B in equity + debt in three weeks." },
     { date: "2026-08-01", title: "Q2 earnings · first lockup tranche unlocks", future: true,
       desc: "First major insider supply event. Late-July or early-August earnings window triggers release of ~20% of locked shares (an additional ~10% releases early if SPCX is trading >30% above the $135 IPO price into that date)." },
     { date: "2026-11-01", title: "Q3 earnings · largest unlock tranche (28%)", future: true,
@@ -1036,6 +1040,9 @@
 
   // AUTO:FILINGS:START — partially auto-managed: refresh-news.py updates "Updated" dates on live links and appends SEC-detected filings. Hand-curated entries are preserved.
   const FILINGS = [
+    { type: "8-K",       title: "$25B senior notes — closing",          meta: "CIK 1181412 · accession 0001628280-26-045763 · Indenture with BNY Mellon Trust; registration rights agreement with IPO syndicate as initial purchasers (144A/Reg S placement)", url: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001181412&type=8-K&dateb=&owner=include&count=40", date: "2026-06-26", dateKind: "Filed" },
+    { type: "8-K",       title: "$25B senior notes — pricing (5 tranches)", meta: "CIK 1181412 · accession 0001628280-26-044955 · $7B 5.350% due 2031, $6B 5.650% due 2033, $6B 5.875% due 2036, $2.5B 6.600% due 2046, $3.5B 6.650% due 2056", url: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001181412&type=8-K&dateb=&owner=include&count=40", date: "2026-06-23", dateKind: "Filed" },
+    { type: "8-K",       title: "$25B senior notes offering launched",   meta: "CIK 1181412 · accession 0001628280-26-044489 · Bond deal launches; ~$100.8B cash position disclosed as of June 19", url: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001181412&type=8-K&dateb=&owner=include&count=40", date: "2026-06-22", dateKind: "Filed" },
     { type: "8-K",       title: "Governance + first Form 4 insider trade", meta: "CIK 1181412 · accession 0001628280-26-043865 · Second post-IPO governance 8-K; Form 4 accession 0001628280-26-044069", url: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001181412&type=8-K&dateb=&owner=include&count=40", date: "2026-06-17", dateKind: "Filed" },
     { type: "8-K",       title: "Amended Certificate of Formation + Bylaws", meta: "CIK 1181412 · accession 0001628280-26-043411 · Post-IPO governance housekeeping + indemnification agreements", url: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001181412&type=8-K&dateb=&owner=include&count=40", date: "2026-06-16", dateKind: "Filed" },
     { type: "8-K",       title: "Greenshoe fully exercised — $85.7B total raised", meta: "CIK 1181412 · accession 0001628280-26-043288 · Underwriters take the full 83.33M over-allotment; ~103M Series Preferred shares converted to common", url: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001181412&type=8-K&dateb=&owner=include&count=40", date: "2026-06-15", dateKind: "Filed" },

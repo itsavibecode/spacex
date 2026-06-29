@@ -50,6 +50,16 @@ To run it manually: GitHub → **Actions** tab → **Refresh news + filings** �
 
 ## Changelog
 
+### v1.5.2 — 2026-06-29 ($25B senior notes follow-on)
+- **SpaceX raised another $25B** in senior unsecured notes the week after the IPO. Combined with the IPO, that's **~$110.7B in equity + debt in three weeks**. Direct EDGAR check (bot still 403'd from CI) turned up three 8-Ks covering the notes deal:
+  - **June 22 — Offering launched** (acc `0001628280-26-044489`). Disclosed ~$100.8B cash on the balance sheet as of June 19.
+  - **June 23 — Priced 5 tranches** (acc `0001628280-26-044955`): $7B 5.350% due 2031, $6B 5.650% due 2033, $6B 5.875% due 2036, $2.5B 6.600% due 2046, $3.5B 6.650% due 2056.
+  - **June 26 — Closing** (acc `0001628280-26-045763`). Indenture with BNY Mellon Trust; registration rights agreement with same IPO syndicate (BofA, Citi, Goldman, JPM, Morgan Stanley) as initial purchasers. 144A/Reg S placement; commit to register-for-exchange within 540 days.
+- **Two consolidated TIMELINE events** added: "Launches $25B senior notes offering" (June 22) and "$25B senior notes closed (5 tranches)" (June 26, folding in the June 23 pricing).
+- **Three new FILINGS entries** at the top of the list — one per 8-K so each filing is a clickable destination.
+- **Footer disclaimer** updated to note the $25B notes follow-on and the ~$110.7B combined-raise figure.
+- Hero / price block / countdown caption / OG image **unchanged** — the bond deal is corporate-finance news adjacent to the IPO, not a change to the IPO story itself.
+
 ### v1.5.1 — 2026-06-21 (delete the dead countdown)
 - The countdown grid was hidden post-IPO but still in the DOM, plus its CSS, JS, and the `setInterval` that fired every second to do nothing. Removed entirely now that the site has permanently shifted to post-IPO mode.
 - Specifically deleted: the four `.cd-cell` HTML elements, `.countdown` / `.cd-cell` / `.cd-num` / `.cd-lbl` CSS rules, `updateCountdown()` function, the `setInterval(updateCountdown, 1000)` call, the `updateCountdown()` boot call, and the now-unused `pad()` helper. The `<div class="live-banner">` no longer needs the `hidden` attribute — it's always visible.
