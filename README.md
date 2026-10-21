@@ -50,6 +50,9 @@ To run it manually: GitHub → **Actions** tab → **Refresh news + filings** �
 
 ## Changelog
 
+### v1.5.4 — 2026-10-20 (Q3 earnings date fix)
+- The timeline's Q3 earnings / 28% unlock row still carried the "~November" placeholder from June. SpaceX confirmed the report for **October 20 after the close**, so the row is corrected on the day. Nothing else touched: the full post-IPO catch-up (Q2 results and 10-Q, the August/September lockup tranches that already passed, the summer slide below the $135 IPO price, Shotwell's share-per-child pledge) ships as v1.6.0 once the Q3 numbers are out.
+
 ### v1.5.3 — 2026-06-29 (refresh script: multi-query news + EDGAR Atom fallback)
 - **Bot's news refresh now runs 7 queries** instead of the single hardcoded `"SpaceX" IPO`. New queries: `"SpaceX" IPO`, `"SpaceX" stock`, `"SpaceX" SEC`, `"SpaceX" notes`, `"SpaceX" bonds`, `"SpaceX" earnings`, `"SPCX"`. Results merged + URL-deduped + freshest 25 kept after 60-day cutoff. Smoke test today: 642 unique items across 7 queries (vs. ~100 from the single old query), and it caught CNBC's "$25 billion bond sale drives huge demand" headline — exactly the kind of news the old narrow query was missing.
 - **EDGAR poller now tries an Atom RSS fallback** when `data.sec.gov` JSON returns 403. The Atom feed at `sec.gov/cgi-bin/browse-edgar?...&output=atom` is served by different SEC infrastructure than the JSON endpoint and typically has less aggressive throttling on CI IPs. Both paths return the same `{form, date, ciks, accession, filer}` shape so downstream insert logic is unchanged. Whether the Atom fallback actually clears 403 from GitHub Actions runners is "wait-and-see" — first real test is tomorrow's cron run.
